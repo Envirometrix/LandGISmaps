@@ -1,0 +1,46 @@
+Results of model fitting 'randomForest':
+
+Variable: tax_grtgroup.f
+
+ Random forest model:Ranger result
+
+Call:
+ ranger::ranger(formulaString.USDA, rm.tax, importance = "impurity",      mtry = mtry, probability = TRUE, num.trees = 85, case.weights = rm.tax$pedon_completeness_index +          1) 
+
+Type:                             Probability estimation 
+Number of trees:                  85 
+Sample size:                      338677 
+Number of independent variables:  242 
+Mtry:                             40 
+Target node size:                 10 
+Variable importance mode:         impurity 
+Splitrule:                        gini 
+OOB prediction error (Brier s.):  0.460861 
+
+ Variable importance:
+          [,1]
+PC241 3950.996
+PC240 3303.079
+PC225 2976.047
+PC4   2857.142
+PC1   2405.260
+PC81  2247.006
+PC26  2082.876
+PC230 1976.328
+PC224 1882.154
+PC63  1842.871
+PC6   1705.013
+PC242 1672.535
+PC9   1631.230
+PC3   1599.826
+PC28  1562.016
+PC226 1552.301
+PC79  1550.635
+PC199 1540.698
+PC17  1522.023
+PC71  1504.418
+PC15  1476.025
+PC22  1450.578
+PC53  1440.650
+PC231 1435.305
+PC23  1419.668

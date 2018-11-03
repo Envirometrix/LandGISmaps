@@ -1,0 +1,14 @@
+Code,Name,Value,Color
+Cl,clay,1,#d5c36b
+SiCl,silty clay,2,#b96947
+SaCl,sandy clay,3,#9d3706
+ClLo,clay loam,4,#ae868f
+SiClLo,silty clay loam,5,#f86714
+SaClLo,sandy clay loam,6,#46d143
+Lo,loam,7,#368f20
+SiLo,silt loam,8,#3e5a14
+SaLo,sandy loam,9,#ffd557
+Si,silt,10,#fff72e
+LoSa,loamy sand,11,#ff5a9d
+Sa,sand,12,#ff005b
+NODATA,,255,#ffffff

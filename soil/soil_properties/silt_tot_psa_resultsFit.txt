@@ -1,0 +1,137 @@
+Results of model fitting 'randomForest, XGBoost, bartMachine':
+
+
+Variable: silt.wfraction
+Ranger result
+
+Call:
+ ranger(formula = as.formula(paste(t.vars[j], "~ DEPTH +", paste0("PC",      1:242, collapse = "+"))), data = dfs, importance = "impurity",      write.forest = TRUE, mtry = t.mrfX$bestTune$mtry, num.trees = 85,      case.weights = case.weights.s) 
+
+Type:                             Regression 
+Number of trees:                  85 
+Sample size:                      1169664 
+Number of independent variables:  243 
+Mtry:                             115 
+Target node size:                 5 
+Variable importance mode:         impurity 
+Splitrule:                        variance 
+OOB prediction error (MSE):       35.26683 
+R squared (OOB):                  0.9084237 
+
+ Variable importance:
+          [,1]
+PC223 40048399
+DEPTH 26116377
+PC241 17822878
+PC231  8222360
+PC4    7693375
+PC240  6454122
+PC209  5823014
+PC68   5679637
+PC69   4844301
+PC222  4490002
+PC63   4370344
+PC234  4007058
+PC232  3963541
+PC227  3692787
+PC228  3325993
+PC54   2874395
+PC178  2645507
+PC12   2524930
+PC212  2445988
+PC235  2422274
+PC60   2353766
+PC33   2302098
+PC210  2291452
+PC211  2284839
+PC98   2217847
+PC3    2207402
+PC83   2187915
+PC18   2115139
+PC9    2089372
+PC185  2062988
+PC188  2059303
+PC14   1956341
+PC56   1930969
+PC230  1925019
+PC28   1920125
+
+eXtreme Gradient Boosting 
+
+1169664 samples
+    243 predictor
+
+No pre-processing
+Resampling: Cross-Validated (3 fold, repeated 1 times) 
+Summary of sample sizes: 779776, 779777, 779775 
+Resampling results across tuning parameters:
+
+  eta  max_depth  nrounds  RMSE      Rsquared   MAE     
+  0.3  2           50      15.97266  0.3417704  12.57839
+  0.3  2          100      15.51276  0.3782376  12.17615
+  0.3  2          150      15.25734  0.3980395  11.94710
+  0.3  3           50      15.25009  0.3992795  11.95657
+  0.3  3          100      14.75565  0.4373714  11.51000
+  0.3  3          150      14.43883  0.4611973  11.22078
+  0.3  4           50      14.67979  0.4434753  11.44408
+  0.3  4          100      14.09193  0.4871461  10.91153
+  0.3  4          150      13.68282  0.5164644  10.53997
+  0.4  2           50      15.83799  0.3506770  12.45833
+  0.4  2          100      15.39907  0.3858057  12.07483
+  0.4  2          150      15.10938  0.4087345  11.82396
+  0.4  3           50      15.11028  0.4091142  11.82208
+  0.4  3          100      14.57085  0.4502083  11.33182
+  0.4  3          150      14.24947  0.4742090  11.03390
+  0.4  4           50      14.51620  0.4546016  11.28358
+  0.4  4          100      13.88845  0.5005693  10.71319
+  0.4  4          150      13.48297  0.5295175  10.35784
+  0.5  2           50      15.72139  0.3593721  12.33877
+  0.5  2          100      15.28197  0.3945237  11.95694
+  0.5  2          150      14.99358  0.4171640  11.70459
+  0.5  3           50      15.00630  0.4160898  11.71164
+  0.5  3          100      14.47420  0.4566446  11.22300
+  0.5  3          150      14.13249  0.4820661  10.91269
+  0.5  4           50      14.40914  0.4614714  11.15738
+  0.5  4          100      13.77361  0.5079656  10.58766
+  0.5  4          150      13.35165  0.5378031  10.22085
+
+Tuning parameter 'gamma' was held constant at a value of 0
+Tuning parameter 'colsample_bytree' was
+ held constant at a value of 0.8
+Tuning parameter 'min_child_weight' was held constant at a value of
+ 1
+Tuning parameter 'subsample' was held constant at a value of 1
+RMSE was used to select the optimal model using the smallest value.
+The final values used for the model were nrounds = 150, max_depth = 4, eta = 0.5, gamma =
+ 0, colsample_bytree = 0.8, min_child_weight = 1 and subsample = 1.
+
+ XGBoost variable importance:
+    Feature        Gain       Cover   Frequency
+ 1:   PC241 0.214551476 0.019468811 0.012217195
+ 2:   PC223 0.071457158 0.015334125 0.010407240
+ 3:   PC227 0.045475457 0.006431189 0.008144796
+ 4:     PC4 0.037163058 0.014965884 0.014027149
+ 5:   PC232 0.025701330 0.004303231 0.009049774
+ 6:    PC68 0.021551456 0.010714414 0.009954751
+ 7:   PC178 0.021155053 0.012056040 0.008144796
+ 8:   PC235 0.018595610 0.004344139 0.006787330
+ 9:    PC75 0.017885699 0.005398508 0.004524887
+10:   PC212 0.016536809 0.006656921 0.004524887
+11:   PC240 0.014481871 0.012146971 0.015384615
+12:    PC69 0.014401799 0.003008501 0.004524887
+13:    PC60 0.013013703 0.005535110 0.004524887
+14:   PC188 0.011812206 0.006417173 0.004072398
+15:     PC1 0.011104435 0.006423016 0.014027149
+16:   PC101 0.010220096 0.005564657 0.002714932
+17:   DEPTH 0.008892429 0.024239903 0.021266968
+18:     PC3 0.008833830 0.009669086 0.009502262
+19:   PC228 0.008436765 0.003011337 0.002714932
+20:   PC210 0.008436651 0.008865734 0.008597285
+21:   PC237 0.007703525 0.003687537 0.004524887
+22:   PC231 0.007582459 0.009028705 0.009954751
+23:   PC234 0.007504264 0.008834057 0.006334842
+24:    PC79 0.006929230 0.005176458 0.007239819
+25:   PC209 0.006313288 0.008878103 0.007239819
+    Feature        Gain       Cover   Frequency
+
+--------------------------------------

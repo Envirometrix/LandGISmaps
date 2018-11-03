@@ -1,0 +1,8 @@
+Number,Group,Name
+1,dtm_landform_usgs.ecotapestry.breaks.foothills_p_250m_s0..0cm_2014_v1.0.tif,usgs.ecotapestry.breaks.foothills
+2,dtm_landform_usgs.ecotapestry.flat.plains_p_250m_s0..0cm_2014_v1.0.tif,usgs.ecotapestry.flat.plains
+3,dtm_landform_usgs.ecotapestry.high.mountains.deep.canyons_p_250m_s0..0cm_2014_v1.0.tif,usgs.ecotapestry.high.mountains.deep.canyons
+4,dtm_landform_usgs.ecotapestry.hills_p_250m_s0..0cm_2014_v1.0.tif,usgs.ecotapestry.hills
+5,dtm_landform_usgs.ecotapestry.low.hills_p_250m_s0..0cm_2014_v1.0.tif,usgs.ecotapestry.low.hills
+6,dtm_landform_usgs.ecotapestry.low.mountains_p_250m_s0..0cm_2014_v1.0.tif,usgs.ecotapestry.low.mountains
+7,dtm_landform_usgs.ecotapestry.smooth.plains_p_250m_s0..0cm_2014_v1.0.tif,usgs.ecotapestry.smooth.plains

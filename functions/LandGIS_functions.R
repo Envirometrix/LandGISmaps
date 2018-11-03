@@ -1,6 +1,90 @@
 ## Functions for LandGIS (https://github.com/Envirometrix/LandGIS_data)
 ## tom.hengl@gmail.com
 
+test_classifier <- function(formulaString, df, sizes, nfold=3, mtry.seq, cpus=parallel::detectCores()){
+  require(caret)
+  ## test model accuracy:
+  message("Running caret::train...")
+  out.train <- caret::train(formulaString, data=df, method="ranger", 
+                    trControl = trainControl(method="repeatedcv", classProbs=TRUE, number=nfold, repeats=1),
+                    na.action = na.omit, num.trees=85, tuneGrid=expand.grid(mtry = mtry.seq, splitrule="gini", min.node.size=10))
+  message("DONE")
+  # run the RFE algorithm to select optimal subset of covariates:
+  message("Running RFE...")
+  require(parallel)
+  cl <- parallel::makeCluster(cpus)
+  doParallel::registerDoParallel(cl)
+  out.rfe <- caret::rfe(x=df[,all.vars(formulaString)[-1]], y=df[,all.vars(formulaString)[1]], 
+                    sizes=sizes, 
+                    rfeControl=caret::rfeControl(functions=rfFuncs, method="cv", number=nfold))
+  message("DONE")
+  parallel::stopCluster(cl)
+  return(list(train=out.train, rfe=out.rfe))
+}
+
+over_rds = function(x, y, out.dir="/data/LandGIS/overlay"){
+  out.rds = paste0(out.dir, "/", basename(x), ".rds")
+  if(!file.exists(out.rds)){
+    z = raster::extract(raster(x), y, na.rm=FALSE)
+    saveRDS.gz(z, out.rds)
+    gc(); gc()
+  }
+}
+
+dominant_class = function(i, tile.tbl, input.tif, tvar, out.dir="/data/tt/LandGIS/calc250m"){ # col.legend
+  i.n = which(tile.tbl$ID == strsplit(i, "T")[[1]][2])
+  out.tif <- paste0(out.dir, "/T", tile.tbl[i.n,"ID"], "/T", tile.tbl[i.n,"ID"], "_", tvar, ".tif")
+  if(any(!file.exists(out.tif))){
+    ## read all tifs:
+    m = readGDAL(fname=input.tif[1], offset=unlist(tile.tbl[i.n,c("offset.y","offset.x")]), region.dim=unlist(tile.tbl[i.n,c("region.dim.y","region.dim.x")]), output.dim=unlist(tile.tbl[i.n,c("region.dim.y","region.dim.x")]), silent = TRUE)
+    m = as(m, "SpatialPixelsDataFrame")
+    sel.p = !is.na(m$band1)
+    if(sum(sel.p)>0){
+      for(j in 2:length(input.tif)){
+        m@data[,j] = readGDAL(fname=input.tif[j], offset=unlist(tile.tbl[i.n,c("offset.y","offset.x")]), region.dim=unlist(tile.tbl[i.n,c("region.dim.y","region.dim.x")]), output.dim=unlist(tile.tbl[i.n,c("region.dim.y","region.dim.x")]), silent=TRUE)$band1[m@grid.index]
+      }
+      #tax = basename(input.tif)
+      ## most probable class:
+      #col.tbl <- plyr::join(data.frame(Group=tax, int=1:length(tax)), col.legend, type="left")
+      ## match most probable class
+      #m$cl <- col.tbl[match(apply(m@data,1,which.max), col.tbl$int),"Number"]
+      m$cl <- apply(m@data,1,which.max)
+      writeGDAL(m["cl"], out.tif, type="Byte", mvFlag=255, options="COMPRESS=DEFLATE")
+    }
+  }
+}
+
+pred_probs = function(i, gm, tile.tbl, col.legend, varn, out.dir="/data/tt/LandGIS/grid250m"){
+  i.n = which(tile.tbl$ID == strsplit(i, "T")[[1]][2])
+  out.rds <- paste0(out.dir, "/T", tile.tbl[i.n,"ID"], "/T", tile.tbl[i.n,"ID"], ".rds")
+  out.c <- paste0(out.dir, "/", i, "/", varn, "_C_", i, ".tif")
+  if(file.exists(out.rds) & !file.exists(out.c)){
+    m = readRDS(out.rds)
+    m = m[complete.cases(m@data[,gm$forest$independent.variable.names]),]
+    pred = predict(gm, m@data)
+    tax = attr(pred$predictions, "dimnames")[[2]]
+    rs <- rowSums(pred$predictions, na.rm=TRUE)
+    ## Write GeoTiffs:
+    if(sum(rs,na.rm=TRUE)>0&length(rs)>0){
+      ## predictions
+      m@data <- data.frame(pred$predictions)
+      x = m[1]
+      for(j in 1:ncol(m)){
+        out <- paste0(out.dir, "/", i, "/", varn, "_M_", tax[j], "_", i, ".tif")
+        x@data[,1] <- round(m@data[,j]*100)
+        writeGDAL(x[1], out, type="Byte", mvFlag=255, options="COMPRESS=DEFLATE")
+      }
+      ## most probable class:
+      col.tbl <- plyr::join(data.frame(Group=tax, int=1:length(tax)), col.legend, type="left")
+      ## match most probable class
+      m$cl <- col.tbl[match(apply(m@data,1,which.max), col.tbl$int),"Number"]  
+      writeGDAL(m["cl"], out.c, type="Int16", mvFlag=-32768, options="COMPRESS=DEFLATE")
+    }
+    gc()
+    gc()
+  }
+}
+
 hor2xyd = function(x, U="UHDICM", L="LHDICM", treshold.T=15){
   x$DEPTH <- x[,U] + (x[,L] - x[,U])/2
   x$THICK <- x[,L] - x[,U]
@@ -118,19 +202,16 @@ stack_mean_sd <- function(i, tile.tbl, tif.sel, var, out=c("mean","sd"), out.dir
   }
 }
 
-mosaick_ll <- function(varn, i, out.tif, in.path="/data/tt/OpenLandData/covs250m", out.path="/data/GEOG", ot="Int16", dstnodata=-32768, dominant=FALSE, resample="near", metadata=NULL, aggregate=FALSE, te, tr, only.metadata=TRUE){
+mosaick_ll <- function(varn=NULL, i, out.tif, in.path="/data/tt/OpenLandData/covs250m", out.path="/data/GEOG", ot="Int16", dstnodata=-32768, dominant=FALSE, resample="near", metadata=NULL, aggregate=FALSE, te, tr, only.metadata=TRUE, pattern=NULL){
   if(missing(out.tif)){
     out.tif <- paste0(out.path, "/", ifelse(varn=="BLD.f", "BLDFIE", ifelse(varn=="CECSUM", "CECSOL", varn)), "_", i, "_250m_ll.tif")
-  } else {
-    out.tif <- paste0(out.path, "/", out.tif)
   }
   if(!file.exists(out.tif)){
     if(missing(i)){
-      tmp.lst <- list.files(path=in.path, pattern=glob2rx(paste0(varn, "_T*.tif$")), full.names=TRUE, recursive=TRUE)
-      if(!varn=="ACDWRB_M_ss"){
-        n.s = length(strsplit(varn, "_")[[1]])+2
-        tmp.lst <- tmp.lst[sapply(tmp.lst, function(k){length(strsplit(basename(k), "_")[[1]])})<n.s]
+      if(is.null(pattern)){ 
+        pattern <- paste0(varn, "_T*.tif$") 
       }
+      tmp.lst <- list.files(path=in.path, pattern=glob2rx(pattern), full.names=TRUE, recursive=TRUE)
     } else {
       tmp.lst <- list.files(path=in.path, pattern=glob2rx(paste0(varn, "_", i, "_T*.tif$")), full.names=TRUE, recursive=TRUE)
     }
@@ -138,7 +219,7 @@ mosaick_ll <- function(varn, i, out.tif, in.path="/data/tt/OpenLandData/covs250m
     vrt.tmp <- tempfile(fileext = ".vrt")
     cat(tmp.lst, sep="\n", file=out.tmp)
     system(paste0('gdalbuildvrt -input_file_list ', out.tmp, ' ', vrt.tmp))
-    system(paste0('gdalwarp ', vrt.tmp, ' ', out.tif, ' -ot \"', paste(ot), '\" -dstnodata \"',  paste(dstnodata), '\" -r \"near\" -co \"COMPRESS=DEFLATE\" -co \"BIGTIFF=YES\" -wm 2000 -tr ', tr, ' ', tr, ' -te ', te))
+    system(paste0('gdalwarp ', vrt.tmp, ' ', out.tif, ' -ot \"', paste(ot), '\" -dstnodata \"',  paste(dstnodata), '\" -r \"near\" -co \"COMPRESS=DEFLATE\" -co \"BIGTIFF=YES\" -multi -wo \"NUM_THREADS=2\" -wm 2000 -tr ', tr, ' ', tr, ' -te ', te))
     system(paste0('gdaladdo ', out.tif, ' 2 4 8 16 32 64 128'))
     if(!is.null(metadata)){ 
       m = paste('-mo ', '\"', names(metadata), "=", as.vector(metadata), '\"', sep="", collapse = " ")
@@ -218,9 +299,10 @@ aggr_SG <- function(i, r, tr=1/120, tr.metric=1000, out.dir="/data/aggregated/1k
 }
 
 ## Overlay and extract values using a tiling system:
-extract.tiled <- function(x, tile.pol, path="/data/tt/OpenLandData/predicted250m", ID="ID", cpus=parallel::detectCores()){
-  x$row.index <- 1:nrow(x)
-  ov.c <- over(spTransform(x, CRS(proj4string(tile.pol))), tile.pol)
+extract.tiled <- function(obj, tile.pol, path="/data/tt/LandGIS/grid250m", ID="ID", cpus=parallel::detectCores()){
+  obj$row.index <- 1:nrow(obj)
+  ov.c <- over(spTransform(obj, CRS(proj4string(tile.pol))), tile.pol)
+  message("Done overlaying points and tiles.")
   ov.t <- which(!is.na(ov.c[,ID]))
   ## for each point get the tile name:
   ov.c <- data.frame(ID=ov.c[ov.t,ID], row.index=ov.t)
@@ -230,16 +312,21 @@ extract.tiled <- function(x, tile.pol, path="/data/tt/OpenLandData/predicted250m
   cov.c <- as.list(tiles)
   names(cov.c) <- tiles
   ## extract using snowfall
-  require(snowfall)
-  sfInit(parallel=TRUE, cpus=cpus)
-  sfExport("x", "path", "ov.c", "ID", "cov.c", ".extract.tile", "tile.pol")
-  sfLibrary(raster)
-  sfLibrary(rgdal)
-  ov.lst <- sfLapply(1:length(cov.c), function(i){try(.extract.tile(i, x=x, ID=ID, path=path, ov.c=ov.c, cov.c=cov.c, tile.pol=tile.pol), silent = TRUE)}) 
-  snowfall::sfStop()
+  #require(snowfall)
+  #sfInit(parallel=TRUE, cpus=cpus)
+  #sfExport(list=c("obj", "path", "ov.c", "ID", "cov.c", ".extract.tile", "tile.pol"))
+  #sfLibrary(raster)
+  #sfLibrary(rgdal)
+  #ov.lst <- sfClusterApplyLB(1:length(cov.c), function(i){try(.extract.tile(i, x=obj, ID=ID, path=path, ov.c=ov.c, cov.c=cov.c, tile.pol=tile.pol), silent = TRUE)}) 
+  #snowfall::sfStop()
+  cl <- parallel::makeCluster(cpus, type="FORK") 
+  parallel::clusterExport(cl, list("obj", "path", "ov.c", "ID", "cov.c", ".extract.tile", "tile.pol"), envir=environment())
+  ov.lst = parallel::clusterApplyLB(cl, 1:length(cov.c), function(i){try(.extract.tile(i, x=obj, ID=ID, path=path, ov.c=ov.c, cov.c=cov.c, tile.pol=tile.pol), silent = FALSE)}) 
+  parallel::stopCluster(cl)
   ## bind together:
+  message("Done running overlay in parallel.")
   out <- dplyr::bind_rows(ov.lst)
-  out <- plyr::join(x@data, as.data.frame(out), type="left", by="row.index")
+  out <- plyr::join(obj@data, as.data.frame(out), type="left", by="row.index")
   return(out)
 }
 
@@ -456,5 +543,279 @@ entropy_tile <- function(i, in.path, varn, levs){
     v <- unlist(alply(s@data, 1, .fun=function(x){entropy.empirical(unlist(x))})) 
     s$SSI <- round(v/entropy.empirical(rep(1/length(levs),length(levs)))*100)
     writeGDAL(s["SSI"], out.p, type="Byte", mvFlag=255, options="COMPRESS=DEFLATE")
+  }
+}
+
+## Filter landform / lithology maps using land mask:
+filter_landmask = function(i, tile.tbl, inf.tif, tif.land="/data/LandGIS/layers250m/lcv_landmask_esacci.lc.l4_c_250m_s0..0cm_2000..2015_v1.0.tif", tif.admin="/data/LandGIS/layers250m/lcv_admin0_fao.gaul_c_250m_s0..0cm_2015_v1.0.tif", out.dir="/data/tt/grid250m"){
+  i.n = which(tile.tbl$ID == strsplit(i, "T")[[1]][2])
+  out.tif <- paste0(out.dir, "/T", tile.tbl[i.n,"ID"], "/T", tile.tbl[i.n,"ID"], "_", basename(inf.tif))
+  if(any(!file.exists(out.tif))){
+    ## land mask:
+    m = readGDAL(fname=tif.land, offset=unlist(tile.tbl[i.n,c("offset.y","offset.x")]), region.dim=unlist(tile.tbl[i.n,c("region.dim.y","region.dim.x")]), output.dim=unlist(tile.tbl[i.n,c("region.dim.y","region.dim.x")]), silent = TRUE)
+    m$band2 = readGDAL(fname=tif.admin, offset=unlist(tile.tbl[i.n,c("offset.y","offset.x")]), region.dim=unlist(tile.tbl[i.n,c("region.dim.y","region.dim.x")]), output.dim=unlist(tile.tbl[i.n,c("region.dim.y","region.dim.x")]), silent = TRUE)$band1
+    m = as(m, "SpatialPixelsDataFrame")
+    sel.p = (m$band1==1|m$band1==3)
+    if(sum(sel.p)>0){
+      m = m[sel.p,]
+      for(j in 1:length(inf.tif)){
+        m@data[,j+2] = readGDAL(fname=inf.tif[j], offset=unlist(tile.tbl[i.n,c("offset.y","offset.x")]), region.dim=unlist(tile.tbl[i.n,c("region.dim.y","region.dim.x")]), output.dim=unlist(tile.tbl[i.n,c("region.dim.y","region.dim.x")]), silent=TRUE)$band1[m@grid.index]
+      }
+      names(m) = c("landcover", "admin", basename(inf.tif))
+      ## Systematic fixes (snow prob):
+      sn.sel = grep(pattern="ESA4", names(m))
+      for(p in sn.sel){ m@data[,p] = ifelse(m@data[,p]>100, NA, m@data[,p]) }
+      ## Missing values in latitudes >61
+      if(any(m@coords[,2]>61.4)){
+        m$S01ESA4.tif = ifelse(m@coords[,2]>61.4 & is.na(m$S01ESA4.tif), 100, m$S01ESA4.tif)
+        m$S12ESA4.tif = ifelse(m@coords[,2]>61.4 & is.na(m$S12ESA4.tif), 100, m$S12ESA4.tif)
+        m$S11ESA4.tif = ifelse(m@coords[,2]>61.4 & is.na(m$S11ESA4.tif), 100, m$S11ESA4.tif)
+      }
+      ## Filter northern latitudes MODFC:
+      m$C11MCF5.tif = ifelse(is.na(m$C11MCF5.tif), rowMeans(m@data[,c("C09MCF5.tif", "C10MCF5.tif", "C12MCF5.tif", "C01MCF5.tif")], na.rm=TRUE), m$C11MCF5.tif)
+      m$C12MCF5.tif = ifelse(is.na(m$C12MCF5.tif), rowMeans(m@data[,c("C10MCF5.tif", "C11MCF5.tif", "C01MCF5.tif", "C02MCF5.tif")], na.rm=TRUE), m$C12MCF5.tif)
+      m$C01MCF5.tif = ifelse(is.na(m$C01MCF5.tif), rowMeans(m@data[,c("C11MCF5.tif", "C12MCF5.tif", "C02MCF5.tif", "C03MCF5.tif")], na.rm=TRUE), m$C01MCF5.tif)
+      ## Filter Greenland
+      m$L07USG5.tif = ifelse(is.na(m$L07USG5.tif) & m$admin==99, 100, m$L07USG5.tif)
+      ## Filter Global Surface Water
+      m$OCCGSW7.tif = ifelse(m$OCCGSW7.tif>100 | is.na(m$OCCGSW7.tif), 0, m$OCCGSW7.tif)
+      ## Filter GIEMS
+      m$GIEMSD3.tif = ifelse(is.na(m$GIEMSD3.tif), 0, m$GIEMSD3.tif)
+      ## Filter indicators
+      us.sel = grep(pattern="USG5", names(m))
+      for(q in us.sel){ m@data[,q] = ifelse(is.na(m@data[,q]), 0, m@data[,q]) }
+      ## Fill-in the remaining missing values (can be tricky)
+      sel.mis = sapply(m@data[,-unlist(sapply(c("USG5", "admin", "landcover"), function(i){grep(i,names(m))}))], function(x){sum(is.na(x))>0})
+      if(sum(sel.mis)>0){
+        x = which(sel.mis)
+        for(k in 1:length(x)){
+          if(!is.factor(m@data[,attr(x, "names")[k]])){
+            if(length(grep(pattern="OCCGSW7", attr(x, "names")[k]))>0 | length(grep(pattern="ESA4", attr(x, "names")[k]))>0 | length(grep(pattern="USG5", attr(x, "names")[k]))>0 ){ 
+              repn = rep(0, nrow(m)) 
+            } else {
+              r = raster::raster(m[attr(x, "names")[k]])
+              ## first using proximity filter:
+              rf = raster::focal(r, w=matrix(1,15,15), fun=mean, pad=TRUE, na.rm=TRUE, NAonly=TRUE)
+              repn = as(rf, "SpatialGridDataFrame")@data[m@grid.index,1]
+              ## second using dominant value:
+              repn = ifelse(is.na(repn), quantile(repn, probs=.5, na.rm=TRUE), repn)
+            }
+            m@data[,attr(x, "names")[k]] = ifelse(is.na(m@data[,attr(x, "names")[k]]), repn, m@data[,attr(x, "names")[k]])
+          }
+        }
+      }
+      ## write back filtered Geotiff:
+      for(j in 1:length(out.tif)){
+        type <- ifelse(length(grep("MCF5", out.tif[j]))>0, "Int16", "Byte")
+        mvFlag <- ifelse(length(grep("MCF5", out.tif[j]))>0, "-32768", "255")
+        writeGDAL(m[j+2], out.tif[j], type=type, mvFlag=mvFlag, options=c("COMPRESS=DEFLATE"))
+      }
+    }
+  }
+}
+
+writeRDS.tile <- function(i, tif.sel, tile.tbl, tif.mask="/data/LandGIS/layers250m/lcv_landmask_esacci.lc.l4_c_250m_s0..0cm_2000..2015_v1.0.tif", out.dir="/data/tt/LandGIS/grid250m"){
+  i.n = which(tile.tbl$ID == strsplit(i, "T")[[1]][2])
+  out.rds <- paste0(out.dir, "/T", tile.tbl[i.n,"ID"], "/T", tile.tbl[i.n,"ID"], ".rds")
+  if(!file.exists(out.rds)){
+    m = readGDAL(fname=tif.mask, offset=unlist(tile.tbl[i.n,c("offset.y","offset.x")]), region.dim=unlist(tile.tbl[i.n,c("region.dim.y","region.dim.x")]), output.dim=unlist(tile.tbl[i.n,c("region.dim.y","region.dim.x")]), silent = TRUE)
+    m = as(m, "SpatialPixelsDataFrame")
+    sel.p = (m$band1==1|m$band1==3)
+    if(sum(sel.p)>0){
+      m = m[sel.p,]
+      for(j in 1:length(tif.sel)){
+        m@data[,j+1] = readGDAL(fname=tif.sel[j], offset=unlist(tile.tbl[i.n,c("offset.y","offset.x")]), region.dim=unlist(tile.tbl[i.n,c("region.dim.y","region.dim.x")]), output.dim=unlist(tile.tbl[i.n,c("region.dim.y","region.dim.x")]), silent=TRUE)$band1[m@grid.index]
+      }
+      names(m) = c("mask", basename(tif.sel))
+      ## Fill-in the remaining missing values (can be very tricky)
+      sel.mis = sapply(m@data[,-unlist(sapply(c("usgs.ecotapestry", "mask"), function(i){grep(i,names(m))}))], function(x){sum(is.na(x))>0})
+      if(sum(sel.mis)>0){
+        x = which(sel.mis)
+        for(k in 1:length(x)){
+          if(!is.factor(m@data[,attr(x, "names")[k]])){
+            if(length(grep(pattern="_p_", attr(x, "names")[k]))>0 ){ 
+              repn = rep(0, nrow(m)) 
+            } else {
+              r = raster::raster(m[attr(x, "names")[k]])
+              ## 1 using proximity filter:
+              rf = raster::focal(r, w=matrix(1,15,15), fun=mean, pad=TRUE, na.rm=TRUE, NAonly=TRUE)
+              repn = as(rf, "SpatialGridDataFrame")@data[m@grid.index,1]
+              ## 2 using dominant value:
+              repn = ifelse(is.na(repn), quantile(repn, probs=.5, na.rm=TRUE), repn)
+            }
+            m@data[,attr(x, "names")[k]] = ifelse(is.na(m@data[,attr(x, "names")[k]]), repn, m@data[,attr(x, "names")[k]])
+          }
+        }
+      }
+      saveRDS(m, out.rds)
+    }
+  }  
+}
+
+writeRDS.pc.tile <- function(i, tif.sel.pc, covs_prcomp, scaling.c, scaling.s, tile.tbl, tif.mask="/data/LandGIS/layers250m/lcv_landmask_esacci.lc.l4_c_250m_s0..0cm_2000..2015_v1.0.tif", out.dir="/data/tt/LandGIS/grid250m"){
+  i.n = which(tile.tbl$ID == strsplit(i, "T")[[1]][2])
+  out.rds <- paste0(out.dir, "/T", tile.tbl[i.n,"ID"], "/T", tile.tbl[i.n,"ID"], ".rds")
+  if(!file.exists(out.rds)){
+    m = readGDAL(fname=tif.mask, offset=unlist(tile.tbl[i.n,c("offset.y","offset.x")]), region.dim=unlist(tile.tbl[i.n,c("region.dim.y","region.dim.x")]), output.dim=unlist(tile.tbl[i.n,c("region.dim.y","region.dim.x")]), silent = TRUE)
+    m = as(m, "SpatialPixelsDataFrame")
+    sel.p = (m$band1==1|m$band1==3)
+    if(sum(sel.p)>0){
+      m = m[sel.p,]
+      for(j in 1:length(tif.sel.pc)){
+        m@data[,j+1] = readGDAL(fname=tif.sel.pc[j], offset=unlist(tile.tbl[i.n,c("offset.y","offset.x")]), region.dim=unlist(tile.tbl[i.n,c("region.dim.y","region.dim.x")]), output.dim=unlist(tile.tbl[i.n,c("region.dim.y","region.dim.x")]), silent=TRUE)$band1[m@grid.index]
+      }
+      names(m) = c("mask", basename(tif.sel.pc))
+      sel.mis = sapply(m@data, function(x){sum(is.na(x))>0})
+      if(sum(sel.mis)>0){
+        x = which(sel.mis)
+        for(k in 1:length(x)){
+          if(!is.factor(m@data[,attr(x, "names")[k]])){
+            if(length(grep(pattern="_p_", attr(x, "names")[k]))>0 ){ 
+              repn = rep(0, nrow(m)) 
+            } else {
+              r = raster::raster(m[attr(x, "names")[k]])
+              ## 1 using proximity filter:
+              rf = raster::focal(r, w=matrix(1,15,15), fun=mean, pad=TRUE, na.rm=TRUE, NAonly=TRUE)
+              repn = as(rf, "SpatialGridDataFrame")@data[m@grid.index,1]
+              ## 2 using dominant value:
+              repn = ifelse(is.na(repn), quantile(repn, probs=.5, na.rm=TRUE), repn)
+            }
+            m@data[,attr(x, "names")[k]] = ifelse(is.na(m@data[,attr(x, "names")[k]]), repn, m@data[,attr(x, "names")[k]])
+          }
+        }
+      }
+      ## Convert to PCs
+      v = base::scale(m@data[,basename(tif.sel.pc)], center = scaling.c, scale = scaling.s)
+      v[is.na(v)] <- 0
+      v <- as.data.frame(v)
+      v = predict(covs_prcomp, v[,basename(tif.sel.pc)])
+      m@data = cbind(m@data["mask"], round(as.data.frame(v), 1))
+      saveRDS(m, out.rds)
+      gc()
+    }
+  }  
+}
+
+decrease_RDS_size = function(i, tile.tbl, round.number=1, out.dir="/data/tt/LandGIS/grid250m"){
+  i.n <- which(tile.tbl$ID == strsplit(i, "T")[[1]][2])
+  out.rds <- paste0(out.dir, "/T", tile.tbl[i.n,"ID"], "/T", tile.tbl[i.n,"ID"], ".rds")
+  if(file.exists(out.rds)){
+    m <- readRDS(out.rds)
+    m@data <- cbind(m@data["mask"], round(m@data[,-1], round.number))
+    saveRDS(m, out.rds)
+    gc()
+  }
+}
+
+extract_bands = function(i, tile.tbl, band.numbers=1:3, out.dir="/data/tt/LandGIS/grid250m"){
+  i.n <- which(tile.tbl$ID == strsplit(i, "T")[[1]][2])
+  out.tif <- paste0(out.dir, "/T", tile.tbl[i.n,"ID"], "/covs_PC", band.numbers, "_T", tile.tbl[i.n,"ID"], ".tif")
+  out.rds <- paste0(out.dir, "/T", tile.tbl[i.n,"ID"], "/T", tile.tbl[i.n,"ID"], ".rds")
+  if(any(!file.exists(out.tif))){
+    m <- readRDS(out.rds)
+    for(j in 1:length(band.numbers)){
+      m@data[,"xx"] = m@data[band.numbers[j]+1] * 10
+      writeGDAL(m["xx"], out.tif[j], type="Int16", mvFlag=-32768, options="COMPRESS=DEFLATE")
+    }
+  }
+}
+
+check_RDS = function(i, tile.tbl, out.dir="/data/tt/LandGIS/grid250m"){
+  i.n <- which(tile.tbl$ID == strsplit(i, "T")[[1]][2])
+  out.rds <- paste0(out.dir, "/T", tile.tbl[i.n,"ID"], "/T", tile.tbl[i.n,"ID"], ".rds")
+  res <- try( m <- readRDS(out.rds) )
+  if(class(res) == "try-error"){
+   unlink(out.rds) 
+  } else {
+    if(!class(m)=="SpatialPixelsDataFrame"){
+      unlink(out.rds) 
+    }
+    stat.ov = lapply(m@data, function(i){data.frame(t(as.vector(summary(i))))})
+    stat.ov = dplyr::bind_rows(stat.ov)
+    names(stat.ov)[1:6] = c("min", "q1st", "median", "mean", "q3rd", "max")
+    stat.ov$layer_name = names(m)
+    write.csv(stat.ov, gsub(".rds",".csv",out.rds))
+  }
+}
+
+## 6 standard dephts
+split_predict_n <- function(i, gm, in.path="/data/tt/LandGIS/grid250m", out.path="/data/tt/LandGIS/grid250m", varn, sd=c(0, 10, 30, 60, 100, 200), method, multiplier=1, depths=TRUE, DEPTH.col="DEPTH", rds.file){
+  if(method=="ranger"){
+    rds.out = paste0(out.path, "/", i, "/", varn,"_", i, "_rf.rds")
+  }
+  if(method=="xgboost"){
+    rds.out = paste0(out.path, "/", i, "/", varn,"_", i, "_xgb.rds")
+  }
+  if(any(c(!file.exists(rds.out),file.size(rds.out)==0))){
+    if(missing(rds.file)){ rds.file = paste0(in.path, "/", i, "/", i, ".rds") }
+    if(file.exists(rds.file)&file.size(rds.file)>1e3){ 
+      gc(); gc()
+      m <- readRDS(rds.file)
+      if(depths==FALSE){
+        x <- matrix(data=NA, nrow=nrow(m), ncol=1)
+        if(method=="ranger"){
+          x[,1] <- round(predict(gm, m@data, na.action=na.pass)$predictions * multiplier)
+        } else {
+          x[,1] <- round(predict(gm, m@data, na.action=na.pass) * multiplier)
+        }
+      } else {
+        x <- matrix(data=NA, nrow=nrow(m), ncol=length(sd))
+        for(l in 1:length(sd)){
+          m@data[,DEPTH.col] = sd[l]
+          if(method=="ranger"){
+            v = predict(gm, m@data, na.action=na.pass)$predictions * multiplier
+          } else {
+            v = predict(gm, m@data[,gm$finalModel$feature_names], na.action=na.pass) * multiplier
+          }
+          x[,l] <- round(v)
+        }
+      }
+      saveRDS(x, file=rds.out)
+    }
+  }
+}
+
+## Sum up predictions
+sum_predict_ensemble <- function(i, in.path="/data/tt/LandGIS/grid250m", out.path="/data/tt/LandGIS/grid250m", varn, num_splits, zmin, zmax, gm1.w, gm2.w, type="Byte", mvFlag=255, depths=TRUE, rds.file){
+  if(depths==FALSE){
+    out.tif = paste0(out.path, "/", i, "/", varn, "_M_", i, ".tif")
+    test = !file.exists(out.tif)
+  } else {
+    test = !length(list.files(path = paste0(out.path, "/", i, "/"), glob2rx(paste0("^", varn, "_M_sl*_*.tif$"))))==6
+  }
+  if(test){
+    if(missing(rds.file)){ rds.file = paste0(in.path, "/", i, "/", i, ".rds") }
+    if(file.exists(rds.file)){
+      m <- readRDS(rds.file)
+      if(nrow(m@data)>1){
+        gb = paste0(out.path, "/", i, "/", varn,"_", i, "_xgb.rds")
+        rf.ls = paste0(out.path, "/", i, "/", varn,"_", i, "_rf.rds")
+        if(all(file.exists(c(rf.ls,gb)))){
+          ## import all predictions:
+          v1 <- readRDS(rf.ls)
+          v2 <- readRDS(gb)
+          ## weighted average:
+          m@data <- data.frame(Reduce("+", list(v1*gm1.w, v2*gm2.w)) / (gm1.w+gm2.w))
+          if(depths==FALSE){
+            ## Write GeoTiffs (2D case):
+            m@data[,1] <- ifelse(m@data[,1] < zmin, zmin, ifelse(m@data[,1] > zmax, zmax, m@data[,1]))
+            writeGDAL(m[1], out.tif, type=type, mvFlag=mvFlag, options="COMPRESS=DEFLATE")
+          } else {
+            ## Write GeoTiffs (per depth):
+            for(l in 1:ncol(m)){
+              out.tif = paste0(out.path, "/", i, "/", varn, "_M_sl", l, "_", i, ".tif")
+              m@data[,l] <- ifelse(m@data[,l] < zmin, zmin, ifelse(m@data[,l] > zmax, zmax, m@data[,l]))
+              writeGDAL(m[l], out.tif, type=type, mvFlag=mvFlag, options="COMPRESS=DEFLATE")
+              m@data[,"sd"] <- matrixStats::rowSds(cbind(v1[,l], v2[,l]), na.rm=TRUE)
+              writeGDAL(m["sd"], gsub("_M_", "_sd_", out.tif), type=type, mvFlag=mvFlag, options="COMPRESS=DEFLATE")
+            }
+          }
+          ## cleanup:
+          unlink(rf.ls) 
+          unlink(gb)
+          #gc(); gc()
+        }
+      }
+    }
   }
 }
