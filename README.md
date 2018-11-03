@@ -46,19 +46,19 @@ Accessing data
 
 Users can access LandGIS data via the four main channels:
 
-- **LandGIS App** at http://landgis.opengeohub.org,
-- **OpenGeoHub Geonode** installation at http://maps.opengeohub.org,
-- **LandGIS REST API services** at http://landgisapi.opengeohub.org,
+- **LandGIS App** at https://landgis.opengeohub.org,
+- **OpenGeoHub Geonode** installation at https://maps.opengeohub.org,
+- **LandGIS REST API services** at https://landgisapi.opengeohub.org,
 - [Zenodo.org](https://zenodo.org/search?page=1&size=20&q=LandGIS) to access a (version-controlled) back-up copy of data via a DOI,
 
-Data portal http://landgis.opengeohub.org is the landing page where users can browse maps, query values by
-location, and find out about most recent news and activities. Geonode at http://maps.opengeohub.org 
+Data portal https://landgis.opengeohub.org is the landing page where users can browse maps, query values by
+location, and find out about most recent news and activities. Geonode at https://maps.opengeohub.org 
 is a generic layer repository for accessing layers installed via OpenGeoHub Geoserver. 
 It allow users i.e. producers of layers to edit and update metadata and descriptions, 
 create map views, learn how to use WCS, WMS or similar. A copy of the raw data can be obtained 
 via zenodo.org or similar public data repositories.
 
-LandGIS data services REST API (http://landgisapi.opengeohub.org) contains scripts and functions 
+LandGIS data services REST API (https://landgisapi.opengeohub.org) contains scripts and functions 
 that allow users to and developers to fetch raw data (point queries) in some simple textual 
 formats such as GeoJSON, csv, compressed GeoTIFFs or similar. The following query would fetch monthly precipitations at a location X, Y: 
 
