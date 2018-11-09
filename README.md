@@ -383,6 +383,8 @@ dtm_landform_usgs.ecotapestry_c_250m_s0..0cm_2017..2018_v0.1.tif
 :open_file_folder: [Download layer](https://doi.org/10.5281/zenodo.1447198)
 :information_source: [Classes](/tables/dtm_landform_usgs.ecotapestry_c_250m_s0..0cm_2014_v1.0.tif.csv)
 
+[USGS Global Ecophysiography map](https://rmgsc.cr.usgs.gov/ecosystems/global.shtml) is property of the U.S. Department of the Interior, U.S. Geological Survey.
+
 1.6 Density of Earthquakes for the last 100 years
 
 Based on the USGS global earthquakes database (http://earthquake.usgs.gov/earthquakes/). We considered only earthquakes with magntiude 4 or higher (405,885 quakes in total). 
@@ -397,15 +399,17 @@ dtm_earthquakes.dens_earthquake.usgs_m_1km_s0..0cm_1910..2017_v1.0
 Land cover, land use and administrative data
 --------------------------------------------
 
-2.1 Land cover images for 1985 to 2015
+2.1 Land cover images for 1992 to 2015
 
-Based on the European Space Agency (ESA) Climate Change Initiative (ESACCI-LC). 
+Based on the [European Space Agency (ESA) Climate Change Initiative (ESACCI-LC)](https://www.esa-landcover-cci.org/?q=node/175). 
 
 ```
 lcv_land.cover_esacci.lc.l4_c_250m_s0..0cm_*_v1.0.tif
 ```
 :open_file_folder: [Download layer](http://maps.elie.ucl.ac.be/CCI/viewer/download.php)
 :information_source: [Classes](/tables/lcv_land.cover_esacci.lc.l4_c.csv)
+
+[CCI Land cover time series](https://www.esa-landcover-cci.org/) © ESA Climate Change Initiative — Land Cover led by UCLouvain (2017).
 
 2.2 Surface water occurrence probability 
 
@@ -446,6 +450,7 @@ lcv_landuse.pasture_hyde_p_10km_s0..0cm_*_v3.2.tif
 ```
 :open_file_folder: [Download layer](http://themasites.pbl.nl/tridion/en/themasites/hyde/download/index-2.html)
 
+[Historic land use maps HYDE data set](http://themasites.pbl.nl/tridion/en/themasites/hyde/) is property of Netherlands Environmental Assessment Agency (PBL).
 
 Vegetation indices
 ------------------
@@ -506,6 +511,7 @@ ldg_forest.cover_esacci.ifl_c_250m_s0..0cm_*_v0.1.tif
 ```
 :open_file_folder: [Download layer](https://doi.org/10.5281/zenodo.1476464)
 
+The [intact forest landscapes](http://www.intactforests.org) is a project supported by University of Maryland, Greenpeace, World Resources Institute, and Transparent World. 
 
 Climatic layers
 ---------------
@@ -514,6 +520,7 @@ Climatic layers are available only at resolution of 1 km or 500 m.
 Long-term Land Surface Temperature was derived from the [MODIS MOD11A2](https://lpdaac.usgs.gov/dataset_discovery/modis/modis_products_table/mod11a2_v006)
 Land Surface Temperature (LST) images 2000–2017 using the data.table package and quantile function in R. 
 See [processing steps](https://github.com/Envirometrix/LandGISmaps/tree/master/input_layers/MOD11A2).
+[MODIS land products](https://modis-land.gsfc.nasa.gov/) are property of Land Processes Distributed Active Archive Center, U.S. Geological Survey. 
 
 5.1 Long-term Land Surface Temperature daytime monthly mean
 
@@ -551,9 +558,11 @@ clm_precipitation_imerge.*_m_1km_s0..0cm_2014..2018_v1.0.tif
 ```
 :open_file_folder: [Download layer](https://doi.org/10.5281/zenodo.1435912)
 
+[Global Precipitation Measurement Integrated Multi-satellitE Retrievals for GPM (IMERG)](https://pmm.nasa.gov/) is provided by NASA Goddard Space Flight Center.
+
 5.5 Snow probability monthly
 
-Based on the CCI Land Cover dataset / MOD10A2 product at 500 m for the period 2000–2012.
+Based on the CCI Land Cover dataset / [MOD10A2 product](https://nsidc.org/data/mod10a2) at 500 m for the period 2000–2012.
 
 ```
 clm_snow.prob_esacci.*_p_1km_s0..0cm_2000..2016_v1.0.tif
@@ -606,7 +615,7 @@ are provided for each soil property / depth. For example:
 sol_bulkdens.fineearth_usda.4a1h_md_250m_b30..30cm_1950..2017_v0.1.tif
 ```
 
-contains standard deviation of the ensemble models (independent prediction variance). This provides an estimate of the prediction error and currently can not be used to derive prediction intervals.
+contains standard deviation of the ensemble models (independent prediction variance). This provides only an estimate of the prediction error and currently can not be used to derive prediction intervals.
 
 Data import, overlay and model fitting to produce predictions of soil properties and classes are 
 explained in detail [here](https://github.com/Envirometrix/LandGISmaps/tree/master/soil). Principles of Predictive Soil Mapping are outlined in detail in the [PSMwR book](https://envirometrix.github.io/PredictiveSoilMapping/).
