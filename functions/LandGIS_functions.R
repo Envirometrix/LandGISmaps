@@ -1,6 +1,11 @@
 ## Functions for LandGIS (https://github.com/Envirometrix/LandGIS_data)
 ## tom.hengl@gmail.com
 
+unregister <- function() {
+  env <- foreach:::.foreachGlobals
+  rm(list=ls(name=env), pos=env)
+}
+
 test_classifier <- function(formulaString, df, sizes, nfold=3, mtry.seq, cpus=parallel::detectCores()){
   require(caret)
   ## test model accuracy:
@@ -204,7 +209,7 @@ stack_mean_sd <- function(i, tile.tbl, tif.sel, var, out=c("mean","sd"), out.dir
 
 mosaick_ll <- function(varn=NULL, i, out.tif, in.path="/data/tt/OpenLandData/covs250m", out.path="/data/GEOG", ot="Int16", dstnodata=-32768, dominant=FALSE, resample="near", metadata=NULL, aggregate=FALSE, te, tr, only.metadata=TRUE, pattern=NULL){
   if(missing(out.tif)){
-    out.tif <- paste0(out.path, "/", ifelse(varn=="BLD.f", "BLDFIE", ifelse(varn=="CECSUM", "CECSOL", varn)), "_", i, "_250m_ll.tif")
+    out.tif <- paste0(out.path, "/", varn, "_", i, "_250m_ll.tif")
   }
   if(!file.exists(out.tif)){
     if(missing(i)){
@@ -215,27 +220,29 @@ mosaick_ll <- function(varn=NULL, i, out.tif, in.path="/data/tt/OpenLandData/cov
     } else {
       tmp.lst <- list.files(path=in.path, pattern=glob2rx(paste0(varn, "_", i, "_T*.tif$")), full.names=TRUE, recursive=TRUE)
     }
-    out.tmp <- tempfile(fileext = ".txt")
-    vrt.tmp <- tempfile(fileext = ".vrt")
-    cat(tmp.lst, sep="\n", file=out.tmp)
-    system(paste0('gdalbuildvrt -input_file_list ', out.tmp, ' ', vrt.tmp))
-    system(paste0('gdalwarp ', vrt.tmp, ' ', out.tif, ' -ot \"', paste(ot), '\" -dstnodata \"',  paste(dstnodata), '\" -r \"near\" -co \"COMPRESS=DEFLATE\" -co \"BIGTIFF=YES\" -multi -wo \"NUM_THREADS=2\" -wm 2000 -tr ', tr, ' ', tr, ' -te ', te))
-    system(paste0('gdaladdo ', out.tif, ' 2 4 8 16 32 64 128'))
-    if(!is.null(metadata)){ 
-      m = paste('-mo ', '\"', names(metadata), "=", as.vector(metadata), '\"', sep="", collapse = " ")
-      command = paste0('gdal_edit.py ', m,' ', out.tif)
-      system (command, intern=TRUE)
-    }
-    ## 1 km resolution:
-    if(aggregate==TRUE){
-      if(dominant==TRUE){
-        system(paste0('gdal_translate -of GTiff -r \"near\" -tr ', 1/120, ' ', 1/120, ' ', vrt.tmp, ' ', gsub("250m", "1km", gsub("_250m_ll.tif", "_1km_ll.tif", out.tif)), ' -ot \"', paste(ot), '\" -a_nodata \"', paste(dstnodata), '\" -co \"COMPRESS=DEFLATE\" -co \"BIGTIFF=YES\"'))
-      } else {
-        system(paste0('gdal_translate -of GTiff -r \"average\" -tr ', 1/120, ' ', 1/120, ' ', vrt.tmp, ' ', gsub("250m", "1km", gsub("_250m_ll.tif", "_1km_ll.tif", out.tif)), ' -ot \"', paste(ot), '\" -a_nodata \"', paste(dstnodata), '\" -co \"COMPRESS=DEFLATE\" -co \"BIGTIFF=YES\"'))
+    if(length(tmp.lst)>1){
+      out.tmp <- tempfile(fileext = ".txt")
+      vrt.tmp <- tempfile(fileext = ".vrt")
+      cat(tmp.lst, sep="\n", file=out.tmp)
+      system(paste0('gdalbuildvrt -input_file_list ', out.tmp, ' ', vrt.tmp))
+      system(paste0('gdalwarp ', vrt.tmp, ' ', out.tif, ' -ot \"', paste(ot), '\" -dstnodata \"',  paste(dstnodata), '\" -r \"near\" -co \"COMPRESS=DEFLATE\" -co \"BIGTIFF=YES\" -multi -wo \"NUM_THREADS=2\" -wm 2000 -tr ', tr, ' ', tr, ' -te ', te))
+      system(paste0('gdaladdo ', out.tif, ' 2 4 8 16 32 64 128'))
+      if(!is.null(metadata)){ 
+        m = paste('-mo ', '\"', names(metadata), "=", as.vector(metadata), '\"', sep="", collapse = " ")
+        command = paste0('gdal_edit.py ', m,' ', out.tif)
+        system (command, intern=TRUE)
       }
+      ## 1 km resolution:
+      if(aggregate==TRUE){
+        if(dominant==TRUE){
+          system(paste0('gdal_translate -of GTiff -r \"near\" -tr ', 1/120, ' ', 1/120, ' ', vrt.tmp, ' ', gsub("250m", "1km", gsub("_250m_ll.tif", "_1km_ll.tif", out.tif)), ' -ot \"', paste(ot), '\" -a_nodata \"', paste(dstnodata), '\" -co \"COMPRESS=DEFLATE\" -co \"BIGTIFF=YES\"'))
+        } else {
+          system(paste0('gdal_translate -of GTiff -r \"average\" -tr ', 1/120, ' ', 1/120, ' ', vrt.tmp, ' ', gsub("250m", "1km", gsub("_250m_ll.tif", "_1km_ll.tif", out.tif)), ' -ot \"', paste(ot), '\" -a_nodata \"', paste(dstnodata), '\" -co \"COMPRESS=DEFLATE\" -co \"BIGTIFF=YES\"'))
+        }
+      }
+      unlink(vrt.tmp)
+      unlink(out.tmp)
     }
-    unlink(vrt.tmp)
-    unlink(out.tmp)
   }
   if(!is.null(metadata)&only.metadata==TRUE){ 
     m = paste('-mo ', '\"', names(metadata), "=", as.vector(metadata), '\"', sep="", collapse = " ")
@@ -312,17 +319,17 @@ extract.tiled <- function(obj, tile.pol, path="/data/tt/LandGIS/grid250m", ID="I
   cov.c <- as.list(tiles)
   names(cov.c) <- tiles
   ## extract using snowfall
-  #require(snowfall)
-  #sfInit(parallel=TRUE, cpus=cpus)
-  #sfExport(list=c("obj", "path", "ov.c", "ID", "cov.c", ".extract.tile", "tile.pol"))
-  #sfLibrary(raster)
-  #sfLibrary(rgdal)
-  #ov.lst <- sfClusterApplyLB(1:length(cov.c), function(i){try(.extract.tile(i, x=obj, ID=ID, path=path, ov.c=ov.c, cov.c=cov.c, tile.pol=tile.pol), silent = TRUE)}) 
-  #snowfall::sfStop()
-  cl <- parallel::makeCluster(cpus, type="FORK") 
-  parallel::clusterExport(cl, list("obj", "path", "ov.c", "ID", "cov.c", ".extract.tile", "tile.pol"), envir=environment())
-  ov.lst = parallel::clusterApplyLB(cl, 1:length(cov.c), function(i){try(.extract.tile(i, x=obj, ID=ID, path=path, ov.c=ov.c, cov.c=cov.c, tile.pol=tile.pol), silent = FALSE)}) 
-  parallel::stopCluster(cl)
+  require(snowfall)
+  sfInit(parallel=TRUE, cpus=cpus)
+  sfExport(list=c("obj", "path", "ov.c", "ID", "cov.c", ".extract.tile", "tile.pol"))
+  sfLibrary(raster)
+  sfLibrary(rgdal)
+  ov.lst <- sfClusterApplyLB(1:length(cov.c), function(i){try(.extract.tile(i, x=obj, ID=ID, path=path, ov.c=ov.c, cov.c=cov.c, tile.pol=tile.pol), silent = TRUE)}) 
+  snowfall::sfStop()
+  #cl <- parallel::makeCluster(cpus, type="FORK") 
+  #parallel::clusterExport(cl, list("obj", "path", "ov.c", "ID", "cov.c", ".extract.tile", "tile.pol"), envir=environment())
+  #ov.lst = parallel::clusterApplyLB(cl, 1:length(cov.c), function(i){try(.extract.tile(i, x=obj, ID=ID, path=path, ov.c=ov.c, cov.c=cov.c, tile.pol=tile.pol), silent = FALSE)}) 
+  #parallel::stopCluster(cl)
   ## bind together:
   message("Done running overlay in parallel.")
   out <- dplyr::bind_rows(ov.lst)
@@ -595,7 +602,7 @@ filter_landmask = function(i, tile.tbl, inf.tif, tif.land="/data/LandGIS/layers2
             } else {
               r = raster::raster(m[attr(x, "names")[k]])
               ## first using proximity filter:
-              rf = raster::focal(r, w=matrix(1,15,15), fun=mean, pad=TRUE, na.rm=TRUE, NAonly=TRUE)
+              rf = raster::focal(r, w=matrix(1,15,15), fun=mean, na.rm=TRUE, NAonly=TRUE)
               repn = as(rf, "SpatialGridDataFrame")@data[m@grid.index,1]
               ## second using dominant value:
               repn = ifelse(is.na(repn), quantile(repn, probs=.5, na.rm=TRUE), repn)
@@ -738,7 +745,7 @@ check_RDS = function(i, tile.tbl, out.dir="/data/tt/LandGIS/grid250m"){
   }
 }
 
-## 6 standard dephts
+## predict 6 standard dephts ----
 split_predict_n <- function(i, gm, in.path="/data/tt/LandGIS/grid250m", out.path="/data/tt/LandGIS/grid250m", varn, sd=c(0, 10, 30, 60, 100, 200), method, multiplier=1, depths=TRUE, DEPTH.col="DEPTH", rds.file){
   if(method=="ranger"){
     rds.out = paste0(out.path, "/", i, "/", varn,"_", i, "_rf.rds")
@@ -746,10 +753,13 @@ split_predict_n <- function(i, gm, in.path="/data/tt/LandGIS/grid250m", out.path
   if(method=="xgboost"){
     rds.out = paste0(out.path, "/", i, "/", varn,"_", i, "_xgb.rds")
   }
+  if(method=="liquidSVM"){
+    rds.out = paste0(out.path, "/", i, "/", varn,"_", i, "_svm.rds")
+  }
   if(any(c(!file.exists(rds.out),file.size(rds.out)==0))){
     if(missing(rds.file)){ rds.file = paste0(in.path, "/", i, "/", i, ".rds") }
     if(file.exists(rds.file)&file.size(rds.file)>1e3){ 
-      gc(); gc()
+      #gc(); gc()
       m <- readRDS(rds.file)
       if(depths==FALSE){
         x <- matrix(data=NA, nrow=nrow(m), ncol=1)
@@ -763,9 +773,16 @@ split_predict_n <- function(i, gm, in.path="/data/tt/LandGIS/grid250m", out.path
         for(l in 1:length(sd)){
           m@data[,DEPTH.col] = sd[l]
           if(method=="ranger"){
+            require(ranger)
             v = predict(gm, m@data, na.action=na.pass)$predictions * multiplier
-          } else {
+          }
+          if(method=="xgboost"){
+            require(xgboost)
             v = predict(gm, m@data[,gm$finalModel$feature_names], na.action=na.pass) * multiplier
+          }
+          if(method=="liquidSVM"){
+            require(liquidSVM)
+            v = predict(gm, m@data, T=1) * multiplier
           }
           x[,l] <- round(v)
         }
@@ -776,7 +793,7 @@ split_predict_n <- function(i, gm, in.path="/data/tt/LandGIS/grid250m", out.path
 }
 
 ## Sum up predictions
-sum_predict_ensemble <- function(i, in.path="/data/tt/LandGIS/grid250m", out.path="/data/tt/LandGIS/grid250m", varn, num_splits, zmin, zmax, gm1.w, gm2.w, type="Byte", mvFlag=255, depths=TRUE, rds.file){
+sum_predict_ensemble <- function(i, in.path="/data/tt/LandGIS/grid250m", out.path="/data/tt/LandGIS/grid250m", varn, zmin, zmax, gm1.w, gm2.w, type="Byte", mvFlag=255, depths=TRUE, rds.file){
   if(depths==FALSE){
     out.tif = paste0(out.path, "/", i, "/", varn, "_M_", i, ".tif")
     test = !file.exists(out.tif)
@@ -790,11 +807,15 @@ sum_predict_ensemble <- function(i, in.path="/data/tt/LandGIS/grid250m", out.pat
       if(nrow(m@data)>1){
         gb = paste0(out.path, "/", i, "/", varn,"_", i, "_xgb.rds")
         rf.ls = paste0(out.path, "/", i, "/", varn,"_", i, "_rf.rds")
+        #svm = paste0(out.path, "/", i, "/", varn,"_", i, "_svm.rds")
+        #if(all(file.exists(c(rf.ls,gb,svm)))){
         if(all(file.exists(c(rf.ls,gb)))){
           ## import all predictions:
           v1 <- readRDS(rf.ls)
           v2 <- readRDS(gb)
+          #v3 <- readRDS(svm)
           ## weighted average:
+          #m@data <- data.frame(Reduce("+", list(v1*gm1.w, v2*gm2.w, v3*gm3.w)) / (gm1.w+gm2.w+gm3.w))
           m@data <- data.frame(Reduce("+", list(v1*gm1.w, v2*gm2.w)) / (gm1.w+gm2.w))
           if(depths==FALSE){
             ## Write GeoTiffs (2D case):
@@ -806,6 +827,7 @@ sum_predict_ensemble <- function(i, in.path="/data/tt/LandGIS/grid250m", out.pat
               out.tif = paste0(out.path, "/", i, "/", varn, "_M_sl", l, "_", i, ".tif")
               m@data[,l] <- ifelse(m@data[,l] < zmin, zmin, ifelse(m@data[,l] > zmax, zmax, m@data[,l]))
               writeGDAL(m[l], out.tif, type=type, mvFlag=mvFlag, options="COMPRESS=DEFLATE")
+              #m@data[,"sd"] <- matrixStats::rowSds(cbind(v1[,l], v2[,l], v3[,l]), na.rm=TRUE) ## use weighted sd?
               m@data[,"sd"] <- matrixStats::rowSds(cbind(v1[,l], v2[,l]), na.rm=TRUE)
               writeGDAL(m["sd"], gsub("_M_", "_sd_", out.tif), type=type, mvFlag=mvFlag, options="COMPRESS=DEFLATE")
             }
@@ -813,9 +835,128 @@ sum_predict_ensemble <- function(i, in.path="/data/tt/LandGIS/grid250m", out.pat
           ## cleanup:
           unlink(rf.ls) 
           unlink(gb)
+          #unlink(svm)
           #gc(); gc()
         }
       }
+    }
+  }
+}
+
+## textures ----
+normalize_texture <- function(in.lst, n.lst=c("sand_tot_psa","silt_tot_psa","clay_tot_psa")){
+  tex.lst <- sapply(n.lst, function(x){gsub(pattern="sand_tot_psa", replacement=x, in.lst)})
+  if(file.exists(tex.lst[1])){
+    x = readGDAL(tex.lst[1])
+    x@data[,2] <- readGDAL(tex.lst[2])$band1
+    x@data[,3] <- readGDAL(tex.lst[3])$band1
+    names(x) <- n.lst
+    sums <- rowSums(x@data)
+    xr = range(sums, na.rm=TRUE)
+    if(xr[1]<99|xr[2]>101){
+      x$silt_tot_psa <- round(x$silt_tot_psa / sums * 100, 0)
+      x$sand_tot_psa <- round(x$sand_tot_psa / sums * 100, 0)
+      x$clay_tot_psa <- round(x$clay_tot_psa / sums * 100, 0)
+      unlink(tex.lst[1]); unlink(tex.lst[2]); unlink(tex.lst[3])
+      writeGDAL(x[n.lst[1]], tex.lst[1], "GTiFF", mvFlag=255, type="Byte", options="COMPRESS=DEFLATE")
+      writeGDAL(x[n.lst[2]], tex.lst[2], "GTiFF", mvFlag=255, type="Byte", options="COMPRESS=DEFLATE")
+      writeGDAL(x[n.lst[3]], tex.lst[3], "GTiFF", mvFlag=255, type="Byte", options="COMPRESS=DEFLATE")
+      gc()
+    }
+  }
+}
+
+## soil carbon ----
+## machine learning misses training points in deserts hence artifacts
+## function to remove artifacts based on land cover / FAPAR map
+normalize_carbon = function(i, tile.tbl, in.tif, tif.mask="/data/LandGIS/layers250m/lcv_landmask_esacci.lc.l4_c_250m_s0..0cm_2000..2015_v1.0.tif", lcv.tif="/data/LandGIS/layers250m/lcv_land.cover_esacci.lc.l4_c_250m_s0..0cm_2000_v1.0.tif", fap.tif="/data/LandGIS/layers250m/veg_fapar_proba.v.annual_d_250m_s0..0cm_2014..2017_v1.0.tif", out.path="/data/tt/LandGIS/grid250m"){
+  i.n = which(tile.tbl$ID == strsplit(i, "T")[[1]][2])
+  out.tif = paste0(out.path, "/", i, "/oc.f_M_sl", 1:6, "_", i,".tif")
+  m = readGDAL(fname=tif.mask, offset=unlist(tile.tbl[i.n,c("offset.y","offset.x")]), region.dim=unlist(tile.tbl[i.n,c("region.dim.y","region.dim.x")]), output.dim=unlist(tile.tbl[i.n,c("region.dim.y","region.dim.x")]), silent = TRUE)
+  m$band2 = readGDAL(fname=fap.tif, offset=unlist(tile.tbl[i.n,c("offset.y","offset.x")]), region.dim=unlist(tile.tbl[i.n,c("region.dim.y","region.dim.x")]), output.dim=unlist(tile.tbl[i.n,c("region.dim.y","region.dim.x")]), silent = TRUE)$band1
+  m$band3 = readGDAL(fname=lcv.tif, offset=unlist(tile.tbl[i.n,c("offset.y","offset.x")]), region.dim=unlist(tile.tbl[i.n,c("region.dim.y","region.dim.x")]), output.dim=unlist(tile.tbl[i.n,c("region.dim.y","region.dim.x")]), silent = TRUE)$band1
+  sel.p <- m$band1==1|m$band1==3
+  ## land cover class bare land or FAPAR close to 0
+  sel.rm <- (m$band3 == 200 | m$band3 == 220 | (m$band2 < 3 & !is.na(m$band2))) & sel.p
+  if(sum(sel.rm)>0){
+    for(j in 1:length(out.tif)){
+      m@data[,paste0("mask",j)] = readGDAL(fname=in.tif[j], offset=unlist(tile.tbl[i.n,c("offset.y","offset.x")]), region.dim=unlist(tile.tbl[i.n,c("region.dim.y","region.dim.x")]), output.dim=unlist(tile.tbl[i.n,c("region.dim.y","region.dim.x")]), silent = TRUE)$band1
+      m@data[which(sel.rm),paste0("mask",j)] <- 0 
+      m@data[which(!sel.p),paste0("mask",j)] <- NA
+      writeGDAL(m[paste0("mask",j)], out.tif[j], type="Byte", mvFlag=255, options="COMPRESS=DEFLATE")
+    }
+    gc()
+  }
+}
+
+## texture class ----
+frac2TEX <- function(x){
+  require(soiltexture)
+  TT <- soiltexture::TT.points.in.classes(tri.data=x, class.sys="USDA.TT", PiC.type="t", tri.sum.tst=FALSE)
+  ## filter transitional classes:
+  no.TT <- sapply(TT, function(x){length(strsplit(x, ",")[[1]])})
+  sel.TT <- which(no.TT > 1)
+  TEX <- TT
+  ## replace transitional classes with a random class:
+  for(i in sel.TT){
+    TEX[[i]] <- trim(strsplit(TT[i], ",")[[1]][ceiling(runif(1)*no.TT[i])])
+  }
+  return(TEX)
+}
+
+predictTEXclass <- function(i, in.path, depths=1:6, tex.c){
+  for(d in depths){
+    outn <- paste0(in.path, "/", i, "/texture.class_M_sl", d, "_", i, ".tif")
+    if(!file.exists(outn)){
+      tex.tif.lst <- paste0(in.path, "/", i, "/", c("sand_tot_psa","silt_tot_psa","clay_tot_psa"), "_M_sl", d, "_", i, ".tif")
+      if(all(file.exists(tex.tif.lst))){
+        try( x <- rgdal::readGDAL(tex.tif.lst[1]) )
+        if(!class(.Last.value)[1]=="try-error"){
+          if(sum(!is.na(x$band1))>4){
+            x$band2 <- rgdal::readGDAL(tex.tif.lst[2])$band1
+            x$band3 <- rgdal::readGDAL(tex.tif.lst[3])$band1
+            try( x0 <- as(x, "SpatialPixelsDataFrame"), silent=TRUE )
+            if(!class(.Last.value)[1]=="try-error"&exists("x0")){
+              names(x0@data) <- c("SAND", "SILT","CLAY")
+              sel <- complete.cases(x0@data)
+              if(length(sel)>2){
+                x0 <- x0[sel,]
+                tex.i <- frac2TEX(x0@data)  
+                tex.i <- as.vector(unlist(tex.i))
+                ## convert to integers:
+                x0$TEX_M <- plyr::join(data.frame(class.n=tex.i), tex.c, type="left", match="first")$class.i
+                rgdal::writeGDAL(x0["TEX_M"], outn, mvFlag=255, type="Byte", options="COMPRESS=DEFLATE")
+              }
+            } else {
+              return(i)
+            }
+          }
+        } else {
+          return(i)
+        }
+      }
+    }
+  }
+}
+
+## organic carbon stock ----
+## (six standard layers) corrected for depth to bedrock:
+carbon_stock <- function(i, n.lst=c("oc.f","db_od","wpg2"), ORCDRC.sd=20, BLD.sd=100, CRFVOL.sd=5, sdepth = c(0, 10, 30, 60, 100, 200), out.path="/data/tt/LandGIS/grid250m"){
+  ## five standard layers 0-10, 10-30, 30-60, 60-100, 100-200:
+  out.all <- paste0(out.path, "/", i, "/ocs_M_sh", 1:5, "_", i,".tif")
+  if(any(!file.exists(out.all))){
+    for(d in 1:5){
+      Utif.lst <- paste0(out.path, "/", i, "/", n.lst, "_M_sl", d, "_", i, ".tif")
+      Ltif.lst <- paste0(out.path, "/", i, "/", n.lst, "_M_sl", d+1, "_", i, ".tif")
+      s <- raster::stack(c(Utif.lst,Ltif.lst))
+      s <- as(as(s, "SpatialGridDataFrame"), "SpatialPixelsDataFrame")
+      s$ORCDRC <- rowMeans(s@data[,grep("oc.f", names(s))], na.rm = TRUE)/2
+      s$BLD <- rowMeans(s@data[,grep("db_od", names(s))], na.rm = TRUE)
+      s$CRFVOL <- rowMeans(s@data[,grep("wpg2", names(s))], na.rm = TRUE)
+      ## Predict organic carbon stock (in kg / m2):
+      s$v <- round(as.vector(GSIF::OCSKGM(ORCDRC=s$ORCDRC*10, BLD=s$BLD*10, CRFVOL=s$CRFVOL, HSIZE=(sdepth[d+1]-sdepth[d]), ORCDRC.sd=ORCDRC.sd, BLD.sd=BLD.sd, CRFVOL.sd=CRFVOL.sd)))
+      writeGDAL(s["v"], out.all[d], type="Int16", mvFlag=-32768, options="COMPRESS=DEFLATE")
+      gc()
     }
   }
 }

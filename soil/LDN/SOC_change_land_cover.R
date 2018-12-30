@@ -21,7 +21,7 @@ library(RSAGA)
 library(data.table)
 library(compiler)
 
-source('/data/LDN/functions_SOC_change.R')
+source('functions_SOC_change.R')
 source("/data/LandGIS/R/saveRDS_functions.R")
 
 ## Resample all maps to the same grid ----
@@ -33,15 +33,15 @@ lcA.leg = read.csv("ESA_landcover_legend.csv")
 ## Soil carbon stock map ----
 ## 0-30 cm only
 sumf <- function(x){calc(x, sum, na.rm=TRUE)}
-s1 = raster::stack(paste0("/data/LandGIS/predicted250m/", c("sol_organic.carbon.stock_msa.kgm2_m_250m_b0..10cm_1950..2017_v0.1.tif", "sol_organic.carbon.stock_msa.kgm2_m_250m_b10..30cm_1950..2017_v0.1.tif")))
+s1 = raster::stack(paste0("/data/LandGIS/predicted250m/", c("sol_organic.carbon.stock_msa.kgm2_m_250m_b0..10cm_1950..2017_v0.2.tif", "sol_organic.carbon.stock_msa.kgm2_m_250m_b10..30cm_1950..2017_v0.2.tif")))
 beginCluster()
-r <- clusterR(s1, fun=sumf, filename="/data/LandGIS/predicted250m/sol_organic.carbon.stock_msa.kgm2_m_250m_b0..30cm_1950..2017_v0.1.tif", datatype="INT2S", options=c("COMPRESS=DEFLATE"), NAflag=-32767, overwrite=TRUE)
+r <- clusterR(s1, fun=sumf, filename="/data/LandGIS/predicted250m/sol_organic.carbon.stock_msa.kgm2_m_250m_b0..30cm_1950..2017_v0.2.tif", datatype="INT2S", options=c("COMPRESS=DEFLATE"), NAflag=-32767, overwrite=TRUE)
 endCluster()
-#system('gdal_translate /data/LandGIS/predicted250m/sol_organic.carbon.stock_msa.kgm2_m_250m_b0..10cm_1950..2017_v0.1.tif /data/tmp/sol_organic.carbon.stock_msa.kgm2_m_250m_b0..10cm_1950..2017_v0.1.sdat -of \"SAGA\" -ot \"Int16\"')
-#system('gdal_translate /data/LandGIS/predicted250m/sol_organic.carbon.stock_msa.kgm2_m_250m_b10..30cm_1950..2017_v0.1.tif /data/tmp/sol_organic.carbon.stock_msa.kgm2_m_250m_b10..30cm_1950..2017_v0.1.sdat -of \"SAGA\" -ot \"Int16\"')
-#system('gdal_translate /data/tmp/sol_organic.carbon.stock_msa.kgm2_m_250m_b0..30cm_1950..2017_v0.1.sdat /data/LandGIS/predicted250m/sol_organic.carbon.stock_msa.kgm2_m_250m_b0..30cm_1950..2017_v0.1.tif -ot \"Int16\" -co \"COMPRESS=DEFLATE\"')
+#system('gdal_translate /data/LandGIS/predicted250m/sol_organic.carbon.stock_msa.kgm2_m_250m_b0..10cm_1950..2017_v0.2.tif /data/tmp/sol_organic.carbon.stock_msa.kgm2_m_250m_b0..10cm_1950..2017_v0.2.sdat -of \"SAGA\" -ot \"Int16\"')
+#system('gdal_translate /data/LandGIS/predicted250m/sol_organic.carbon.stock_msa.kgm2_m_250m_b10..30cm_1950..2017_v0.2.tif /data/tmp/sol_organic.carbon.stock_msa.kgm2_m_250m_b10..30cm_1950..2017_v0.2.sdat -of \"SAGA\" -ot \"Int16\"')
+#system('gdal_translate /data/tmp/sol_organic.carbon.stock_msa.kgm2_m_250m_b0..30cm_1950..2017_v0.2.sdat /data/LandGIS/predicted250m/sol_organic.carbon.stock_msa.kgm2_m_250m_b0..30cm_1950..2017_v0.2.tif -ot \"Int16\" -co \"COMPRESS=DEFLATE\"')
 ## resample to LC grid
-system(paste0('gdalwarp /data/tmp/sol_organic.carbon.stock_msa.kgm2_m_250m_b0..30cm_1950..2017_v0.1.sdat OCSTHA_M_30cm_300m_ll.tif -multi -wo \"NUM_THREADS=32\" -co \"BIGTIFF=YES\" -wm 2000 -co \"COMPRESS=DEFLATE\" -overwrite -tr ', res(r.lc)[1],' ', res(r.lc)[2], ' -ot \"Int16\" -te ', paste(as.vector(extent(r.lc))[c(1,3,2,4)], collapse=" ")))
+system(paste0('gdalwarp /data/tmp/sol_organic.carbon.stock_msa.kgm2_m_250m_b0..30cm_1950..2017_v0.2.sdat OCSTHA_M_30cm_300m_ll.tif -multi -wo \"NUM_THREADS=32\" -co \"BIGTIFF=YES\" -wm 2000 -co \"COMPRESS=DEFLATE\" -overwrite -tr ', res(r.lc)[1],' ', res(r.lc)[2], ' -ot \"Int16\" -te ', paste(as.vector(extent(r.lc))[c(1,3,2,4)], collapse=" ")))
 ## Bioclimatic zones (http://ecoexplorer.arcgis.com/eco/maps.html):
 #system(paste0('gdalwarp EF_Bio_Des_250m.tif EF_Bio_Des_300m.tif -ot \"Byte\" -multi -co \"BIGTIFF=YES\" -wm 2000 -co \"COMPRESS=DEFLATE\" -tr ', res(r.lc)[1],' ', res(r.lc)[2], ' -r \"near\" -te ', paste(as.vector(extent(r.lc))[c(1,3,2,4)], collapse=" ")))
 
@@ -117,7 +117,7 @@ te = as.vector(extent(r))[c(1,3,2,4)]
 cellsize = res(r)[1]
 
 vars = c("dOCS", paste0("OCS", 2001:2015))
-filename.lst = paste0("/mnt/DATA/LandGIS/predicted250m/", c("ldg_organic.carbon.stock_msa.kgm2_td_250m_b0..30cm_2001..2015_v0.1.tif", paste0("sol_organic.carbon.stock_msa.kgm2_m_250m_b0..30cm_", 2001:2015, "_v0.1.tif")))
+filename.lst = paste0("/data/LandGIS/predicted250m/", c("ldg_organic.carbon.stock_msa.kgm2_td_250m_b0..30cm_2001..2015_v0.2.tif", paste0("sol_organic.carbon.stock_msa.kgm2_m_250m_b0..30cm_", 2001:2015, "_v0.1.tif")))
 sfInit(parallel=TRUE, cpus=25)
 sfExport("make_mosaic", "vars", "filename.lst", "cellsize", "te")
 t <- sfLapply(1:length(vars), function(x){ make_mosaic(vars[x], filename=filename.lst[x], tr=cellsize, te=paste(te, collapse = " "))  })

@@ -9,6 +9,7 @@ LandGIS — Open Land Data service
 -   [Accessing data](#accessing-data)
 -   [The file naming convention](#the-file-naming-convention)
 -   [The land mask](#the-land-mask)
+-   [Cloud-optimized GeoTIFF](#cloud-optimized-geotiff)
 -   [Relief and geology](#relief-and-geology)
 -   [Land cover, land use and administrative data](#land-cover-land-use-and-administrative-data)
 -   [Vegetation indices](#vegetation-indices)
@@ -513,6 +514,17 @@ ldg_forest.cover_esacci.ifl_c_250m_s0..0cm_*_v0.1.tif
 
 The [intact forest landscapes](http://www.intactforests.org) is a project supported by University of Maryland, Greenpeace, World Resources Institute, and Transparent World. 
 
+4.3 Landscape degradation degree
+
+Based on the comparison of [land cover changes in a 9 km search radius (Nowosad et al., 2018)](https://doi.org/10.1016/j.jag.2018.09.013).
+
+```
+ldg_landscape.degradation_sil.9km_c_250m_s0..0cm_1992..2015_v1.0.tif
+```
+:open_file_folder: [Download layer](https://doi.org/10.5281/zenodo.2360376)
+
+Produced by Space Informatics Lab, University of Cincinnati.
+
 Climatic layers
 ---------------
 
@@ -580,7 +592,7 @@ The most important sources of training points include:
 - [USDA National Cooperative Soil Characterization Database](https://ncsslabdatamart.sc.egov.usda.gov/),
 - [Africa Soil Profiles Database](https://www.isric.org/projects/africa-soil-profiles-database-afsp),
 - [LUCAS Soil database](https://doi.org/10.1111/ejss.12499),
-- [Repositório Brasileiro Livre para Dados Abertos do Solo (FEBR)](https://github.com/febr-team),
+- [Repositório Brasileiro Livre para Dados Abertos do Solo (FEBR)](http://coral.ufsm.br/febr/),
 - [Sistema de Información de Suelos de Latinoamérica y el Caribe (SISLAC)](http://www.fao.org/soils-portal/soil-survey/soil-maps-and-databases/soil-profile-databases/en/),
 - [The Northern Circumpolar Soil Carbon Database (NCSCD)](http://bolin.su.se/data/ncscd/),
 - [Dokuchaev Soil Science Institute / Ministry of Agriculture of Russia (soil profiles for Russia)](http://egrpr.esoil.ru/),
@@ -588,11 +600,14 @@ The most important sources of training points include:
 
 Additional points, if not available through these databases, have been also imported from the [WoSIS Soil Profile Database](https://www.isric.org/explore/wosis) (Batjes et al. 2017).
 
+Predictions are based on 3D Machine Learning ensemble models estimated using the SuperLearner and caret packages.
+Modeling steps and sample outputs are described in detail in [Hengl and MacMillan (2019)](http://soilmapper.org).
+
 For soil variable names we use consistently the National Cooperative Soil Characterization Database 
 column names and codes. For example:
 
 ```
-sol_bulkdens.fineearth_usda.4a1h_m_250m_b30..30cm_1950..2017_v0.1.tif
+sol_bulkdens.fineearth_usda.4a1h_m_250m_b30..30cm_1950..2017_v0.2.tif
 ```
 
 refers to the `db_od` column in the database and `4a1h` laboratory method (bulk density oven-dry), as described in:
@@ -612,7 +627,7 @@ Standard prediction errors (eithers as the prediction variance of prediction con
 are provided for each soil property / depth. For example:
 
 ```
-sol_bulkdens.fineearth_usda.4a1h_md_250m_b30..30cm_1950..2017_v0.1.tif
+sol_bulkdens.fineearth_usda.4a1h_md_250m_b30..30cm_1950..2017_v0.2.tif
 ```
 
 contains standard deviation of the ensemble models (independent prediction variance). This provides only an estimate of the prediction error and currently can not be used to derive prediction intervals.
@@ -667,7 +682,7 @@ More detailed soil class maps of USA can be found in [Ramcharan et al. (2018)](h
 Predicted distribution of the soils with argillic (clay accumulation) subsoil horizon.
 
 ```
-sol_grtgroup_usda.soiltax.hapludalfs_p_250m_s0..0cm_1950..2017_v0.1.tif
+sol_grtgroup_usda.soiltax.hapludalfs_p_250m_s0..0cm_1950..2017_v0.2.tif
 ```
 :open_file_folder: [Download layer](https://doi.org/10.5281/zenodo.1476844)
 
@@ -677,7 +692,7 @@ Based on machine learning predictions from global compilation of soil profiles a
 To convert to % divide by 2.
 
 ```
-sol_organic.carbon_usda.6a1c_m_250m_b*..*cm_1950..2017_v0.1.tif
+sol_organic.carbon_usda.6a1c_m_250m_b*..*cm_1950..2017_v0.2.tif
 ```
 :open_file_folder: [Download layer](https://doi.org/10.5281/zenodo.1475457)
 
@@ -686,7 +701,7 @@ sol_organic.carbon_usda.6a1c_m_250m_b*..*cm_1950..2017_v0.1.tif
 Based on machine learning predictions from global compilation of soil profiles and samples.
 
 ```
-sol_bulkdens.fineearth_usda.4a1h_m_250m_b*..*cm_1950..2017_v0.1.tif
+sol_bulkdens.fineearth_usda.4a1h_m_250m_b*..*cm_1950..2017_v0.2.tif
 ```
 :open_file_folder: [Download layer](https://doi.org/10.5281/zenodo.1475970)
 
@@ -695,7 +710,7 @@ sol_bulkdens.fineearth_usda.4a1h_m_250m_b*..*cm_1950..2017_v0.1.tif
 Based on machine learning predictions from global compilation of soil profiles and samples.
 
 ```
-sol_clay.wfraction_usda.3a1a1a_m_250m_b*..*cm_1950..2017_v0.1.tif
+sol_clay.wfraction_usda.3a1a1a_m_250m_b*..*cm_1950..2017_v0.2.tif
 ```
 :open_file_folder: [Download layer](https://doi.org/10.5281/zenodo.1476854)
 
@@ -704,7 +719,7 @@ sol_clay.wfraction_usda.3a1a1a_m_250m_b*..*cm_1950..2017_v0.1.tif
 Based on machine learning predictions from global compilation of soil profiles and samples.
 
 ```
-sol_sand.wfraction_usda.3a1a1a_m_250m_b*..*cm_1950..2017_v0.1.tif
+sol_sand.wfraction_usda.3a1a1a_m_250m_b*..*cm_1950..2017_v0.2.tif
 ```
 :open_file_folder: [Download layer](https://doi.org/10.5281/zenodo.1476851)
 
@@ -713,17 +728,17 @@ sol_sand.wfraction_usda.3a1a1a_m_250m_b*..*cm_1950..2017_v0.1.tif
 Derived using the predicted clay, silt and sand content images and the [soiltexture](https://cran.r-project.org/package=soiltexture) R package.
 
 ```
-sol_texture.class_usda.tt_m_250m_b*..*cm_1950..2017_v0.1.tif
+sol_texture.class_usda.tt_m_250m_b*..*cm_1950..2017_v0.2.tif
 ```
 :open_file_folder: [Download layer](https://doi.org/10.5281/zenodo.1475451)
-:information_source: [Classes](/tables/sol_texture.class_usda.tt_m_250m_b_1950..2017_v0.1.tif.csv)
+:information_source: [Classes](/tables/sol_texture.class_usda.tt_m_250m_b_1950..2017_v0.2.tif.csv)
 
 6.8 Soil pH in H2O
 
 Based on machine learning predictions from global compilation of soil profiles and samples.
 
 ```
-sol_ph.h2o_usda.4c1a2a_m_250m_b*..*cm_1950..2017_v0.1.tif
+sol_ph.h2o_usda.4c1a2a_m_250m_b*..*cm_1950..2017_v0.2.tif
 ```
 :open_file_folder: [Download layer](https://doi.org/10.5281/zenodo.1475459)
 
@@ -776,48 +791,56 @@ References
        A representation of rock properties at the Earth surface*. 
        Geochemistry, Geophysics, Geosystems, 13(12). https://doi.org/10.1029/2012GC004370
 
-4.  Hengl T., Walsh M.G., Sanderman J., Wheeler I., Harrison S.P., Prentice I.C. (2018) 
+4.  Hengl, T., MacMillan, R.A., (2019). [*Predictive Soil Mapping with R*](http://soilmapper.org). 
+       OpenGeoHub foundation, Wageningen, the Netherlands, 340 pages. ISBN: 978-0-359-30635-0.
+
+5.  Hengl T., Walsh M.G., Sanderman J., Wheeler I., Harrison S.P., Prentice I.C. (2018) 
       *Global mapping of potential natural vegetation: an assessment of machine learning algorithms for estimating land potential*. PeerJ 6:e5457 
       https://doi.org/10.7717/peerj.5457
 
-5.  Hengl, T., de Jesus, J.M., Heuvelink, G.B., Gonzalez, M.R.,
+6.  Hengl, T., de Jesus, J.M., Heuvelink, G.B., Gonzalez, M.R.,
       Kilibarda, M., Blagotić, A., Shangguan, W., Wright, M.N., Geng,
       X., Bauer-Marschallinger, B. and Guevara, M.A., (2017).
       *SoilGrids250m: Global gridded soil information based on machine learning*. 
       PLoS one, 12(2), p.e0169748. https://doi.org/10.1371/journal.pone.0169748 
 
-6.  Karger, D. N., Conrad, O., Böhner, J., Kawohl, T., Kreft, H., Soria-Auza, R. W., ... & Kessler, M. (2017). 
+7.  Karger, D. N., Conrad, O., Böhner, J., Kawohl, T., Kreft, H., Soria-Auza, R. W., ... & Kessler, M. (2017). 
       *Climatologies at high resolution for the earth’s land surface areas*. 
       Scientific data, 4, 170122. https://doi.org/10.1038/sdata.2017.122
 
-7.  Klein Goldewijk, K., Beusen, A., Doelman, J., Stehfest, E. (2017). 
+8.  Klein Goldewijk, K., Beusen, A., Doelman, J., Stehfest, E. (2017). 
       *Anthropogenic land-use estimates for the holocene - hyde 3.2*. 
       Earth Syst. Sci. Data, 9, 927-953. https://doi.org/10.5194/essd-9-927-2017 
 
-8.  Bauer-Marschallinger, B., Sabel, D., & Wagner, W. (2014). 
+9.  Bauer-Marschallinger, B., Sabel, D., & Wagner, W. (2014). 
       *Optimisation of global grids for high-resolution remote sensing data*. 
       Computers & Geosciences, 72, 84-93. https://doi.org/10.1016/j.cageo.2014.07.005
 
-9.  Pekel, J. F., Cottam, A., Gorelick, N., & Belward, A. S. (2016). 
+10.  Pekel, J. F., Cottam, A., Gorelick, N., & Belward, A. S. (2016). 
       *High-resolution mapping of global surface water and its long-term changes*. 
      Nature, 540(7633), 418. http://dx.doi.org/10.1038/nature20584
 
-10.  Potapov, P., Hansen, M. C., Laestadius, L., Turubanova, S., Yaroshenko, A. et al. (2013). 
+11.  Potapov, P., Hansen, M. C., Laestadius, L., Turubanova, S., Yaroshenko, A. et al. (2013). 
       *The last frontiers of wilderness: Tracking loss of intact forest landscapes from 2000 to 2013*. 
       Science Advances, 2017; 3:e1600821 https://dx.doi.org/10.1126/sciadv.1600821
 
-11.  Ramcharan, A., Hengl, T., Nauman, T., Brungard, C., Waltman, S., Wills, S., & Thompson, J. (2018). 
+12.  Ramcharan, A., Hengl, T., Nauman, T., Brungard, C., Waltman, S., Wills, S., & Thompson, J. (2018). 
        *Soil Property and Class Maps of the Conterminous United States at 100-Meter Spatial Resolution*. 
        Soil Science Society of America Journal, 82(1), 186-201. https://dl.sciencesocieties.org/publications/sssaj/abstracts/82/1/186
 
-12.  Sanderman, J., Hengl, T., Fiske, G., (2017). *The soil carbon debt of 12,000 years of human land use*. 
+13.  Samuel-Rosa, A., Dalmolin, R., Gubiani, P., Teixeira, W., Olivieira, S. D. M., Viana, J., ... & Ottoni, M. (2018). 
+       *Bringing together brazilian soil scientists to share soil data*. In Embrapa Solos-Artigo em anais de congresso (ALICE). 
+       In: REUNIÃO SUL BRASILEIRA DE CIÊNCIA DO SOLO, 12., 2018, Xanxerê. Solo, água, ar e biodiversidade: 
+       componentes essenciais para a vida: anais. Chapecó: Argos, 2018.
+
+14.  Sanderman, J., Hengl, T., Fiske, G., (2017). *The soil carbon debt of 12,000 years of human land use*. 
        PNAS, https://dx.doi.org/10.1073/pnas.1706103114
 
-13.  Sayre, R., Dangermond, J., Frye, C., Vaughan, R., Aniello, P., Breyer, S., ... & Wright, D. (2014). 
+15.  Sayre, R., Dangermond, J., Frye, C., Vaughan, R., Aniello, P., Breyer, S., ... & Wright, D. (2014). 
        *A new map of global ecological land units—an ecophysiographic stratification approach*.
        Washington, DC: Association of American Geographers. 
 
-14.  Yamazaki, D., Ikeshima, D., Tawatari, R., Yamaguchi, T., O'Loughlin,
+16.  Yamazaki, D., Ikeshima, D., Tawatari, R., Yamaguchi, T., O'Loughlin,
       F., Neal, J.C., Sampson, C.C., Kanae, S. and Bates, P.D., (2017) 
       *A high‐accuracy map of global terrain elevations*. Geophysical
       Research Letters, 44(11), pp.5844-5853. https://doi.org/10.1002/2017GL072874

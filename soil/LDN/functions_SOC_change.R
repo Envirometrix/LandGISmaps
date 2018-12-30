@@ -345,7 +345,7 @@ prop_FC <- function(x, CF.tbl){
 myFuncCmp <- compiler::cmpfun(prop_FC)
 
 ## Derive SOC change using multitemporal land cover ----
-SOC_change_ts = function(i, tile.tbl, CF.tbl, cl.leg, out.path="/data/tt/LDN/tiled", ts.grid="/data/LDN/ESA_landcover/ESACCI-LC-L4-LCCS-Map-300m-P1Y-1992_2015-v2.0.7.tif", clim="/data/LDN/EF_Bio_Des_300m.tif", soc="/data/LDN/OCSTHA_M_30cm_300m_ll.tif", years=2000:2015, tot.years=1992:2015){
+SOC_change_ts = function(i, tile.tbl, CF.tbl, cl.leg, out.path="/data/tt/LDN/tiled", ts.grid="./ESA_landcover/ESACCI-LC-L4-LCCS-Map-300m-P1Y-1992_2015-v2.0.7.tif", clim="EF_Bio_Des_300m.tif", soc="OCSTHA_M_30cm_300m_ll.tif", years=2000:2015, tot.years=1992:2015){
   outD.tif = paste0(out.path, "/T", tile.tbl[i,"ID"], "/dOCS_", tile.tbl[i,"ID"], ".tif")
   if(!file.exists(outD.tif)){
     m = readGDAL(fname=ts.grid, offset=unlist(tile.tbl[i,c("offset.y","offset.x")]), region.dim=unlist(tile.tbl[i,c("region.dim.y","region.dim.x")]), output.dim=unlist(tile.tbl[i,c("region.dim.y","region.dim.x")]), silent = TRUE)
@@ -407,7 +407,7 @@ summary_OCS_tiles <- function(i, tileS.tbl, admin="./300m_sin/GAUL_ADMIN1_landma
 }
 
 ## historic forest ----
-historic_forest = function(i, tileL.tbl, ifl.tifs=paste0("/data/LDN/250m_ll/", c("ifl_2000.sdat", "ifl_2013.sdat", "ifl_2016.sdat")), lcv.tifs=paste0("/data/LandGIS/layers250m/", paste0("lcv_land.cover_esacci.lc.l4_c_250m_s0..0cm_", c(1995, 2000, 2005, 2010, 2013, 2015), "_v1.0.tif")), ofc.tif="/data/LDN/250m_ll/ofc_gen.sdat", tif.land="/data/LandGIS/layers250m/lcv_landmask_esacci.lc.l4_c_250m_s0..0cm_2000..2015_v1.0.tif", out.dir="/data/tt/LandGIS/calc250m", tree.sel=c(50, 60, 61, 62, 70, 71, 72, 80, 81, 82, 90, 100, 160)){
+historic_forest = function(i, tileL.tbl, ifl.tifs=paste0("./250m_ll/", c("ifl_2000.sdat", "ifl_2013.sdat", "ifl_2016.sdat")), lcv.tifs=paste0("/data/LandGIS/layers250m/", paste0("lcv_land.cover_esacci.lc.l4_c_250m_s0..0cm_", c(1995, 2000, 2005, 2010, 2013, 2015), "_v1.0.tif")), ofc.tif="/data/LDN/250m_ll/ofc_gen.sdat", tif.land="/data/LandGIS/layers250m/lcv_landmask_esacci.lc.l4_c_250m_s0..0cm_2000..2015_v1.0.tif", out.dir="/data/tt/LandGIS/calc250m", tree.sel=c(50, 60, 61, 62, 70, 71, 72, 80, 81, 82, 90, 100, 160)){
   i.n = which(tileL.tbl$ID == strsplit(i, "T")[[1]][2])
   out.file = paste0(out.dir, "/T", tileL.tbl[i.n,"ID"], "/", paste0("FC", c(0,1995,2000,2005,2010,2013,2016)),"_T", tileL.tbl[i.n,"ID"], ".tif")
   if(!all(file.exists(out.file))){
