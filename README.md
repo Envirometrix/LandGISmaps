@@ -630,7 +630,7 @@ are provided for each soil property / depth. For example:
 sol_bulkdens.fineearth_usda.4a1h_md_250m_b30..30cm_1950..2017_v0.2.tif
 ```
 
-contains standard deviation of the ensemble models (independent prediction variance). This provides only an estimate of the prediction error and currently can not be used to derive prediction intervals.
+contains standard deviation of the ensemble models (independent prediction variance). The `md` provides **only an estimate of the prediction error** and currently can not be used to derive prediction intervals.
 
 Data import, overlay and model fitting to produce predictions of soil properties and classes are 
 explained in detail [here](https://github.com/Envirometrix/LandGISmaps/tree/master/soil). Principles of Predictive Soil Mapping are outlined in detail in the [PSMwR book](https://envirometrix.github.io/PredictiveSoilMapping/).
@@ -677,9 +677,12 @@ USDA great groups are explained in detail in:
 
 More detailed soil class maps of USA can be found in [Ramcharan et al. (2018)](https://dl.sciencesocieties.org/publications/sssaj/abstracts/82/1/186).
 
+![LandGIS workflow soil types](https://raw.githubusercontent.com/Envirometrix/PredictiveSoilMapping/master/figures/Fig_soil_type_workflow.svg.png)
+*Image: Example of a general workflow of how LandGIS can be used to recommend optimal soil use practices at farm scale based on accurately predicting the soil type (in this case USDA great group).*
+
 6.2 Hapludalfs
 
-Predicted distribution of the soils with argillic (clay accumulation) subsoil horizon.
+Example of predicted distribution of the “hapludalfs”: soils with argillic (clay accumulation) subsoil horizon.
 
 ```
 sol_grtgroup_usda.soiltax.hapludalfs_p_250m_s0..0cm_1950..2017_v0.2.tif
