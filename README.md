@@ -95,7 +95,7 @@ clm_precipitation_imerge.sep_m_1km_s0..0cm_2014..2018_v0.1.tif	197
 to determine a soil type (USDA great group) use:
 
 ```
-http://landgisapi.opengeohub.org/point?lat=30.2543&lon=-95.5811&coll=predicted250m&regex=sol_grtgroup_usda.soiltax_c_250m_s0..0cm_1950..2017_v0.1.tif
+https://landgisapi.opengeohub.org/query/point?lat=30.2543&lon=-95.5811&coll=predicted250m&regex=sol_grtgroup_usda.soiltax_c_250m_b0..0cm_1950..2017_v0.1.tif
 ```
 
 which gives e.g.:
@@ -227,7 +227,7 @@ complete list):
 5.  Spatial support (usually horizontal block) in m or km e.g. “250m”
 
 6.  Depth reference or depth interval e.g. “b0..10cm” below ("b"),
-      above ("a") ground or ("s"), or at surface,
+      above ("a") ground or at surface ("s"),
 
 7.  Time reference (begin end time) in standard date format e.g.
       “01.Feb.2018”,
@@ -243,7 +243,7 @@ sol_ph.h2o_usda.4c1a2a_md_250m_s30..30cm_1950..2017_v0.1.tif
 
 Note from this example the following:
 
--   No mathematical symbols are used e.g. "-" or "/",
+-   No mathematical symbols are used e.g. "+" or "/",
 
 -   no capitalized letters are used,
 
