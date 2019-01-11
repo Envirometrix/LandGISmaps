@@ -1,4 +1,5 @@
 ## Fit spatial prediction models and make global soil maps soil properties
+## Attribution: some functions and code is based on https://github.com/ISRICWorldSoil/SoilGrids250m 
 ## tom.hengl@gmail.com
 
 library(rgdal)

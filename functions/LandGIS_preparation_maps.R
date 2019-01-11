@@ -1,4 +1,5 @@
 ## Preparation of layers LandGIS
+## Attribution: some functions and code is based on https://github.com/ISRICWorldSoil/SoilGrids250m 
 ## tom.hengl@gmail.com
 
 load(".RData")

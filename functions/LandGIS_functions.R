@@ -1,4 +1,5 @@
 ## Functions for LandGIS (https://github.com/Envirometrix/LandGIS_data)
+## Attribution: some functions and code is based on https://github.com/ISRICWorldSoil/SoilGrids250m 
 ## tom.hengl@gmail.com
 
 unregister <- function() {
