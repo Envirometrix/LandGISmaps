@@ -6,8 +6,8 @@ LandGIS — Open Land Data service
 |-------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
 
 -   [General specifications](#landgis)
--   [Accessing data using REST and WCS](#accessing-data)
--   [Accessing data from Zenodo](#zenodo)
+-   [Accessing data](#accessing-data)
+-   [Accessing data from Zenodo](#accessing-data-from-zenodo)
 -   [The file naming convention](#the-file-naming-convention)
 -   [The land mask](#the-land-mask)
 -   [Cloud-optimized GeoTIFF](#cloud-optimized-geotiff)
@@ -34,7 +34,7 @@ LandGIS is a Web-GIS system providing access to spatial layers and services cove
 Access to spatial layers is possible via interactive visualizations and/or Open Source software solutions. 
 Read more about this project [here](http://opengeohub.org/about-landgis/).
 
-![LandGIS](https://github.com/Envirometrix/LandGISweb/blob/master/stylesheet/LandGIS_Logo-full-550x250-02.png)
+![LandGIS](img/LandGIS_Logo-full-550x250-02.png)
 
 The LandGIS layers, if not specified otherwise, are licensed under the 
 [Creative Commons Attribution-ShareAlike 4.0 International license](https://creativecommons.org/licenses/by-sa/4.0/legalcode) (CC BY-SA) and/or
@@ -57,8 +57,8 @@ It allow users i.e. producers of layers to edit and update metadata and descript
 create map views, learn how to use WCS, WMS or similar. A copy of the raw data can be obtained 
 via zenodo.org or similar public data repositories.
 
-Accessing data using REST and WCS
----------------------------------
+Accessing data
+--------------
 
 LandGIS data services **REST API** (https://landgisapi.opengeohub.org) contains scripts and functions 
 that allow users to and developers to fetch raw data (point queries) in some simple textual 
