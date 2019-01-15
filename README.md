@@ -6,7 +6,8 @@ LandGIS — Open Land Data service
 |-------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
 
 -   [General specifications](#landgis)
--   [Accessing data](#accessing-data)
+-   [Accessing data using REST and WCS](#accessing-data)
+-   [Accessing data from Zenodo](#zenodo)
 -   [The file naming convention](#the-file-naming-convention)
 -   [The land mask](#the-land-mask)
 -   [Cloud-optimized GeoTIFF](#cloud-optimized-geotiff)
@@ -42,14 +43,15 @@ or build upon, the LandGIS data without restrictions.
 See the [Copyright and License](http://opengeohub.org/about-landgis/) page for more details.
 
 
-Accessing data
---------------
+Accessing data using REST and WCS
+---------------------------------
 
 Users can access LandGIS data via the four main channels:
 
 - **LandGIS App** at https://landgis.opengeohub.org,
 - **OpenGeoHub Geonode** installation at https://maps.opengeohub.org,
 - **LandGIS REST API services** at https://landgisapi.opengeohub.org,
+- **LandGIS WCS** at https://geoserver.opengeohub.org/landgisgeoserver/web/,
 - [Zenodo.org](https://zenodo.org/search?page=1&size=20&q=LandGIS) to access a (version-controlled) back-up copy of data via a DOI,
 
 Data portal https://landgis.opengeohub.org is the landing page where users can browse maps, query values by
@@ -59,7 +61,7 @@ It allow users i.e. producers of layers to edit and update metadata and descript
 create map views, learn how to use WCS, WMS or similar. A copy of the raw data can be obtained 
 via zenodo.org or similar public data repositories.
 
-LandGIS data services REST API (https://landgisapi.opengeohub.org) contains scripts and functions 
+LandGIS data services **REST API** (https://landgisapi.opengeohub.org) contains scripts and functions 
 that allow users to and developers to fetch raw data (point queries) in some simple textual 
 formats such as GeoJSON, csv, compressed GeoTIFFs or similar. The following query would fetch monthly precipitations at a location X, Y: 
 
@@ -122,6 +124,38 @@ Order	"Alfisols"
 
 ![LandGIS world mask](img/landgis_soil_types_point_query.jpg)
 *Image: Example of spatial query on soil types (USDA great groups) in the LandGIS app.*
+
+To list all available layers use:
+
+```	
+https://landgisapi.opengeohub.org/query/layers 
+```	
+
+To query values for multiple points (currently limited to **max 20 points**) provide a GeoJSON with point feature collection and layer name from the table:
+
+```	
+curl -X POST --form "points=@test_points.geojson" --form "layer=pnv_fapar_proba.v.jul_d_1km_s0..0cm_2014..2017_v0.1.tif" https://landgisapi.opengeohub.org/query/points -o results.json 
+```	
+
+where `test_points.geojson` is the GeoJSON file containing coordinates of points. More examples of how to construct spatial queries are available at: https://landgisapi.opengeohub.org
+
+In addition to the REST access, you can access the LandGIS data using the [Web Coverage Service (WCS) functionality of the Geoserver](https://geoserver.opengeohub.org/landgisgeoserver/web/) e.g. to subset layers using a bounding box. For example, to download [surface temperature for July](http://maps.opengeohub.org/layers/predicted250m:sol_clay.wfraction_usda.3a1a1a_m_250m_b30..30cm_1950..2017_v0.2) for an area of about 300 by 300 km you can use:
+
+```
+https://geoserver.opengeohub.org/landgisgeoserver/ows?service=WCS&version=2.0.1&
+request=GetCoverage&
+coverageId=layers1km:clm_lst_mod11a2.jul.day_m_1km_s0..0cm_2000..2017_v1.0&
+subset=Lat(41,45)&subset=Long(32,35)
+```
+
+The read limit for WCS is 4GB and response size limit is 200MB. This means that WCS might fail if you try to fetch too large bounding boxes. If this happens we recommend instead downloading whole GeoTIFFs from Zenodo.
+
+![LandGIS world mask](img/landgis_wms_settings.png)
+*Image: Parameter settings for adding LandGIS WMS to QGIS.*
+
+
+Accessing data from Zenodo
+--------------------------
 
 To download whole layers from zenodo you can use the R packages jsonlite and RCurl:
 
