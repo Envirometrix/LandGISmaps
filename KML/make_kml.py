@@ -20,6 +20,13 @@ df = df.loc[df.layer_public_download==1,:]
 
 wms = WebMapService('https://geoserver.opengeohub.org/landgisgeoserver/wms', version='1.3.0')
 wms_layers = list(wms.contents)
+
+folder_style_radio = simplekml.Style()
+folder_style_radio.liststyle.listitemtype = simplekml.ListItemType.radiofolder
+
+link_style_hidden = simplekml.Style()
+link_style_hidden.liststyle.listitemtype = simplekml.ListItemType.checkhidechildren
+
 #%%
 def month_to_number(month):
     months = dict(jan=1, feb=2, mar=3, apr=4, may=5, jun=6, jul=7, aug=8, sep=9, oct=10, nov=11, dec=12, annual=13, annualdiff=14)
@@ -33,9 +40,7 @@ def find_month(desc):
     return desc
     
     
-def time_designation(time_string):
-    #import re
-    
+def time_designation(time_string):    
     m = re.match(r'^-?\d+$', time_string.strip())
     if m:        
         return {'prop': 'newtimestamp', 'args':(time_string,)}
@@ -86,24 +91,24 @@ def link_layer(r):
 def setup_network_link(netlink, name, layer_name, when=None, description=None, 
                        td=None):
     netlink.name = name
+    netlink.style = link_style_hidden
     if description is not None:
         netlink.description = description
     netlink.visibility = 0
-    netlink.link.href = 'https://geoserver.opengeohub.org/landgisgeoserver/wms/kml?layers={}'.format(layer_name) #get_href(layer_name)
+    netlink.open = 0
+    netlink.link.href = 'https://geoserver.opengeohub.org/landgisgeoserver/wms/kml?layers={}'.format(layer_name)
     if when is not None:
         netlink.timestamp.when = when
     setup_timeref(netlink, td)
         
-        #setattr(netlink, td['prop'], td['args'])
-        
-#    kml_netlink.atomauthor = ('' if r.isna().layer_contact else r.layer_contact) + ('' if r.isna().layer_contact_email else ' ({})'.format(r.layer_contact_email ))
-#    kml_netlink.atomlink = r.layer_download_url
         
 #%%
 def make_kml(output_kml):
     
     kml = simplekml.Kml(open=1, name='LandGIS: Open Land Data')
-    kml.document.description = link("http://opengeohub.org/about-landgis", 'LandGIS: Open Land Data')
+    kml.document.description = link("http://opengeohub.org/about-landgis", 'Read more ...')
+    
+
     
     # Spatial layers
     kml_fld=kml.newfolder(name = 'Spatial layers')
@@ -123,7 +128,7 @@ def make_kml(output_kml):
         except Exception as e:
             print("Error while processing {}: {}".format(layer_name, e))
         else:
-            kml_netlink = kml_fld.newnetworklink() #(name = layer_title, description = layer_desc, visibility = 0)
+            kml_netlink = kml_fld.newnetworklink() 
             setup_network_link(kml_netlink, layer_title, layer_name, description=layer_desc,
                                td=td)
     # 3D Layers
@@ -131,7 +136,7 @@ def make_kml(output_kml):
         # i,r = next(df.loc[df.layer_display_type.apply(lambda x: x[:2]=='3D')].iterrows())
         try:
             layer_group_name = '{}:{}'.format(r.layer_distribution_folder, osp.splitext(r.layer_filename_pattern)[0])
-            layers = fnmatch.filter(wms_layers, layer_group_name.replace('*..*','*')) #.replace('_v0.1','_v0.2'))
+            layers = fnmatch.filter(wms_layers, layer_group_name.replace('*..*','*'))
             if len(layers)==0:
                 continue
     
@@ -139,6 +144,7 @@ def make_kml(output_kml):
             
             layer_desc = '{}</br>{}'.format(link_layer(r),time_string)        
             kml_fld_lay = kml_fld.newfolder(name = r.layer_title, visibility=0, description=layer_desc, open=0)
+            kml_fld_lay.style = folder_style_radio
             
             setup_timeref(kml_fld_lay, time_designation(time_string))        
             
@@ -146,7 +152,7 @@ def make_kml(output_kml):
             layer_list = sorted(layer_list, key=lambda x: int(x[1].replace('cm','')))
                    
             for layer_name, depth_string in layer_list: # layer_name=layers[0]                                                     
-                kml_netlink = kml_fld_lay.newnetworklink() #(name = depth_string, visibility = 0)        
+                kml_netlink = kml_fld_lay.newnetworklink()     
                 setup_network_link(kml_netlink, depth_string, layer_name)
                 
         except Exception as e:
@@ -175,6 +181,7 @@ def make_kml(output_kml):
             
             kml_fld_lay = kml_fld.newfolder(name = layer_title, visibility=0, open=0)
             kml_fld_lay.timespan = simplekml.TimeSpan(layer_list[0][1].replace('BC','-'), layer_list[-1][1].replace('BC','-'))
+            kml_fld_lay.style = folder_style_radio
             
             if layer_type == 'TS':
                 layer_desc = '{}</br>{} .. {}'.format(link_layer(r), layer_list[0][1], layer_list[-1][1])
@@ -202,7 +209,7 @@ def make_kml(output_kml):
     screen.icon.href = 'https://opengeohub.org/themes/gavias_edubiz/logo.png'
     screen.overlayxy = simplekml.OverlayXY(x=0, y=0, xunits=simplekml.Units.fraction, yunits=simplekml.Units.fraction)
     screen.screenxy = simplekml.ScreenXY(x=0, y=0,  xunits=simplekml.Units.fraction, yunits=simplekml.Units.fraction)
-    screen.description = link('http://opengeohub.org/about-landgis', 'LandGis')
+    # screen.description = link('http://opengeohub.org/about-landgis', 'LandGis')
     
     kml.savekmz(output_kml)
             
