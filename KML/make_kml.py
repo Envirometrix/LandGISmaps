@@ -204,11 +204,11 @@ def make_kml(output_kml):
     screen.screenxy = simplekml.ScreenXY(x=0, y=0,  xunits=simplekml.Units.fraction, yunits=simplekml.Units.fraction)
     screen.description = link('http://opengeohub.org/about-landgis', 'LandGis')
     
-    kml.save(output_kml)
+    kml.savekmz(output_kml)
             
     
     
 if __name__=='__main__':
-    make_kml('LandGIS.kml')
+    make_kml('LandGIS.kmz')
     
     
