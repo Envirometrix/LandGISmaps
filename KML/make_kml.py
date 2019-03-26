@@ -8,9 +8,8 @@ Created on Mon Mar  4 11:12:21 2019
 import pandas
 from owslib.wms import WebMapService
 import simplekml
-from xml.dom import minidom
+import xml.etree.ElementTree as ET
 import os.path as osp
-import requests
 import fnmatch, re
 
 layer_table_path = 'https://raw.githubusercontent.com/Envirometrix/LandGISmaps/master/tables/LandGIS_tables_landgis_layers.csv'
@@ -20,6 +19,7 @@ df = df.loc[df.layer_public_download==1,:]
 
 wms = WebMapService('https://geoserver.opengeohub.org/landgisgeoserver/wms', version='1.3.0')
 wms_layers = list(wms.contents)
+wms_xml = ET.fromstring(wms.getServiceXML())
 
 folder_style_radio = simplekml.Style()
 folder_style_radio.liststyle.listitemtype = simplekml.ListItemType.radiofolder
@@ -50,26 +50,16 @@ def time_designation(time_string):
         return {'prop':'newtimespan', 'args':('{}-1-1'.format(m.group(1)), '{}-12-31'.format(m.group(2)))}
     
     raise Exception('add_time_designation: unknown time_string format: {}'.format(time_string))
-    
-def get_href(layer_name):
-    wmskml_url = 'https://geoserver.opengeohub.org/landgisgeoserver/wms/kml?layers={}'.format(layer_name)
-    
-    wmskml_txt = requests.get(wmskml_url).text
-    wmskml_xml = minidom.parseString(wmskml_txt)
-    
-    href_node = wmskml_xml.getElementsByTagName('href')
-    if len(href_node)>0:
-        href = href_node[0].childNodes[0].nodeValue
-        return href
-    else:
-        exception_node = wmskml_xml.getElementsByTagName('ServiceException')
-        if len(exception_node)>0:
-            err = exception_node[0].childNodes[0].nodeValue
-        else:
-            err = "Unknown error while fetching network link for {}".format(layer_name)
-            
-        raise Exception("get_href: " + err)
-    
+        
+def get_legend_link(layer_name):
+    ns = {'ns': 'http://www.opengis.net/wms'}
+    elems = wms_xml.findall(".//ns:Layer[ns:Name='{}']/ns:Style/ns:LegendURL/ns:OnlineResource".format(layer_name),ns)
+    if len(elems) != 1:
+        return None
+    href = elems[0].attrib['{http://www.w3.org/1999/xlink}href']
+    href = href.replace("height=20", "height=10")
+    return href
+
 def setup_timeref(kml_feature, td):
     if td is None:
         return
@@ -88,22 +78,50 @@ def link_layer(r):
     layer_href = layer_href.format(r.layer_filename_shortname)
     return link(layer_href, r.layer_title_description)
 
-def setup_network_link(netlink, name, layer_name, when=None, description=None, 
+def setup_legend(screen):
+    screen.overlayxy = simplekml.OverlayXY(x=1,y=1,xunits=simplekml.Units.fraction,
+                                       yunits=simplekml.Units.fraction)
+    screen.screenxy = simplekml.ScreenXY(x=15,y=15,xunits=simplekml.Units.insetpixels,
+                                         yunits=simplekml.Units.insetpixels)
+    '''
+    screen.size.x = -1
+    screen.size.y = -1
+    screen.size.xunits = simplekml.Units.fraction
+    screen.size.yunits = simplekml.Units.fraction
+    '''
+    
+def setup_network_link(parent, name, layer_name, when=None, description=None, 
                        td=None):
+    # Folder to contain network link and legend as screenoverlay
+    fld = parent.newfolder(name=name)
+    
+    # NetworkLink
+    netlink = fld.newnetworklink()
     netlink.name = name
-    netlink.style = link_style_hidden
+    #netlink.style = link_style_hidden
     if description is not None:
-        netlink.description = description
-    netlink.visibility = 0
-    netlink.open = 0
+        fld.description = description
+    #netlink.visibility = 0
+    #netlink.open = 0
     netlink.link.href = 'https://geoserver.opengeohub.org/landgisgeoserver/wms/kml?layers={}'.format(layer_name)
     if when is not None:
         netlink.timestamp.when = when
     setup_timeref(netlink, td)
+    
+    # Legend
+    legend_link = get_legend_link(layer_name)
+    if legend_link is not None:
+        screen = fld.newscreenoverlay(name='Legend')
+        screen.icon.href = legend_link
+        setup_legend(screen)
+    
+    fld.visibility = 0
+    fld.open = 0
+    fld.style = link_style_hidden
         
         
 #%%
-def make_kml(output_kml):
+def make_kml(output_kml, output_format='kmz'):
     
     kml = simplekml.Kml(open=1, name='LandGIS: Open Land Data')
     kml.document.description = link("http://opengeohub.org/about-landgis", 'Read more ...')
@@ -128,8 +146,7 @@ def make_kml(output_kml):
         except Exception as e:
             print("Error while processing {}: {}".format(layer_name, e))
         else:
-            kml_netlink = kml_fld.newnetworklink() 
-            setup_network_link(kml_netlink, layer_title, layer_name, description=layer_desc,
+            setup_network_link(kml_fld, layer_title, layer_name, description=layer_desc,
                                td=td)
     # 3D Layers
     for i,r in df.loc[df.layer_display_type.apply(lambda x: x[:2]=='3D')].iterrows():   
@@ -151,9 +168,8 @@ def make_kml(output_kml):
             layer_list = [(x, x.split('_')[-3].split('..')[1]) for x in layers]
             layer_list = sorted(layer_list, key=lambda x: int(x[1].replace('cm','')))
                    
-            for layer_name, depth_string in layer_list: # layer_name=layers[0]                                                     
-                kml_netlink = kml_fld_lay.newnetworklink()     
-                setup_network_link(kml_netlink, depth_string, layer_name)
+            for layer_name, depth_string in layer_list: # layer_name=layers[0]                                                      
+                setup_network_link(kml_fld_lay, depth_string, layer_name)
                 
         except Exception as e:
             print("Error while processing {}: {}".format(layer_name, e))
@@ -189,15 +205,13 @@ def make_kml(output_kml):
                 layer_desc = '{}</br>{}'.format(link_layer(r), layer_group_name.split('_')[-2])                     
             kml_fld_lay.description=layer_desc
             
-            for layer_name, time_string in layer_list:     
-                kml_netlink = kml_fld_lay.newnetworklink()            
-    
+            for layer_name, time_string in layer_list:                    
                 if layer_type == 'TS':
                     td = time_designation(time_string.replace('BC','-'))                
                 elif layer_type == 'SS':
                     td = None
     
-                setup_network_link(kml_netlink, time_string, layer_name, td=td)
+                setup_network_link(kml_fld_lay, time_string, layer_name, td=td)
                 
     
         except Exception as e:
@@ -211,11 +225,16 @@ def make_kml(output_kml):
     screen.screenxy = simplekml.ScreenXY(x=0, y=0,  xunits=simplekml.Units.fraction, yunits=simplekml.Units.fraction)
     # screen.description = link('http://opengeohub.org/about-landgis', 'LandGis')
     
-    kml.savekmz(output_kml)
+    if output_format=='kmz':
+        kml.savekmz(output_kml)
+    else:
+        kml.save(output_kml)
             
     
     
 if __name__=='__main__':
     make_kml('LandGIS.kmz')
     
+    # for testing
+    # make_kml('LandGIS.kml','kml')
     
