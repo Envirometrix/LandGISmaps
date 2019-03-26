@@ -1,5 +1,4 @@
 ## Functions for LandGIS (https://github.com/Envirometrix/LandGIS_data)
-## Attribution: some functions and code is based on https://github.com/ISRICWorldSoil/SoilGrids250m 
 ## tom.hengl@gmail.com
 
 unregister <- function() {
@@ -952,6 +951,7 @@ carbon_stock <- function(i, n.lst=c("oc.f","db_od","wpg2"), ORCDRC.sd=20, BLD.sd
       s <- raster::stack(c(Utif.lst,Ltif.lst))
       s <- as(as(s, "SpatialGridDataFrame"), "SpatialPixelsDataFrame")
       s$ORCDRC <- rowMeans(s@data[,grep("oc.f", names(s))], na.rm = TRUE)/2
+      ## division by 2 to get percent because values are in 5 g / kg:
       s$BLD <- rowMeans(s@data[,grep("db_od", names(s))], na.rm = TRUE)
       s$CRFVOL <- rowMeans(s@data[,grep("wpg2", names(s))], na.rm = TRUE)
       ## Predict organic carbon stock (in kg / m2):
@@ -959,5 +959,35 @@ carbon_stock <- function(i, n.lst=c("oc.f","db_od","wpg2"), ORCDRC.sd=20, BLD.sd
       writeGDAL(s["v"], out.all[d], type="Int16", mvFlag=-32768, options="COMPRESS=DEFLATE")
       gc()
     }
+  }
+}
+
+## Available water capacity ----
+## p.197 in https://www.nrcs.usda.gov/wps/portal/nrcs/detail/soils/ref/?cid=nrcs142p2_054247
+awc_tile = function(i, n.lst=c("w3cld","w15l2","db_od","wpg2"), db.h2o=1, out.path="/data/tt/LandGIS/grid250m"){
+  ## five standard layers 0-10, 10-30, 30-60, 60-100, 100-200:
+  out.all <- paste0(out.path, "/", i, "/awc_M_sh", 1:5, "_", i,".tif")
+  out.tv <- paste0(out.path, "/", i, "/awc_M_tot_", i,".tif")
+  if(any(!file.exists(out.all))){
+    v = list(NULL)
+    for(d in 1:5){
+      Utif.lst <- paste0(out.path, "/", i, "/", n.lst, "_M_sl", d, "_", i, ".tif")
+      Ltif.lst <- paste0(out.path, "/", i, "/", n.lst, "_M_sl", d+1, "_", i, ".tif")
+      s <- raster::stack(c(Utif.lst,Ltif.lst))
+      s <- as(as(s, "SpatialGridDataFrame"), "SpatialPixelsDataFrame")
+      s$AW1 <- rowMeans(s@data[,grep("w3cld", names(s))], na.rm = TRUE)
+      s$AW2 <- rowMeans(s@data[,grep("w15l2", names(s))], na.rm = TRUE)
+      s$BLD <- rowMeans(s@data[,grep("db_od", names(s))], na.rm = TRUE)
+      s$CRFVOL <- rowMeans(s@data[,grep("wpg2", names(s))], na.rm = TRUE)
+      ## Water Retention Difference in %:
+      xx <- (s$AW1-s$AW2) * s$BLD/100 * (100-s$CRFVOL)/100 * db.h2o 
+      v[[d]] <- round(ifelse(xx<0, 0, xx))
+      s$v <- v[[d]]
+      writeGDAL(s["v"], out.all[d], type="Byte", mvFlag=255, options="COMPRESS=DEFLATE")
+      gc()
+    }
+    ## Total available water capacity in mm:
+    s$tv = rowSums( data.frame(mapply(`*`, as.data.frame(v)/100, c(100, 200, 300, 400, 1000))), na.rm = TRUE )
+    writeGDAL(s["tv"], out.tv, type="Int16", mvFlag=-32768, options="COMPRESS=DEFLATE")
   }
 }

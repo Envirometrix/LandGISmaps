@@ -1,0 +1,37 @@
+Results of model fitting 'SuperLearner':
+
+Variable: watercontent.33kPa
+
+Call:  
+SuperLearner(Y = df.s[, t.vars[j]], X = df.s[, c("DEPTH", paste0("PC", 1:242))], SL.library = c("SL.xgboost",  
+    "SL.ranger"), id = id.col, verbose = TRUE, cvControl = list(V = 3), obsWeights = case.weights/max(case.weights,  
+    na.rm = TRUE)) 
+
+
+                   Risk      Coef
+SL.xgboost_All 66.66880 0.2478272
+SL.ranger_All  61.35789 0.7521728
+
+Processing time:
+    user   system  elapsed 
+1372.066  523.335 1866.965 
+
+--------------------------------------
+
+Variable: watercontent.1500kPa
+
+Call:  
+SuperLearner(Y = df.s[, t.vars[j]], X = df.s[, c("DEPTH", paste0("PC", 1:242))], SL.library = c("SL.xgboost",  
+    "SL.ranger"), id = id.col, verbose = TRUE, cvControl = list(V = 3), obsWeights = case.weights/max(case.weights,  
+    na.rm = TRUE)) 
+
+
+                   Risk      Coef
+SL.xgboost_All 62.66622 0.3727098
+SL.ranger_All  60.09557 0.6272902
+
+Processing time:
+    user   system  elapsed 
+2084.808  723.577 2762.269 
+
+--------------------------------------
