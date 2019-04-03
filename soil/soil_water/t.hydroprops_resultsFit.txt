@@ -9,12 +9,12 @@ SuperLearner(Y = df.s[, t.vars[j]], X = df.s[, c("DEPTH", paste0("PC", 1:242))],
 
 
                    Risk      Coef
-SL.xgboost_All 66.66880 0.2478272
-SL.ranger_All  61.35789 0.7521728
+SL.xgboost_All 65.94239 0.3379251
+SL.ranger_All  63.60349 0.6620749
 
 Processing time:
     user   system  elapsed 
-1372.066  523.335 1866.965 
+1422.830  433.952 1826.706 
 
 --------------------------------------
 
@@ -27,11 +27,11 @@ SuperLearner(Y = df.s[, t.vars[j]], X = df.s[, c("DEPTH", paste0("PC", 1:242))],
 
 
                    Risk      Coef
-SL.xgboost_All 62.66622 0.3727098
-SL.ranger_All  60.09557 0.6272902
+SL.xgboost_All 61.94012 0.3147772
+SL.ranger_All  59.30907 0.6852228
 
 Processing time:
     user   system  elapsed 
-2084.808  723.577 2762.269 
+1998.771  692.008 2647.547 
 
 --------------------------------------

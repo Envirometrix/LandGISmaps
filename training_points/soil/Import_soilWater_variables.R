@@ -1,5 +1,7 @@
 ## Import soil Water Retention variables
 ## tom.hengl@gmail.com and Gupta Surya <surya.gupta@usys.ethz.ch>
+## conversion between VWC and MWC (Landon 1991; Schoenberger et al. 2002; van Reeuwijk 2002):
+## VWC (%v/v) = MWC (% by weight ) * bulk density (kg m -3 )
 
 library(plyr)
 library(rgdal)
@@ -8,7 +10,7 @@ library(raster)
 library(fastSave)
 library(tidyverse)
 library(rgeos)
-load.pigz("soilhydro.RData") #, n.cores = parallel::detectCores())
+#load.pigz("soilhydro.RData") #, n.cores = parallel::detectCores())
 
 ## Target USDA_NCSS columns
 ## https://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/nrcs142p2_052226.pdf
@@ -23,8 +25,9 @@ ncss.site <- read.csv("/data/Soil_points/INT/USDA_NCSS/NCSS_Site_Location.csv", 
 str(ncss.site)  # 63990 obs. of  20 variables
 ncss.layer <- read.csv("/data/Soil_points/INT/USDA_NCSS/NCSS_Layer.csv", sep = ";", dec = ",", stringsAsFactors = FALSE)
 ncss.bdm <- read.csv("/data/Soil_points/INT/USDA_NCSS/NCSS_Bulk_Density_and_Moisture.csv", sep = ";", dec = ",", stringsAsFactors = FALSE)
-## multiple measurements hence average
-ncss.bdm.0 <- ncss.bdm[!duplicated(ncss.bdm$labsampnum, fromLast=TRUE),]
+## multiple measurements
+summary(as.factor(ncss.bdm$prep_code))
+ncss.bdm.0 <- ncss.bdm[ncss.bdm$prep_code=="S",]
 summary(ncss.bdm.0$db_od)
 ## 0 values --- error!
 ncss.carb <- read.csv("/data/Soil_points/INT/USDA_NCSS/NCSS_Carbon_and_Extractions.csv", sep = ";", dec = ",", stringsAsFactors = FALSE)
@@ -37,7 +40,7 @@ ncss.CEC <- read.csv("/data/Soil_points/INT/USDA_NCSS/NCSS_CEC_and_Bases.csv")
 ncss.horizons <- plyr::join_all(list(ncss.bdm.0, ncss.layer, ncss.carb, ncss.organic, ncss.pH, ncss.PSDA, ncss.CEC), type = "left", by="labsampnum")
 #head(ncss.horizons)
 nrow(ncss.horizons)
-## 309,882
+## 302,151
 hydrosprops.NCSS = plyr::join(ncss.site[,site.names], ncss.horizons[,hor.names], by="site_key") 
 ## soil organic carbon:
 summary(!is.na(hydrosprops.NCSS$oc)) ## 128,957 measurements
@@ -46,26 +49,77 @@ summary(!is.na(hydrosprops.NCSS$ph_kcl)) ## 22,904 measurements
 hydrosprops.NCSS$source_db = "USDA_NCSS"
 str(hydrosprops.NCSS)
 hist(hydrosprops.NCSS$w3cld[hydrosprops.NCSS$w3cld<150], breaks=45, col="gray")
-## STRANGE: MANY VALUES >100%
+## ERROR: MANY VALUES >100%
+## fills in missing BD values using formula from Köchy, Hiederer, and Freibauer (2015)
+db.f = ifelse(is.na(hydrosprops.NCSS$db_13b), -0.31*log(hydrosprops.NCSS$oc)+1.38, hydrosprops.NCSS$db_13b)
+db.f[db.f<0.02 | db.f>2.87] = NA
+## Convert to volumetric % to match most of world data sets:
+hydrosprops.NCSS$w3cld = hydrosprops.NCSS$w3cld * db.f
+hydrosprops.NCSS$w15l2 = hydrosprops.NCSS$w15l2 * db.f
+hydrosprops.NCSS$w10cld = hydrosprops.NCSS$w10cld * db.f
 summary(as.factor(hydrosprops.NCSS$tex_psda))
 ## texture classes need to be cleaned up!
 ## check WRC values for sandy soils
 hydrosprops.NCSS[which(!is.na(hydrosprops.NCSS$w3cld) & hydrosprops.NCSS$sand_tot_psa>95)[1:10],]
 ## check WRC values for ORGANIC soils
 hydrosprops.NCSS[which(!is.na(hydrosprops.NCSS$w3cld) & hydrosprops.NCSS$oc>12)[1:10],]
-## w3cld > 100?!
+## w3cld > 100?
 ## save
-ncss.csv = paste0("/data/Soil_points/INT/USDA_NCSS/", c("NCSS_Site_Location.csv", "NCSS_Layer.csv", "NCSS_Bulk_Density_and_Moisture.csv", "NCSS_CEC_and_Bases.csv", "NCSS_PSDA_and_Rock_Fragments.csv", "NCSS_Organic.csv", "NCSS_pH_and_Carbonates.csv"))
-file.copy(ncss.csv, to = gsub("/data/", "/data/git/SoilWaterModeling/", ncss.csv), overwrite = TRUE)
+#ncss.csv = paste0("/data/Soil_points/INT/USDA_NCSS/", c("NCSS_Site_Location.csv", "NCSS_Layer.csv", "NCSS_Bulk_Density_and_Moisture.csv", "NCSS_CEC_and_Bases.csv", "NCSS_PSDA_and_Rock_Fragments.csv", "NCSS_Organic.csv", "NCSS_pH_and_Carbonates.csv"))
+#file.copy(ncss.csv, to = gsub("/data/", "/data/git/SoilWaterModeling/", ncss.csv), overwrite = TRUE)
+
+## ISIS ----
+## https://wur.on.worldcat.org/search?queryString=isric+soil+brief
+isis.xy <- read.csv("/data/Soil_points/INT/ISRIC_ISIS/Sites.csv", stringsAsFactors = FALSE)
+str(isis.xy)
+isis.des <- read.csv("/data/Soil_points/INT/ISRIC_ISIS/SitedescriptionResults.csv", stringsAsFactors = FALSE)
+isis.site <- data.frame(site_key=isis.xy$Id, usiteid=paste(isis.xy$CountryISO, isis.xy$SiteNumber, sep=""))
+id0.lst = c(236,235,224)
+nm0.lst = c("longitude_decimal_degrees", "latitude_decimal_degrees", "site_obsdate")
+isis.site.l = plyr::join_all(lapply(1:length(id0.lst), function(i){plyr::rename(subset(isis.des, ValueId==id0.lst[i])[,c("SampleId","Value")], replace=c("SampleId"="site_key", "Value"=paste(nm0.lst[i])))}), type = "full")
+isis.site.df = join(isis.site, isis.site.l)
+for(j in nm0.lst){ isis.site.df[,j] <- as.numeric(isis.site.df[,j]) }
+isis.site.df[isis.site.df$usiteid=="CI2","latitude_decimal_degrees"] = 5.883333
+str(isis.site.df)
+## 906 points
+isis.smp <- read.csv("/data/Soil_points/INT/ISRIC_ISIS/AnalyticalSamples.csv", stringsAsFactors = FALSE)
+isis.ana <- read.csv("/data/Soil_points/INT/ISRIC_ISIS/AnalyticalResults.csv", stringsAsFactors = FALSE)
+str(isis.ana)
+isis.class <- read.csv("/data/Soil_points/INT/ISRIC_ISIS/ClassificationResults.csv", stringsAsFactors = FALSE)
+isis.hor <- data.frame(labsampnum=isis.smp$Id, hzn_top=isis.smp$Top, hzn_bot=isis.smp$Bottom, site_key=isis.smp$SiteId)
+isis.hor$hzn_bot <- as.numeric(gsub(">", "", isis.hor$hzn_bot))
+str(isis.hor)
+id.lst = c(1,2,22,4,28,31,32,14,34,38,39,42)
+nm.lst = c("ph_h2o","ph_kcl","wpg2","oc","sand_tot_psa","silt_tot_psa","clay_tot_psa","cec_sum","db_od","w10cld","w3cld", "w15l2")
+str(as.numeric(isis.ana$Value[isis.ana$ValueId==38]))
+isis.hor.l = plyr::join_all(lapply(1:length(id.lst), function(i){plyr::rename(subset(isis.ana, ValueId==id.lst[i])[,c("SampleId","Value")], replace=c("SampleId"="labsampnum", "Value"=paste(nm.lst[i])))}), type = "full")
+summary(as.numeric(isis.hor.l$w3cld))
+isis.hor.df = join(isis.hor, isis.hor.l)
+isis.hor.df = isis.hor.df[!duplicated(isis.hor.df$labsampnum),]
+#View(isis.hor.df)
+#summary(as.numeric(isis.hor.df$w3cld))
+for(j in nm.lst){ isis.hor.df[,j] <- as.numeric(isis.hor.df[,j]) }
+#str(isis.hor.df)
+## add missing columns
+for(j in c("layer_sequence", "hzn_desgn", "tex_psda", "COLEws", "w15bfm", "adod", "wrd_ws13", "cec7_cly", "w15cly", "cec_nh4", "db_13b", "w6clod")){  isis.hor.df[,j] = NA }
+which(!hor.names %in% names(isis.hor.df))
+hydrosprops.ISIS <- join(isis.site.df[,site.names], isis.hor.df[,hor.names], type="left")
+hydrosprops.ISIS$source_db = "ISRIC_ISIS"
+#plot(hydrosprops.ISIS[,c("longitude_decimal_degrees", "latitude_decimal_degrees")])
+#isis.csv = paste0("/data/Soil_points/INT/ISRIC_ISIS/", c("Sites.csv", "AnalyticalResults.csv","AnalyticalSamples.csv","ClassificationResults.csv","ClassificationSamples.csv","SitedescriptionResults.csv","SitedescriptionSamples.csv"))
+#file.copy(isis.csv, to = gsub("/data/", "/data/git/SoilWaterModeling/", isis.csv), overwrite = TRUE)
 
 ## AFSIS SPDB ----
 ## https://www.isric.org/projects/africa-soil-profiles-database-afsp
 afspdb.profiles <- read.csv("/data/Soil_points/AF/AfSIS_SPDB/AfSP01301Qry_Profiles.csv", stringsAsFactors=FALSE, fileEncoding="latin1", na.strings=c("", "NA", "-9999", "-9999.000", "-9999.0", "-99990", "100000", "<Null>", "<NA>"))
-afspdb.layers <- read.csv("/data/Soil_points/AF/AfSIS_SPDB/AfSP01301Qry_Layers.csv", stringsAsFactors=FALSE, fileEncoding="latin1", na.strings=c("", "NA", "-9999", "-9999.000", "-9999.0", "-99990", "100000", "<Null>", "<NA>"))
+afspdb.layers <- read.csv("/data/Soil_points/AF/AfSIS_SPDB/AfSP01301Qry_Layers.csv", stringsAsFactors=FALSE, fileEncoding="latin1", na.strings=c("", "NA", "-9999", "-9999.000", "-9999.0", "-9999.00", "-99990", "100000", "<Null>", "<NA>"))
 ## select columns of interest:
 #site.names = c("site_key", "usiteid", "site_obsdate", "longitude_decimal_degrees", "latitude_decimal_degrees")
 afspdb.s.lst <- c("ProfileID", "usiteid", "T_Year", "X_LonDD", "Y_LatDD")
 #hor.names = c("labsampnum","site_key","layer_sequence","hzn_top","hzn_bot","hzn_desgn","db_13b", "db_od", "COLEws", "w6clod", "w10cld", "w3cld", "w15l2", "w15bfm", "adod", "wrd_ws13", "cec7_cly", "w15cly", "tex_psda", "clay_tot_psa", "silt_tot_psa", "sand_tot_psa", "oc", "ph_kcl", "ph_h2o", "cec_sum", "cec_nh4", "wpg2")
+## Convert to weight content
+summary(afspdb.layers$BlkDens)
+## select layers
 afspdb.h.lst <- c("LayerID", "ProfileID", "LayerNr", "UpDpth", "LowDpth", "HorDes", "db_13b", "BlkDens", "COLEws", "VMCpF18", "VMCpF20", "VMCpF25", "VMCpF42", "w15bfm", "adod", "wrd_ws13", "cec7_cly", "w15cly", "LabTxtr", "Clay", "Silt", "Sand", "OrgC", "PHKCl", "PHH2O", "CecSoil", "cec_nh4", "CfPc")
 ## add missing columns
 for(j in c("usiteid")){  afspdb.profiles[,j] = NA }
@@ -78,9 +132,9 @@ hydrosprops.AfSPDB$source_db = "AfSPDB"
 hydrosprops.AfSPDB$OrgC = hydrosprops.AfSPDB$OrgC/10
 summary(hydrosprops.AfSPDB$OrgC)
 head(hydrosprops.AfSPDB)
-hist(hydrosprops.AfSPDB$VMCpF25, breaks=45, col="gray")
-afspdb.csv = paste0("/data/Soil_points/AF/AfSIS_SPDB/", c("AfSP01301Qry_Profiles.csv", "AfSP01301Qry_Layers.csv"))
-file.copy(afspdb.csv, to = gsub("/data/", "/data/git/SoilWaterModeling/", afspdb.csv), overwrite = TRUE)
+#hist(hydrosprops.AfSPDB$VMCpF25, breaks=45, col="gray")
+#afspdb.csv = paste0("/data/Soil_points/AF/AfSIS_SPDB/", c("AfSP01301Qry_Profiles.csv", "AfSP01301Qry_Layers.csv"))
+#file.copy(afspdb.csv, to = gsub("/data/", "/data/git/SoilWaterModeling/", afspdb.csv), overwrite = TRUE)
 
 ## ISRIC WISE ----
 ## https://www.isric.org/sites/default/files/isric_report_2008_02.pdf
@@ -100,6 +154,9 @@ for(j in c("LAT","LON")){
 #site.names = c("site_key", "usiteid", "site_obsdate", "longitude_decimal_degrees", "latitude_decimal_degrees")
 wise.s.lst <- c("WISE3_id", "SOURCE_ID", "DATEYR", "LONWGS84", "LATWGS84")
 #hor.names = c("labsampnum","site_key","layer_sequence","hzn_top","hzn_bot","hzn_desgn","db_13b", "db_od", "COLEws", "w6clod", "w10cld", "w3cld", "w15l2", "w15bfm", "adod", "wrd_ws13", "cec7_cly", "w15cly", "tex_psda", "clay_tot_psa", "silt_tot_psa", "sand_tot_psa", "oc", "ph_kcl", "ph_h2o", "cec_sum", "cec_nh4", "wpg2")
+## Convert volumetric values to weight %
+summary(wise.HORIZON$BULKDENS)
+summary(wise.HORIZON$VMC1)
 wise.HORIZON$WISE3_id = wise.HORIZON$WISE3_ID
 wise.h.lst <- c("labsampnum", "WISE3_id", "HONU", "TOPDEP", "BOTDEP", "DESIG", "db_13b", "BULKDENS", "COLEws", "w6clod", "VMC1", "VMC2", "VMC3", "w15bfm", "adod", "wrd_ws13", "cec7_cly", "w15cly", "tex_psda", "CLAY", "SILT", "SAND", "ORGC", "PHKCL", "PHH2O", "CECSOIL", "cec_nh4", "GRAVEL")
 ## add missing columns
@@ -110,13 +167,14 @@ for(j in 1:ncol(hydrosprops.WISE)){
 }
 hydrosprops.WISE$ORGC = hydrosprops.WISE$ORGC/10
 hydrosprops.WISE$source_db = "ISRIC_WISE"
-summary(hydrosprops.WISE$VMC3)
-hist(hydrosprops.WISE$VMC2, breaks=45, col="gray")
-summary(!is.na(hydrosprops.WISE$VMC3))
+summary(hydrosprops.WISE$VMC3.f)
+#hist(hydrosprops.WISE$VMC2.f, breaks=45, col="gray")
+#summary(!is.na(hydrosprops.WISE$VMC3.f))
+## 5677
 head(hydrosprops.WISE)
 ## save
-wise.csv = paste0("/data/Soil_points/INT/ISRIC_WISE/", c("WISE3_SITE.csv", "WISE3_HORIZON.csv"))
-file.copy(wise.csv, to = gsub("/data/", "/data/git/SoilWaterModeling/", wise.csv), overwrite = TRUE)
+#wise.csv = paste0("/data/Soil_points/INT/ISRIC_WISE/", c("WISE3_SITE.csv", "WISE3_HORIZON.csv"))
+#file.copy(wise.csv, to = gsub("/data/", "/data/git/SoilWaterModeling/", wise.csv), overwrite = TRUE)
 
 ## Russian SPDB ----
 russ.HOR = read.csv("/data/Soil_points/Russia/EGRPR/Russia_EGRPR_soil_pedons.csv")
@@ -136,8 +194,8 @@ russ.sel.h = c("SOURCEID", "SOIL_ID", "site_obsdate", "LONG", "LAT", "labsampnum
 hydrosprops.EGRPR = russ.HOR[,russ.sel.h]
 hydrosprops.EGRPR$source_db = "Russia_EGRPR"
 summary(hydrosprops.EGRPR$WR1500)
-hist(hydrosprops.EGRPR$WR33, breaks=45, col="gray")
-file.copy("/data/Soil_points/Russia/EGRPR/Russia_EGRPR_soil_pedons.csv", to = "/data/git/SoilWaterModeling/Soil_points/Russia/EGRPR/Russia_EGRPR_soil_pedons.csv", overwrite = TRUE)
+#hist(hydrosprops.EGRPR$WR33, breaks=45, col="gray")
+#file.copy("/data/Soil_points/Russia/EGRPR/Russia_EGRPR_soil_pedons.csv", to = "/data/git/SoilWaterModeling/Soil_points/Russia/EGRPR/Russia_EGRPR_soil_pedons.csv", overwrite = TRUE)
 
 ## SPADE 2 ----
 ## https://esdac.jrc.ec.europa.eu/content/soil-profile-analytical-database-2
@@ -165,11 +223,12 @@ spade.h.lst = c("HOR_ID","PLOT_ID","layer_sequence","HOR_BEG_V","HOR_END_V","HOR
 hydrosprops.SPADE2 = plyr::join(spade.PLOT[,spade.s.lst], spade.HOR[,spade.h.lst])
 hydrosprops.SPADE2$source_db = "SPADE2"
 summary(hydrosprops.SPADE2$WC4_V)
+summary(is.na(hydrosprops.SPADE2$WC4_V))
 hist(hydrosprops.SPADE2$WC4_V, breaks=45, col="gray")
 str(hydrosprops.SPADE2)
 ## save
-spade.csv = paste0("/data/Soil_points/EU/SPADE/", c("DAT_PLOT.csv", "DAT_HOR.csv"))
-file.copy(spade.csv, to = gsub("/data/", "/data/git/SoilWaterModeling/", spade.csv), overwrite = TRUE)
+#spade.csv = paste0("/data/Soil_points/EU/SPADE/", c("DAT_PLOT.csv", "DAT_HOR.csv"))
+#file.copy(spade.csv, to = gsub("/data/", "/data/git/SoilWaterModeling/", spade.csv), overwrite = TRUE)
 
 ## Canada NPDB ----
 ## https://open.canada.ca/data/en/dataset/6457fad6-b6f5-47a3-9bd1-ad14aea4b9e0
@@ -188,8 +247,8 @@ hydrosprops.NPDB$source_db = "Canada_NPDB"
 summary(hydrosprops.NPDB$RETN_33KP)
 hist(hydrosprops.NPDB$RETN_33KP, breaks=45, col="gray")
 ## save
-npdb.csv = paste0("/data/Soil_points/Canada/NPDB/", NPDB.nm)
-file.copy(npdb.csv, to = gsub("/data/", "/data/git/SoilWaterModeling/", npdb.csv), overwrite = TRUE)
+#npdb.csv = paste0("/data/Soil_points/Canada/NPDB/", NPDB.nm)
+#file.copy(npdb.csv, to = gsub("/data/", "/data/git/SoilWaterModeling/", npdb.csv), overwrite = TRUE)
 
 ## HYBRAS ----
 ## http://www.cprm.gov.br/en/Hydrology/Research-and-Innovation/HYBRAS-4208.html
@@ -208,8 +267,7 @@ summary(hydrosprops.HYBRAS$theta50)
 summary(hydrosprops.HYBRAS$satwat)
 hist(hydrosprops.HYBRAS$theta10, breaks=45, col="gray")
 #plot(hydrosprops.HYBRAS[,c(4:5)])
-file.copy("/data/Soil_points/Brasil/HYBRAS/HYBRAS.V1_integrated_tables_RAW.csv", to = "/data/git/SoilWaterModeling/Soil_points/Brasil/HYBRAS/HYBRAS.V1_integrated_tables_RAW.csv", overwrite = TRUE)
-
+#file.copy("/data/Soil_points/Brasil/HYBRAS/HYBRAS.V1_integrated_tables_RAW.csv", to = "/data/git/SoilWaterModeling/Soil_points/Brasil/HYBRAS/HYBRAS.V1_integrated_tables_RAW.csv", overwrite = TRUE)
 
 ## UNSODA ----
 ## https://data.nal.usda.gov/dataset/unsoda-20-unsaturated-soil-hydraulic-database-database-and-program-indirect-methods-estimating-unsaturated-hydraulic-properties
@@ -240,8 +298,8 @@ hydrosprops.UNSODA = unsoda.col[,unsoda.sel.h]
 hydrosprops.UNSODA$source_db = "UNSODA"
 hist(hydrosprops.UNSODA$w15l2, breaks=45, col="gray")
 ## save
-unsoda.csv = paste0("/data/Soil_points/INT/UNSODA/", c("general_c.csv","soil_properties.csv","lab_drying_h-t.csv"))
-file.copy(unsoda.csv, to = gsub("/data/", "/data/git/SoilWaterModeling/", unsoda.csv), overwrite = TRUE)
+#unsoda.csv = paste0("/data/Soil_points/INT/UNSODA/", c("general_c.csv","soil_properties.csv","lab_drying_h-t.csv"))
+#file.copy(unsoda.csv, to = gsub("/data/", "/data/git/SoilWaterModeling/", unsoda.csv), overwrite = TRUE)
 
 ## HydroS ----
 hydros.tbl = read.csv("/data/Soil_points/INT/HydroS/int_rawret.csv", sep="\t", stringsAsFactors = FALSE, dec = ",")
@@ -273,8 +331,8 @@ hydrosprops.HYDROS = hydros.col[,hydros.sel.h]
 hydrosprops.HYDROS$source_db = "HydroS"
 hist(hydrosprops.HYDROS$w15l2, breaks=45, col="gray")
 ## save
-hydros.csv = paste0("/data/Soil_points/INT/HydroS/", c("int_rawret.csv","int_basicdata.csv"))
-file.copy(hydros.csv, to = gsub("/data/", "/data/git/SoilWaterModeling/", hydros.csv), overwrite = TRUE)
+#hydros.csv = paste0("/data/Soil_points/INT/HydroS/", c("int_rawret.csv","int_basicdata.csv"))
+#file.copy(hydros.csv, to = gsub("/data/", "/data/git/SoilWaterModeling/", hydros.csv), overwrite = TRUE)
 
 ## Pseudo-observations ----
 ## 0 soil organic carbon + 98% sand content (deserts)
@@ -289,12 +347,12 @@ sprops.SIM$latitude_decimal_degrees = sprops.SIM$y
 for(j in c("db_13b", "COLEws", "w6clod", "w15bfm", "adod", "wrd_ws13", "cec7_cly", "w15cly", "ph_kcl", "cec_sum", "cec_nh4")){  sprops.SIM[,j] = NA }
 col.names[which(!col.names %in% names(sprops.SIM))]
 hydrosprops.SIM = sprops.SIM[,col.names]
-file.copy("/data/LandGIS/training_points/soil/sprops.SIM.rds", "/data/git/SoilWaterModeling/Soil_points/SIM/sprops.SIM.rds")
+#file.copy("/data/LandGIS/training_points/soil/sprops.SIM.rds", "/data/git/SoilWaterModeling/Soil_points/SIM/sprops.SIM.rds")
 str(hydrosprops.SIM)
 
 ## Bind ALL ----
 ls(pattern=glob2rx("hydrosprops.*"))
-## 10
+## 11
 tot_sprops = dplyr::bind_rows(lapply(ls(pattern=glob2rx("hydrosprops.*")), function(i){ mutate_all(setNames(get(i), col.names), as.character) }))
 ## convert to numeric:
 for(j in c("longitude_decimal_degrees","latitude_decimal_degrees","layer_sequence","hzn_top","hzn_bot","oc","ph_h2o","ph_kcl","db_od","clay_tot_psa","sand_tot_psa","silt_tot_psa","wpg2","db_13b","COLEws","w15cly","w6clod","w10cld","w3cld","w15l2","w15bfm","adod","wrd_ws13","cec7_cly","cec_sum","cec_nh4")){
@@ -305,10 +363,10 @@ tot_sprops.pnts = tot_sprops[!duplicated(tot_sprops$site_key),c("site_key","sour
 nrow(tot_sprops.pnts)
 ## 96,605 points
 summary(as.factor(tot_sprops$source_db))
-# AfSPDB  Canada_NPDB       HYBRAS       HydroS   ISRIC_WISE Russia_EGRPR    SIMULATED       SPADE2 
-# 80319        21993         8793          173        38679         4961         8133         2356 
-# UNSODA    USDA_NCSS 
-# 790       201700
+# AfSPDB  Canada_NPDB       HYBRAS       HydroS   ISRIC_ISIS   ISRIC_WISE Russia_EGRPR    SIMULATED 
+# 80319        21993         8793          173         6546        38679         4961         8133 
+# SPADE2       UNSODA    USDA_NCSS 
+# 2356          790       196267
 library("ggplot2")
 mp <- NULL
 mapWorld <- borders("world", colour="gray50", fill="gray50") 
@@ -347,15 +405,15 @@ saveRDS(tot_sprops, "/data/LandGIS/training_points/soil/soil_hydroprops_horizons
 ## complete points only:
 sel.compl = !is.na(tot_sprops$longitude_decimal_degrees) & !is.na(tot_sprops$w15l2) & !is.na(tot_sprops$w3cld) & !is.na(tot_sprops$ph_h2o) & !is.na(tot_sprops$clay_tot_psa) & !is.na(tot_sprops$oc)
 summary(sel.compl)
-## 20,425
+## 20,446
 saveRDS(tot_sprops[sel.compl,], "/data/LandGIS/training_points/soil/soil_hydroprops_horizons_COMPLETE.rds")
 ## points COMPLETE ----
-tot_sprops.pnts.C = tot_sprops.pnts[which(tot_sprops.pnts$site_key %in% tot_sprops$site_key[sel.compl] & !tot_sprops.pnts$source_db == "SIMULATED"),]
-str(tot_sprops.pnts.C)
+#tot_sprops.pnts.C = tot_sprops.pnts[which(tot_sprops.pnts$site_key %in% tot_sprops$site_key[sel.compl] & !tot_sprops.pnts$source_db == "SIMULATED"),]
+#str(tot_sprops.pnts.C)
 ## 3516
-mp2 <- NULL
-mp2 <- ggplot() + mapWorld + geom_point(aes(x=tot_sprops.pnts.C$longitude_decimal_degrees, y=tot_sprops.pnts.C$latitude_decimal_degrees), color="black", pch="+", size=2) 
-mp2
+#mp2 <- NULL
+#mp2 <- ggplot() + mapWorld + geom_point(aes(x=tot_sprops.pnts.C$longitude_decimal_degrees, y=tot_sprops.pnts.C$latitude_decimal_degrees), color="black", pch="+", size=2) 
+#mp2
 
 tot_sprops.pnts$location_id = as.factor(paste("ID", round(tot_sprops.pnts$longitude_decimal_degrees,5), round(tot_sprops.pnts$latitude_decimal_degrees,5), sep="_"))
 tot_sprops.pnts = tot_sprops.pnts[complete.cases(tot_sprops.pnts[,c("longitude_decimal_degrees","latitude_decimal_degrees")]),]

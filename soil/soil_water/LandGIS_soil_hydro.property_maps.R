@@ -29,14 +29,16 @@ soil_hydroprops.pnts = readRDS.gz("/data/LandGIS/training_points/soil/soil_hydro
 tot_hydroprops = readRDS.gz("/data/LandGIS/training_points/soil/soil_hydroprops_horizons.rds")
 sel.na = (!is.na(tot_hydroprops$w3cld) | !is.na(tot_hydroprops$w15l2))
 summary(sel.na)
-## 191,330
+## 170,456
 tot_hydroprops = tot_hydroprops[sel.na,]
 soil_hydroprops.pnts = soil_hydroprops.pnts[which(soil_hydroprops.pnts$site_key %in% tot_hydroprops$site_key),]
 str(soil_hydroprops.pnts)
-## 27,635 points
+## 25,404 points
 #summary(as.factor(soil_hydroprops.pnts$source_db))
+#AfSPDB       HYBRAS       HydroS   ISRIC_ISIS   ISRIC_WISE Russia_EGRPR    SIMULATED    USDA_NCSS 
+#3016          346           73          350         1483          247         2711        17178
 
-## overlay (takes 45 mins):
+## overlay (takes 15 mins):
 ov.hydroprops <- extract.tiled(obj=soil_hydroprops.pnts, tile.pol=tile.pol, path="/data/tt/LandGIS/grid250m", ID="ID", cpus=parallel::detectCores())
 ## add tile ID:
 id.t = over(spTransform(soil_hydroprops.pnts, CRS(proj4string(tile.pol))), tile.pol)
@@ -51,7 +53,7 @@ summary(rm.hydroprops$w15l2)
 summary(rm.hydroprops$w3cld/rm.hydroprops$w15l2)
 #rm.hydroprops$w3cld = ifelse(rm.hydroprops$w3cld>98, NA, rm.hydroprops$w3cld)
 #rm.hydroprops$w15l2 = ifelse(rm.hydroprops$w15l2>98, NA, rm.hydroprops$w15l2)
-rm.hydroprops$dataset_confidence = ifelse(rm.hydroprops$source_db=="USDA_NCSS", 9, ifelse(rm.hydroprops$source_db=="ISRIC_WISE", 4, 3))
+rm.hydroprops$dataset_confidence = ifelse(rm.hydroprops$source_db=="USDA_NCSS", 9, ifelse(rm.hydroprops$source_db=="ISRIC_WISE" | rm.hydroprops$source_db=="ISRIC_ISIS", 5, 3))
 saveRDS.gz(rm.hydroprops, "/data/LandGIS/soil/soil_water/rm_soil_properties.rds")
 #rm.hydroprops = readRDS.gz("/data/LandGIS/soil/soil_water/rm_soil_properties.rds")
 save.image.pigz(n.cores = parallel::detectCores())
@@ -62,7 +64,7 @@ plot(prof.s$subset, pch="+")
 length(prof.s$subset)
 ## use subset so the results are generated faster
 rm.df <- hor2xyd(rm.hydroprops[rm.hydroprops$site_key %in% prof.s$subset$site_key,], U="hzn_top", L="hzn_bot")
-
+## target variables
 t.vars = c("w3cld","w15l2")
 out.vars = c("watercontent.33kPa","watercontent.1500kPa")
 meth.vars = c("usda.4b1c", "usda.3c2a1a")
@@ -139,7 +141,7 @@ rf.tuneGrid <- expand.grid(mtry = seq(5,120,by=10), splitrule="variance", min.no
 
 library(caret); library(parallel); library(ranger); library(xgboost); library(doParallel)
 nc = parallel::detectCores()
-## takes >12hrs to fit all models
+## takes >2hrs to fit all models
 ## Problems with using parallel -- zombie processes server freezes and needs to be rebooted
 for(j in 1:length(t.vars)){
   out.file = paste0(t.vars[j],"_resultsFit.txt")
@@ -182,7 +184,7 @@ for(j in 1:length(t.vars)){
       mrfX <- ranger(formula=fm.t, 
                      data=dfs, importance="impurity", 
                      write.forest=TRUE, mtry=t.mrfX$bestTune$mtry, num.trees=105,
-                     ## reduce number of trees so the output objects do not get TOO LARGE i.e. >5GB
+                     ## reduce number of trees so the output objects do not become TOO LARGE i.e. >5GB
                      case.weights=case.weights.s)
       saveRDS.gz(mrfX, file=paste0("mrf.",t.vars[j],".rds"))
     } else {
@@ -233,6 +235,7 @@ z.min <- as.list(c(0,0))
 names(z.min) = t.vars
 z.max <- as.list(c(100,100))
 names(z.max) = t.vars
+
 ## test predictions
 j=1; i="T38715"
 gm = readRDS.gz(paste0("mrf.", t.vars[j],".rds"))
@@ -253,6 +256,8 @@ gc(); gc()
 #x = list.files("/data/tt/LandGIS/grid250m", "_xgb", full.names=TRUE, recursive=TRUE)
 #unlink(x)
 #x = list.files("/data/tt/LandGIS/grid250m", "tif.aux.xml", full.names=TRUE, recursive=TRUE)
+#unlink(x)
+#x = unlist(sapply(c("awc_","w3cld_","w15l2_"), function(i){list.files("/data/tt/LandGIS/grid250m", i, full.names=TRUE, recursive=TRUE)}))
 #unlink(x)
 
 ## Run per property ----
@@ -348,5 +353,5 @@ save.image.pigz(n.cores = parallel::detectCores())
 rm.aux = list.files("/mnt/DATA/LandGIS/", pattern=glob2rx("*.tif.aux.xml"), full.names = TRUE, recursive = TRUE)
 unlink(rm.aux)
 ## copy to massive storage ----
-x = list.files("/mnt/DATA/LandGIS/predicted250m", glob2rx("sol_*_*_m_250m_*_*_v0.*.tif$"), full.names = TRUE)
-unlink(x)
+#x = list.files("/mnt/DATA/LandGIS/predicted250m", glob2rx("sol_*_*_m_250m_*_*_v0.*.tif$"), full.names = TRUE)
+#unlink(x)
