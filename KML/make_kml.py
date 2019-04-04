@@ -236,5 +236,5 @@ if __name__=='__main__':
     make_kml('LandGIS.kmz')
     
     # for testing
-    # make_kml('LandGIS.kml','kml')
+    make_kml('LandGIS.kml','kml')
     
