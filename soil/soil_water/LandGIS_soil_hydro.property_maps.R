@@ -275,6 +275,7 @@ library(matrixStats)
 
 ## 18555 tiles
 for(j in 1:length(t.vars)){
+  gc()
   try( detach("package:snowfall", unload=TRUE), silent=TRUE)
   try( detach("package:snow", unload=TRUE), silent=TRUE)
   multiplier = 1
@@ -289,7 +290,7 @@ for(j in 1:length(t.vars)){
   parallel::stopCluster(cl)
   unregister()
   rm(cl)
-  gc(); gc()
+  gc()
   ## XGBoost:
   gm = readRDS.gz(paste0("mgb.", t.vars[j],".rds"))
   gm2.w = weights.lst$m.Xgboost[which(weights.lst$var == t.vars[j])]
@@ -300,7 +301,7 @@ for(j in 1:length(t.vars)){
   parallel::stopCluster(cl)
   rm(cl)
   unregister()
-  gc(); gc()
+  gc()
   ## sum up predictions:
   library(snowfall)
   sfInit(parallel=TRUE, cpus=parallel::detectCores()-2)
@@ -311,7 +312,7 @@ for(j in 1:length(t.vars)){
   x <- snowfall::sfClusterApplyLB(pr.dirs, fun=function(x){ try( sum_predict_ensemble(x, varn=t.vars[j], zmin=z.min[[j]], zmax=z.max[[j]], gm1.w=gm1.w, gm2.w=gm2.w) ) } )
   snowfall::sfStop()
   unregister()
-  gc(); gc()
+  gc()
 }
 rm(gm)
 gc()
@@ -328,16 +329,16 @@ sfStop()
 
 ## Final mosaics ----
 filename.lst = c(
-  as.vector(sapply(paste0("b", c(0, 10, 30, 60, 100, 200), "..", c(0, 10, 30, 60, 100, 200)), function(i){ paste0("/data/LandGIS/predicted250m/sol_",out.vars,"_", meth.vars, "_m_250m_", i, "cm_1950..2017_v0.1.tif") })), 
+  as.vector(sapply(paste0("b", c(0, 10, 30, 60, 100, 200), "..", c(0, 10, 30, 60, 100, 200)), function(i){ paste0("/data/LandGIS/predicted250m/sol_",out.vars,"_", meth.vars, "_m_250m_", i, "cm_1950..2017_v0.1.tif") })), paste0("/data/LandGIS/predicted250m/sol_available.water.capacity_usda.mm_m_250m_", c(0, 10, 30, 60, 100),"..", c(10, 30, 60, 100, 200), "cm_1950..2017_v0.1.tif"),
   paste0("/data/LandGIS/predicted250m/sol_available.water.capacity_usda.mm_m_250m_0..200cm_1950..2017_v0.1.tif")
 )
 filename.lst = c(filename.lst, gsub("_m_", "_md_", filename.lst))
-## 26 maps in total
-varn.lst = rep(c(rep(t.vars, 6), "awc"), 2)
+## 30 maps in total
+varn.lst = rep(c(rep(t.vars, 6), rep("awc", 6)), 2)
 d.lst = c(as.vector(sapply(paste0("M_sl", 1:6), function(i){rep(i, 2)})),
-          paste0("M_tot"),
+          paste0("M_sh", 1:5), paste0("M_tot"),
           as.vector(sapply(paste0("sd_sl", 1:6), function(i){rep(i, 2)})),
-          paste0("sd_tot") )
+          paste0("sd_sh", 1:5), paste0("sd_tot") )
 View(data.frame(filename.lst, varn.lst, d.lst))
 write.csv(data.frame(filename.lst, varn.lst, d.lst), "/data/LandGIS/soil/soil_water/filename_list.csv")
 #x = list.files("/data/LandGIS/predicted250m", glob2rx("sol_*water*_v0.1.tif$"), full.names = TRUE)

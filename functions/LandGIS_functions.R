@@ -964,7 +964,7 @@ carbon_stock <- function(i, n.lst=c("oc.f","db_od","wpg2"), ORCDRC.sd=20, BLD.sd
 
 ## Available water capacity ----
 ## p.197 in https://www.nrcs.usda.gov/wps/portal/nrcs/detail/soils/ref/?cid=nrcs142p2_054247
-awc_tile = function(i, n.lst=c("w3cld","w15l2","db_od","wpg2"), db.h2o=1, out.path="/data/tt/LandGIS/grid250m", volume.pct=TRUE){
+awc_tile = function(i, n.lst=c("w3cld","w15l2","db_od","wpg2"), db.h2o=1, out.path="/data/tt/LandGIS/grid250m", volume.pct=TRUE, d.s=c(100, 200, 300, 400, 1000)){
   ## five standard layers 0-10, 10-30, 30-60, 60-100, 100-200:
   out.all <- paste0(out.path, "/", i, "/awc_M_sh", 1:5, "_", i,".tif")
   out.tv <- paste0(out.path, "/", i, "/awc_M_tot_", i,".tif")
@@ -981,17 +981,18 @@ awc_tile = function(i, n.lst=c("w3cld","w15l2","db_od","wpg2"), db.h2o=1, out.pa
       s$CRFVOL <- rowMeans(s@data[,grep("wpg2", names(s))], na.rm = TRUE)
       ## Water Retention Difference in %:
       if(volume.pct==TRUE){
-        xx <- (s$AW1-s$AW2) * (100-s$CRFVOL)/100 * db.h2o 
+        xx <- (s$AW1-s$AW2) * (100-s$CRFVOL)/100 * db.h2o * d.s[d]/100
       } else {
-        xx <- (s$AW1-s$AW2) * s$BLD/100 * (100-s$CRFVOL)/100 * db.h2o  
+        xx <- (s$AW1-s$AW2) * s$BLD/100 * (100-s$CRFVOL)/100 * db.h2o * d.s[d]/100
       }
       v[[d]] <- round(ifelse(xx<0, 0, xx))
       s$v <- v[[d]]
-      writeGDAL(s["v"], out.all[d], type="Byte", mvFlag=255, options="COMPRESS=DEFLATE")
+      writeGDAL(s["v"], out.all[d], type="Int16", mvFlag=-32768, options="COMPRESS=DEFLATE")
       gc()
     }
     ## Total available water capacity in mm:
-    s$tv = rowSums( data.frame(mapply(`*`, as.data.frame(v)/100, c(100, 200, 300, 400, 1000))), na.rm = TRUE )
+    #s$tv = rowSums( data.frame(mapply(`*`, as.data.frame(v)/100, )), na.rm = TRUE )
+    s$tv = rowSums( as.data.frame(v), na.rm = TRUE )
     writeGDAL(s["tv"], out.tv, type="Int16", mvFlag=-32768, options="COMPRESS=DEFLATE")
   }
 }
