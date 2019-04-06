@@ -1,0 +1,630 @@
+"procedure_key","procedure_name","requested_analysis_name","procedure_abbreviation","procedure_code","procedure_description","SSIR_42_v_5_Page_number","URL_to_SSIR_42_v_5"
+1,"Aggregate Stability, 2- to 0.5-mm Aggregates Retained","Aggregate Stability","AGGSTAB","3F1a1a","SSIR No. 42, version 4, page 163","213","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=241"
+233,"Saturated Paste and Soluble Salts, EC cap rise","Saturated Paste and Soluble Salts","SATPEC2","8A1a","CMS","989","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=1017"
+234,"Saturated Paste and Soluble Salts, AA I","Saturated Paste and Soluble Salts","SatxAA1",,"CMS",,
+235,"Saturated Paste and Soluble Salts, AA II","Saturated Paste and Soluble Salts","SatxAA2",,"CMS",,
+236,"Saturated Paste and Soluble Salts, ICP","Saturated Paste and Soluble Salts","SatxICP",,"CMS",,
+237,"Bulk Density, Reconstituted, Moist","Bulk Density, Reconstituted, Moist","DBRECON_M","DbRec1","CMS",,
+242,"derived AL_SAT, 5G1b","Derived","none","5G1b","CMS",,
+243,"derived AL_SAT, 5G1","Derived","none","5G1","CMS",,
+244,"derived BSECAT, 5C3b","Derived","none","5C3b","CMS",,
+245,"derived BSECAT, 5C3","Derived","none","5C3","CMS",,
+246,"derived BSESAT, 5C1","Derived","none","5C1","CMS",,
+247,"derived CEC_SUM, 5A3c","Derived","none","5A3c","CMS",,
+248,"derived CEC_SUM, 5A3a","Derived","none","5A3a","CMS",,
+249,"derived COLE, 4D1","Derived","none","4D1","CMS",,
+250,"derived ECEC, 5A3d","Derived","none","5A3d","CMS",,
+251,"derived ECEC, 5A3b","Derived","none","5A3b","CMS",,
+252,"derived est total salts, 8D5","Derived","none","8D5","CMS",,
+253,"derived NA_EXCH, 5D2","Derived","none","5D2","CMS",,
+254,"derived SAR, 5E","Derived","none","5E","CMS",,
+255,"derived WRD, 4C1b","Derived","none","4C1b","CMS",,
+256,"derived WRD, 4C1","Derived","none","4C1","CMS",,
+257,"Unknown","Unknown","none","NK","CMS",,
+258,"Cations, Acid Oxalate Extractable, Aluminum","Acid Oxalate extraction","OXAL","6G12","CMS","742","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=770"
+258,"Cations, Acid Oxalate Extractable, Aluminum","Acid Oxalate extraction","OXAL","6G12b","CMS","742","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=770"
+259,"Cations, Acid Oxalate Extractable, Iron","Acid Oxalate extraction","OXAL","6C9a","CMS","846","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=874"
+259,"Cations, Acid Oxalate Extractable, Iron","Acid Oxalate extraction","OXAL","6C9b","CMS","846","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=874"
+259,"Cations, Acid Oxalate Extractable, Iron","Acid Oxalate extraction","OXAL","6C9c","CMS",,
+260,"Cations, Acid Oxalate Extractable, Silica","Acid Oxalate extraction","OXAL","6V2","CMS","742","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=770"
+260,"Cations, Acid Oxalate Extractable, Silica","Acid Oxalate extraction","OXAL","6V2b","CMS","742","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=770"
+260,"Cations, Acid Oxalate Extractable, Silica","Acid Oxalate extraction","OXAL","6V2c","CMS",,
+261,"Cations, Acid Oxalate Extractable, Aluminum","Acid Oxalate extraction","OXAL","6G12","CMS, SSIR No. 42, version 3, page","742","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=770"
+261,"Cations, Acid Oxalate Extractable, Aluminum","Acid Oxalate extraction","OXAL","6G12b","CMS, SSIR No. 42, version 3, page","742","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=770"
+262,"Cations, Acid Oxalate Extractable, Iron","Acid Oxalate extraction","OXAL","6C9a","CMS, SSIR No. 42, version 3, page","742","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=770"
+262,"Cations, Acid Oxalate Extractable, Iron","Acid Oxalate extraction","OXAL","6C9b","CMS, SSIR No. 42, version 3, page","742","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=770"
+262,"Cations, Acid Oxalate Extractable, Iron","Acid Oxalate extraction","OXAL","6C9c","CMS, SSIR No. 42, version 3, page",,
+263,"Cations, Acid Oxalate Extractable, Silica","Acid Oxalate extraction","OXAL","6V2","CMS, SSIR No. 42, version 3, page","742","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=770"
+263,"Cations, Acid Oxalate Extractable, Silica","Acid Oxalate extraction","OXAL","6V2b","CMS, SSIR No. 42, version 3, page","742","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=770"
+263,"Cations, Acid Oxalate Extractable, Silica","Acid Oxalate extraction","OXAL","6V2c","CMS, SSIR No. 42, version 3, page",,
+264,"Cations, Acid Oxalate Extractable, Aluminum","Acid Oxalate extraction","OXAL","6G12","CMS, SSIR No. 42, version 3, page 279","742","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=770"
+264,"Cations, Acid Oxalate Extractable, Aluminum","Acid Oxalate extraction","OXAL","6G12b","CMS, SSIR No. 42, version 3, page 279","742","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=770"
+265,"Cations, Acid Oxalate Extractable, Iron","Acid Oxalate extraction","OXAL","6C9a","CMS, SSIR No. 42, version 3, page 279","846","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=874"
+265,"Cations, Acid Oxalate Extractable, Iron","Acid Oxalate extraction","OXAL","6C9b","CMS, SSIR No. 42, version 3, page 279","742","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=770"
+265,"Cations, Acid Oxalate Extractable, Iron","Acid Oxalate extraction","OXAL","6C9c","CMS, SSIR No. 42, version 3, page 279",,
+266,"Cations, Acid Oxalate Extractable, Silica","Acid Oxalate extraction","OXAL","6V2","CMS, SSIR No. 42, version 3, page 279","742","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=770"
+266,"Cations, Acid Oxalate Extractable, Silica","Acid Oxalate extraction","OXAL","6V2b","CMS, SSIR No. 42, version 3, page 279","742","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=770"
+266,"Cations, Acid Oxalate Extractable, Silica","Acid Oxalate extraction","OXAL","6V2c","CMS, SSIR No. 42, version 3, page 279",,
+267,"Cations, Acid Oxalate Extractable, Manganese","Acid Oxalate extraction","OXAL","6D5b","CMS, SSIR No. 42, version 3, page 279","742","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=770"
+267,"Cations, Acid Oxalate Extractable, Manganese","Acid Oxalate extraction","OXAL","6D5b","CMS, SSIR No. 42, version 3, page 279","742","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=770"
+268,"Cations, Acid Oxalate Extractable, Phosphorus","Acid Oxalate extraction","OXAL","6S8a","CMS, SSIR No. 42, version 3, page 279","742","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=770"
+269,"Organic Carbon, 6A1","Organic Carbon","unknown","6A1","CMS","652","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=680"
+269,"Organic Carbon, 6A1","Organic Carbon","unknown","6A1","CMS",,
+270,"Organic Carbon, Peroxide Digestion, Weight Loss","Organic Carbon","unknown","6A3a","CMS, SSIR No. 1, 1972, page 29","917","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=945"
+271,"Bulk Density, Air-Dry","Bulk Density,","unknown","4A1b","SSIR No. 1, version 1974, page 15","899","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=927"
+272,"Bulk Density, 30-cm Absorption","Bulk Density,","unknown","4A1c","SSIR No. 1, version 1974, page 15","899","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=927"
+273,"Bulk Density, 1/3-Bar Desorption I","Bulk Density,","unknown","4A1d","SSIR No. 42, version 3, page 121","899","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=927"
+273,"Bulk Density, 1/3-Bar Desorption I","Bulk Density,","unknown","4A1d","SSIR No. 42, version 3, page 121","899","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=927"
+274,"Bulk Density, 1/3-Bar Desorption II","Bulk Density,","unknown","4A1e","SSIR No. 1, version 1974, page 15","899","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=927"
+275,"Bulk Density, 1/3-Bar Desorption III","Bulk Density,","unknown","4A1f","SSIR No. 1, version 1974, page 15","899","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=927"
+276,"Bulk Density, 1/10-Bar Desorption","Bulk Density,","unknown",,"SSIR No. 1, version 1974, page 15",,
+277,"Bulk Density, Oven-Dry","Bulk Density,","unknown","4A1h","SSIR No. 42, version 3, page 127","896","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=924"
+277,"Bulk Density, Oven-Dry","Bulk Density,","unknown","4A1h","SSIR No. 42, version 3, page 127","896","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=924"
+278,"Water Retention, 0.1 or 0.33 bar, Soil Pieces","Water Retention, 0.1 or 0.33 bar, soil pieces","unknown","4B1b","SSIR No. 1, version 1974, page 16","900","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=928"
+279,"Water Retention, cores, 0.06, 0.1, 0.33, or 1 bar, pressure-plate extraction","Water Retention, cores, 0.06, 0.1, 0.33, or 1 Bar, pressure-plate extraction","unknown","4B1d","SSIR No. 1, version 1974, page 17","150","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=178"
+280,"Water Retention, Water Content","Water Retention, Water Content","unknown","4B1f","no desc",,
+281,"Water Retention, Sand-Table Absorption","Water Retention, Sand-Table Absorption","unknown","4B3","SSIR No. 1, version 1974, page 17","901","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=929"
+282,"Aggregate Stability, Wet Sieving, 1-2 mm, moist","Aggregate Stability, moist","unknown","4G1b","no desc",,
+283,"Atterberg Limits, NSMC Lab, moist","Atterberg Limits moist","unknown","4F1b","no desc","218","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=246"
+284,"Calcium Carbonate, HCl Treatment","Calcium Carbonate Equivalent, <2mm","CACO3","6E1","SSIR No. 42, version 3, page 271","929","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=957"
+285,"Calcium Carbonate, Sensitive Qualitative Method, Visual, Gas Bubbles","Calcium Carbonate Equivalent, <2mm","CACO3","6E2a","SSIR No. 1, version 1974, page 35","933","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=961"
+286,"Calcium Carbonate, HCl Treatment, Titrimetric","Calcium Carbonate Equivalent, <2mm","CACO3","6E1e","SSIR No. 1, version 1974, page 34",,
+286,"Calcium Carbonate, HCl Treatment, Titrimetric","Calcium Carbonate Equivalent, <2mm","CACO3","6E1e","SSIR No. 1, version 1974, page 34","932","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=960"
+2,"Atterberg Limits, NSMC Lab","Atterberg Limits","ATTERBERG","3H","SSIR No. 42, version 4, page 167","218","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=246"
+3,"Bulk Density and Water Retention, Pressure-Plate, Clods","Bulk Density, Clod","DBH2ORET","DbWR1","SSIR No. 42, version 4, page 104","138","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=166"
+4,"Bulk Density and Water Retention, Pressure-Plate, Cores","Bulk Density, Soil Core","DBH2ORETCO","3B6","SSIR No. 42, version 4, page 104","138","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=166"
+5,"Bulk Density and Water Retention, Reconstituted","Bulk Density, Reconstituted","DBRECON","3B2","SSIR No. 42, version 4, page 99","125","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=153"
+6,"Bulk Density, Compliant Cavity","Bulk Density, Compliant Cavity","DBCOMPCAV","3B3","SSIR No. 42, version 4, page 98","130","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=158"
+8,"Bulk Density, Field State","Bulk Density, Clod, Field State","DBFLDSTATE","3B1a","SSIR No. 42, version 4, page 75","101","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=129"
+9,"Bulk Density, Reconstituted, Moist","Bulk Density, Reconstituted, Moist","DBRECON_M","DbRec1",,,
+10,"Bulk Density, Rewet, Clods","Bulk Density, Clod, Rewet","DBREWET","3B1d","SSIR No. 42, version 4, page 89","119","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=147"
+11,"Bulk Sample Preparation","Sample Preparation","BlkSmpPrep",,"SSIR No. 42, version 4, page 16",,
+12,"Calcium Carbonate Equivalent, HCl, <2mm","Calcium Carbonate Equivalent, <2mm","CACO3","4E1a1a1a1","SSIR No. 42, version 4, page 269","370","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=398"
+13,"Calcium Carbonate Equivalent, HCl, 2-20mm","Calcium Carbonate Equivalent, 2-20mm","CACO3_20","4E1a1a1a2","SSIR No. 42, version 4, page 269","370","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=398"
+13,"Calcium Carbonate Equivalent, HCl, 2-20mm","Calcium Carbonate Equivalent, 2-20mm","CACO3_20","6E4","SSIR No. 42, version 4, page 269","370","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=398"
+14,"Carbon, Total","Carbon, Total","TOTC","6A2e","SSIR No. 42, version 4, page 473","713","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=741"
+15,"Cations, Acid Oxalate Extractable","Acid Oxalate Extract","OXAL","4G2","SSIR No. 42, version 4, page 312","432","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=460"
+16,"Cations, Dithionite-Citrate Extractable","Dithionite-Citrate Extract","DITH","4G1","SSIR No. 42, version 4, page 307","426","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=454"
+17,"Cations, Potassium Chloride Extractable","KCl Extract","KCL","4B3a1a","SSIR No. 42, version 4, page 197","254","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=282"
+18,"Cations, Pyrophosphate Extractable","Na-Pyrophosphate Extract","PYRO","4G3","SSIR No. 42, version 4, page 317","440","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=468"
+19,"CEC and Cations, NH4Cl","CEC and Cations, Neutral Salts","CECCL","4B1b1a","SSIR No. 42, version 4, page 181","236","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=264"
+20,"CEC and Cations, NH4OAc","CEC and Cations, Routine","CECNH4","4B1a1","SSIR No. 42, version 4, page 173","230","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=258"
+21,"Differential Scanning Calorimetry, Thermal Analyzer","Clay Mineralogy, DSC","DSC910S","7A3a","SSIR No. 42, version 4, page 410",,
+22,"Effervescence, 1N HCl","Effervescence, 1N HCl","EFF_1nhcl","1B1b2d2","SSIR No. 42, version 4, page 25","35","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=63"
+23,"Extractable Acidity, BaCl2-Triethanolamine, Titration","Extractable Acidity, BaCl2-TEA","EXTRACID","4B2a1a1","SSIR No. 42, version 4, page 191","603","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=631"
+23,"Extractable Acidity, BaCl2-Triethanolamine, Titration","Extractable Acidity, BaCl2-TEA","EXTRACID","4B2a1a1","SSIR No. 42, version 4, page 191","603","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=631"
+23,"Extractable Acidity, BaCl2-Triethanolamine, Titration","Extractable Acidity, BaCl2-TEA","EXTRACID","6H5b","SSIR No. 42, version 4, page 191","603","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=631"
+24,"Gypsum, H2O Extraction, Acetone Precipitation, <2mm","Gypsum, <2mm","GYPSUM","4E2a1a1a1","SSIR No. 42, version 4, page 273","375","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=403"
+24,"Gypsum, H2O Extraction, Acetone Precipitation, <2mm","Gypsum, <2mm","GYPSUM","6F1a","SSIR No. 42, version 4, page 273","375","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=403"
+25,"Gypsum, H2O Extraction, Acetone Precipitation, 2-20mm","Gypsum, 2-20mm","GYP20","4E2a1a1a2","SSIR No. 42, version 4, page 273","375","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=403"
+26,"Mineral Content, Loss on Ignition","Mineral Content","MINIGNITE","5A","SSIR No. 42, version 4, page 368","495","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=523"
+27,"Nitrate, 1 M KCl Extractable, FIA","Nitrate, KCl Extractable","NO3KCL","4D9a1a","SSIR No. 42, version 4, page 260","360","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=388"
+28,"Nitrogen, Mineralizable","Nitrogen, Mineralizable","MINT","6B2a1a1","SSIR No. 42, version 4, page 388","664","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=692"
+29,"Nitrogen, Total","Nitrogen, Total","TOTN","6B4a","SSIR No. 42, version 4, page 475","716","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=744"
+30,"Optical Analysis, Glass Count","Optical Analysis, Glass Count","OPTICAL_G","7B1a2","SSIR No. 42, version 4, page 428","566","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=594"
+31,"Optical Analysis, Full Grain Count","Optical Analysis, Full Count","OPTICAL_F","7B1a2","SSIR No. 42, version 4, page 428","566","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=594"
+32,"Organic Fiber Analysis","Fiber Analysis","FIBANAL","5C","SSIR No. 42, version 4, page 371","499","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=527"
+33,"Particle density","Particle Density <2mm","pd_l2","3G1a1","SSIR No. 42, version 4, page 165","216","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=244"
+34,"Particle density >2 mm","Particle Density >2mm","pd_g2","3G1a2","SSIR No. 42, version 4, page 165","216","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=244"
+35,"pH, 1N KCl","pH, KCl","PHKCL","4C1a2a3","SSIR No. 42, version 4, page 215","279","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=307"
+35,"pH, 1N KCl","pH, KCl","PHKCL","8C1c","SSIR No. 42, version 4, page 215","279","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=307"
+35,"pH, 1N KCl","pH, KCl","PHKCL","8C1c","SSIR No. 42, version 4, page 215",,
+36,"pH, 1N NaF","pH, NaF","PHNAF","4C1a1a1","SSIR No. 42, version 4, page 205","267","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=295"
+37,"pH, Oxidized","pH, Oxidized","PHOXID","4C1a1a3","SSIR No. 42, version 4, page 209","271","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=299"
+38,"pH, Routine, 1:1 Water and 1:2 0.01M CaCl2","pH, Routine","PHROUT","4C1a2a","SSIR No. 42, version 4, page 213","276","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=304"
+39,"Phosphate, Water Soluble","Phosphate, Water Soluble","H2OPO4","4D2a1b1","SSIR No. 42, version 4, page 226","292","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=320"
+40,"Phosphorus, Bray 1","Phosphorus, Bray 1","BRAYP","4D3","SSIR No. 42, version 4, page 231","327","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=355"
+40,"Phosphorus, Bray 1","Phosphorus, Bray 1","BRAYP","4D3a1","SSIR No. 42, version 4, page 231","327","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=355"
+40,"Phosphorus, Bray 1","Phosphorus, Bray 1","BRAYP","6S3b","SSIR No. 42, version 4, page 231","327","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=355"
+40,"Phosphorus, Bray 1","Phosphorus, Bray 1","BRAYP","6S3d","SSIR No. 42, version 4, page 231","327","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=355"
+40,"Phosphorus, Bray 1","Phosphorus, Bray 1","BRAYP","6S3e","SSIR No. 42, version 4, page 231","327","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=355"
+40,"Phosphorus, Bray 1","Phosphorus, Bray 1","BRAYP","6S3f","SSIR No. 42, version 4, page 231","327","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=355"
+40,"Phosphorus, Bray 1","Phosphorus, Bray 1","BRAYP","BRAYP","SSIR No. 42, version 4, page 231","327","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=355"
+41,"Phosphorus, Bray 2","Phosphorus, Bray 2","BRAY2P","4D4a1","SSIR No. 42, version 4, page 239","331","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=359"
+42,"Phosphorus, Citric Acid Extractable","Phosphorus, Citric Acid Extractable","CITACIDP","4D7a1","SSIR No. 42, version 4, page 253","351","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=379"
+43,"Phosphorus, New Zealand P Retention","New Zealand Phosphorus Retention","NZPRET","4D8a1","SSIR No. 42, version 4, page 257","356","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=384"
+44,"Phosphorus, Olsen","Phosphorus, Olsen","OLSENP","4D5a1","SSIR No. 42, version 4, page 242","336","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=364"
+45,"PSDA, Dith, Pipet","PSDA, Dith, Pipet","PSDADITH","3A1a3a","SSIR No. 42, version 4, page 46","67","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=95"
+46,"PSDA, Moist, Dith, Pipet","PSDA, Moist, Dith, Pipet","PSDAMDITH","3A1a3b","SSIR No. 42, version 4, page 52","74","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=102"
+47,"PSDA, Moist, NaOAc, Pipet","PSDA, Moist, NaOAc, Pipet","PSDAMNAOAC","3A1a2b","SSIR No. 42, version 4, page 51","73","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=101"
+48,"PSDA, Moist, NaOH, Pipet","PSDA, Moist, NaOH, Pipet","PSDAMNAOH","3A1a4b","SSIR No. 42, version 4, page 53","75","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=103"
+49,"PSDA, Moist, Pipet","PSDA, Moist, Pipet","PSDAMST","3A1a1b","SSIR No. 42, version 4, page 50","72","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=100"
+50,"PSDA, Moist, Ultrasonic, Pipet","PSDA, Moist, Ultrasonic, Pipet","PSDAMULTRA","3A1a5b","SSIR No. 42, version 4, page 53","76","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=104"
+51,"PSDA, NaOAc, Pipet","PSDA, NaOAc, Pipet","PSDANAOAC","3A1a2a","SSIR No. 42, version 4, page 46","66","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=94"
+52,"PSDA, NaOH, Pipet","PSDA, NaOH, Pipet","PSDANAOH","3A1a4a","SSIR No. 42, version 4, page 47","67","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=95"
+53,"PSDA, Routine, Pipet","PSDA, Air-dry,","PSDA","3A1","SSIR No. 42, version 4, page 41","60","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=88"
+53,"PSDA, Routine, Pipet","PSDA, Air-dry,","PSDA","3A1a1a","SSIR No. 42, version 4, page 41","60","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=88"
+54,"PSDA, Ultrasonic, Pipet","PSDA, Ultrasonic, Pipet","PSDAULTRA","3A1a5a","SSIR No. 42, version 4, page 47","68","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=96"
+55,"PSDA, Water Dispersible, Air-dry","PSDA, Water Dispersible, Air-dry","H2OPSDAAD","3A1a6a","SSIR No. 42, version 4, page 48","70","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=98"
+56,"PSDA, Water Dispersible, hydrometer, air-dry","PSDA, Water Dispersible, hydrometer, air-dry","H2OHYDRAD","PSDAh1",,,
+57,"PSDA, Water Dispersible, Moist","PSDA, Water Dispersible, Moist","H2OPSDAM","3A1a6b","SSIR No. 42, version 4, page 55","78","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=106"
+58,"Salt Prediction, 1:2 (w/v)","Salt Predict","PREDICT","4F1a1a1","SSIR No. 42, version 4, page 277","383","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=411"
+59,"Saturated Paste and Soluble Salts","Saturated Paste and Soluble Salts","SATP","4F2","SSIR No. 42, version 4, page 278","390","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=418"
+59,"Saturated Paste and Soluble Salts","Saturated Paste and Soluble Salts","SATP","SATP_TAMU","SSIR No. 42, version 4, page 278",,
+60,"Sulfur, Total","Sulfur, Total","TOTS","6R3c","CMS, LIMS, elementar NCS SSIR No. 42, version 4, page 528","464","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=492"
+61,"Surface Area, EGME","Surface Area, EGME","EGME","7D2","SSIR No. 42, version 4, page 555","819","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=847"
+62,"Thermogravimetric Analysis","Clay Mineralogy, TGA","TGA51","7A2a","SSIR No. 42, version 4, page 415","533","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=561"
+62,"Thermogravimetric Analysis","Clay Mineralogy, TGA","TGA51","7A2a","SSIR No. 42, version 4, page 415","533","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=561"
+62,"Thermogravimetric Analysis","Clay Mineralogy, TGA","TGA51","7A4b","SSIR No. 42, version 4, page 415",,
+63,"Thin Section","Micromorphology, Thin Section","THINSECT","3E1","SSIR No. 42, version 4, page 140","181","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=209"
+64,"Total Analysis, HF, HNO3, HCl Dissolution","Total Elemental Analysis","TOTANAL","4H1b","SSIR No. 42, version 4, page 341","456","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=484"
+65,"Water Retention, 0.06 Bar, Pressure-Plate, <2mm","Water Retention, 0.06 Bar, Pressure-Plate, <2mm","H2O.06Br<2","3C1a1a","SSIR No. 42, version 4, page 106","141","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=169"
+66,"Water Retention, 0.1 Bar, Pressure-Plate, <2mm","Water Retention, 0.1 Bar, Pressure-Plate, <2mm","H2O.1Bar<2","3C1b1a","SSIR No. 42, version 4, page 106","141","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=169"
+67,"Water Retention, 0.33 Bar, Pressure-Plate, <2mm","Water Retention, 0.33 Bar, Pressure-Plate, <2mm","H2O.33Br<2","3C1c1a","SSIR No. 42, version 4, page 106","141","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=169"
+67,"Water Retention, 0.33 Bar, Pressure-Plate, <2mm","Water Retention, 0.33 Bar, Pressure-Plate, <2mm","H2O.33Br<2","4B1a","SSIR No. 42, version 4, page 106","141","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=169"
+68,"Water Retention, 1 Bar, Pressure-Plate, <2mm","Water Retention, 1 Bar, Pressure-Plate, <2mm","H2O1Bar<2","3C1d1a","SSIR No. 42, version 4, page 106","141","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=169"
+69,"Water Retention, 15 Bar, Pressure-Plate, <2mm","Water Retention, 15 Bar, Pressure-Plate, <2mm","H2O15Bar<2","3C2a1a","SSIR No. 42, version 4, page 106","165","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=193"
+69,"Water Retention, 15 Bar, Pressure-Plate, <2mm","Water Retention, 15 Bar, Pressure-Plate, <2mm","H2O15Bar<2","3C2a1a","SSIR No. 42, version 4, page 106","165","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=193"
+69,"Water Retention, 15 Bar, Pressure-Plate, <2mm","Water Retention, 15 Bar, Pressure-Plate, <2mm","H2O15Bar<2","4B2a","SSIR No. 42, version 4, page 106","165","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=193"
+70,"Water Retention, 2 Bar, Pressure-Plate, <2mm","Water Retention, 2 Bar, Pressure-Plate, <2mm","H2O2Bar<2","3C1e1a","SSIR No. 42, version 4, page 106","141","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=169"
+71,"Water Retention, ADOD","Water Retention, ADOD","ADOD","3D1","SSIR No. 42, version 4, page 132","171","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=199"
+72,"Water Retention, Field State","Water Retention, Field State","H2ORETFLD","3C3","SSIR No. 42, version 4, page 131","169","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=197"
+72,"Water Retention, Field State","Water Retention, Field State","H2ORETFLD","4B4","SSIR No. 42, version 4, page 131","169","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=197"
+73,"X-ray Diffraction, Thin Film on Glass, Resin Pretreatment","Clay Mineralogy, X-ray Diffraction","XRAY","7A1a1","SSIR No. 42, version 4, page 399","676","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=704"
+74,"Total N, C, S","Total Nitrogen, Carbon and Sulfur","NCS_Tot","4H2a","SSIR No. 42, version 4, page 347","464","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=492"
+75,"Melanic Index","Melanic Index","Melanic","5D","SSIR No. 42, version 4, page 374","502","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=530"
+76,"Phosphorus, Mehlich III","Phosphorus, Mehlich III","MEHLICH3P","4D6a1","SSIR No. 42, version 4, page 246","340","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=368"
+77,"Trace Elements (HNO3 + HCl)","Trace Elements","TrElem","4H1a","SSIR No. 42, version 4, page 324","445","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=473"
+77,"Trace Elements (HNO3 + HCl)","Trace Elements","TrElem","4H1a","SSIR No. 42, version 4, page 324","445","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=473"
+78,"Major Elements (HF+HNO3+HCl)","Major Elements","MjElem","4H1b","SSIR No. 42, version 4, page 341","456","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=484"
+79,"Nitrogen, Mineralizable (EPA)","Nitrogen, Mineralizable (EPA)","MINTEPA","4D10a1","SSIR No. 42, version 4, page 265","365","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=393"
+80,"CEC and Cations, NH4OAc, 2M KCl displacement","CEC and Cations, Routine","CECdNH4","4B1a1a",,"230","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=258"
+81,"Cations, Acid Oxalate Extractable, Optical Density","Acid Oxalate extraction","OXAL","8J","CMS, SSIR No. 42, version 3, page","742","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=770"
+81,"Cations, Acid Oxalate Extractable, Optical Density","Acid Oxalate extraction","OXAL","8J1b","CMS, SSIR No. 42, version 3, page","742","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=770"
+81,"Cations, Acid Oxalate Extractable, Optical Density","Acid Oxalate extraction","OXAL","8J1c","CMS, SSIR No. 42, version 3, page","742","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=770"
+82,"Cations, Acid Oxalate Extractable, Optical Density","Acid Oxalate extraction","OXAL","8J","CMS, SSIR No. 42, version 3, page 279","846","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=874"
+82,"Cations, Acid Oxalate Extractable, Optical Density","Acid Oxalate extraction","OXAL","8J1b","CMS, SSIR No. 42, version 3, page 279","846","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=874"
+82,"Cations, Acid Oxalate Extractable, Optical Density","Acid Oxalate extraction","OXAL","8J1c","CMS, SSIR No. 42, version 3, page 279","846","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=874"
+83,"Phosphorus, Bray 1","Phosphorus, Bray 1","unknown","4D3","CMS","327","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=355"
+83,"Phosphorus, Bray 1","Phosphorus, Bray 1","unknown","4D3a1","CMS","327","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=355"
+83,"Phosphorus, Bray 1","Phosphorus, Bray 1","unknown","6S3b","CMS","788","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=816"
+83,"Phosphorus, Bray 1","Phosphorus, Bray 1","unknown","6S3d","CMS","788","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=816"
+83,"Phosphorus, Bray 1","Phosphorus, Bray 1","unknown","6S3e","CMS","788","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=816"
+83,"Phosphorus, Bray 1","Phosphorus, Bray 1","unknown","6S3f","CMS","788","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=816"
+83,"Phosphorus, Bray 1","Phosphorus, Bray 1","unknown","BRAYP","CMS","788","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=816"
+84,"Bulk Density","Bulk Density","unknown",,"CMS",,
+85,"Bulk Density, estimated","Bulk Density","Dbest",,"CMS",,
+86,"Bulk Density and Water Retention, Clods","Bulk Density, Clod","DBH2ORET",,"CMS, SSIR No. 42, 1972, page 14",,
+87,"Bulk Density and Water Retention, Clods","Bulk Density, Clod","unknown",,"CMS",,
+88,"Bulk Density, Rewet, Clods","Bulk Density, Clod, Rewet","unknown","3B1d","CMS","119","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=147"
+89,"Calcium Carbonate Equivalent, H2SO4,","Calcium Carbonate Equivalent, <2mm","CACO3",,"CMS, SSIR No. 42, 1972, page 35",,
+90,"Calcium Carbonate Equivalent, HCl,","Calcium Carbonate Equivalent, <2mm","CACO3","6E1d","CMS, SSIR No. 42, 1972, page 34","932","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=960"
+91,"Calcium Carbonate Equivalent, HCl,","Calcium Carbonate Equivalent, <2mm","CACO3","6E1c","CMS, SSIR No. 42, 1972, page 34","930","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=958"
+92,"Calcium Carbonate Equivalent, HCl,","Calcium Carbonate Equivalent, <2mm","CACO3","6E1b","CMS, SSIR No. 42, 1972, page 33","929","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=957"
+93,"Calcium Carbonate Equivalent, HCl,","Calcium Carbonate Equivalent, <2mm","CACO3","6E1g","CMS, SSIR No. 42, 1984, page 39","370","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=398"
+94,"Calcium Carbonate Equivalent, HCl,","Calcium Carbonate Equivalent, <2mm","CACO3","6E1a","CMS, SSIR No. 42, 1972, page","929","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=957"
+95,"Calcium Carbonate Equivalent, HCl,","Calcium Carbonate Equivalent, <2mm","CACO3",,"CMS, SSIR No. 42, version 3, page 271",,
+96,"CEC, BaCl2, pH 8.2","CEC and Cations, BaCl2, pH 8.2","CECbacl","5A5","CMS, SSIR No. 42, 1972, page 23","906","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=934"
+97,"CEC, KOAc, pH 7.0","CEC and Cations, KOAc, pH 7.0","CECkac",,"CMS, SSIR No. 42, 1972, page 23",,
+98,"CEC, NaOAc, pH 8.2, centrifuge","CEC and Cations, NaOAc, pH 8.2","CECnac","5A2a","CMS, SSIR No. 42, 1972, page 23","904","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=932"
+99,"CEC, NH4OAc, pH 7.0, Buchner funnel, direct distillation","CEC and Cations, NH4OAc, pH 7.0","CECNH4b","5A1a","CMS, SSIR No. 42, 1972, page 22","903","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=931"
+100,"CEC, NH4OAc, pH 7.0","CEC and Cations, NH4OAc, pH 7.0","unknown",,"CMS",,
+101,"CEC, NH4OAc, pH 7.0, leaching tube, direct distillation","CEC and Cations, NH4OAc, pH 7.0","CECNH4l","5A6a","CMS, SSIR No. 42, 1972, page 24","907","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=935"
+102,"CEC, NH4OAc, pH 7.0, automatic extractor","CEC and Cations, NH4OAc, pH 7.0","CECNH4ae",,"CMS, SSIR No. 42, 1984, page 29",,
+103,"CEC, NH4OAc, pH 7.0, automatic extractor, direct distillation","CEC and Cations, NH4OAc, pH 7.0","CECNH4aed","5A8a","CMS, SSIR No. 42, 1984, page 30","908","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=936"
+104,"CEC, NH4OAc, pH 7.0, automatic extractor, steam distillation I","CEC and Cations, NH4OAc, pH 7.0","CECNH4aes","5A8b","CMS, SSIR No. 42, 1984, page 30","827","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=855"
+104,"CEC, NH4OAc, pH 7.0, automatic extractor, steam distillation I","CEC and Cations, NH4OAc, pH 7.0","CECNH4aes","5A8b","CMS, SSIR No. 42, 1984, page 30","827","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=855"
+105,"Cations, Dithionite-Citrate Extractable","Dithionite-Citrate Extract","unknown","4G1","CMS","426","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=454"
+106,"Cations, Dithionite-Citrate Extractable","Dithionite-Citrate Extract","DITH","4G1","CMS, SSIR No. 42, 1972, page 31","426","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=454"
+107,"Cations, Dithionite-Citrate Extractable","Dithionite-Citrate Extract","DITH","4G1","CMS, SSIR No. 42, 1984, page 37","426","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=454"
+108,"Cations, Dithionite-Citrate Extractable","Dithionite-Citrate Extract","DITH","4G1","CMS, SSIR No. 42, version 3, page 233","426","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=454"
+109,"Cations, Dithionite-Citrate Extractable","Dithionite-Citrate Extract","DITH","4G1","CMS","426","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=454"
+110,"Cations, Dithionite-Citrate Extractable","Dithionite-Citrate Extract","DITH","4G1","CMS","426","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=454"
+111,"Cations, Dithionite-Citrate Extractable","Dithionite-Citrate Extract","DITH","4G1","CMS","426","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=454"
+112,"Extractable Acidity, BaCl2-Triethanolamine I","Extractable Acidity, BaCl2-TEA","EXTRACID","6H1a","CMS, SSIR No. 1, 1972, page 38","943","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=971"
+113,"Extractable Acidity, BaCl2-Triethanolamine II","Extractable Acidity, BaCl2-TEA","EXTRACID","6H2b","CMS, SSIR No. 1, 1972, page 38","944","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=972"
+114,"Extractable Acidity, BaCl2-Triethanolamine III","Extractable Acidity, BaCl2-TEA","EXTRACID","6H4a","CMS, SSIR No. 1, 1984, page 45",,
+115,"Extractable Acidity, BaCl2-Triethanolamine IV, automatic extractor","Extractable Acidity, BaCl2-TEA","EXTRACID","6H5a","CMS, SSIR No. 1, 1984, page 45",,
+116,"Extractable Acidity, BaCl2-Triethanolamine","Extractable Acidity, BaCl2-TEA","unknown",,"CMS",,
+117,"Gypsum","Gypsum, <2mm","unknown",,"CMS",,
+118,"Gypsum, indirect estimate, Ca & SO4","Gypsum, <2mm","GYPSUM",,"CMS, SSIR No. 42, 1972, page 36",,
+119,"Gypsum, weight loss","Gypsum, <2mm","GYPSUM","6F2a","CMS, SSIR No. 42, 1984, page 41",,
+120,"Gypsum, ion chromatograph","Gypsum, <2mm","GYPSUM","6F1c","CMS, SSIR No. 42, 1984, page 41",,
+121,"Gypsum, H2O Extraction, Acetone Precipitation, <2mm","Gypsum, <2mm","GYPSUM","4E2a1a1a1","CMS, SSIR No. 42, 1972, page 35 duplicate delete","375","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=403"
+121,"Gypsum, H2O Extraction, Acetone Precipitation, <2mm","Gypsum, <2mm","GYPSUM","6F1a","CMS, SSIR No. 42, 1972, page 35 duplicate delete","375","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=403"
+122,"Major Elements","Major Elements","unknown",,"CMS",,
+123,"Major Elements (HF dissolution, AA)","Major Elements","MjElem",,"CMS, SSIR No. 42, 1984, page 60",,
+124,"Major Elements (HFdissolution, ICP)","Major Elements","MjElem",,"CMS",,
+125,"Organic Fiber Analysis","Fiber Analysis","unknown","5C","CMS","499","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=527"
+126,"Cations, Potassium Chloride Extractable","KCl Extract","unknown","4B3a1a","CMS","254","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=282"
+127,"Cations, Potassium Chloride Extractable I (6G1b)","KCl Extract, Al","AL_KCL","6G1b","CMS, SSIR No. 1, 1972, page 36",,
+128,"Cations, Potassium Chloride Extractable II, overnight (6G2a)","KCl Extract, Al","AL_KCL","6G2a","CMS, SSIR No. 1, 1972, page 37",,
+129,"Cations, Potassium Chloride Extractable, 1N, automatic extractor, AA (6G9a)","KCl Extract, Al","AL_KCL","6G9a","CMS, SSIR No. 1, 1984, page 43",,
+130,"Cations, Potassium Chloride Extractable, 1 N, automatic extractor< ICP","KCl Extract","KCL",,"CMS, SSIR No. 42, 1984, page 43",,
+131,"Organic Carbon, acid dichromate digestion, FeSO4 titration","Organic Carbon","WBC1","6A1a","CMS, SSIR No. 42, 1972, page 26","911","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=939"
+132,"Organic Carbon, acid dichromate digestion, CO2 evolution, gravimetric","Organic Carbon","ALLI","6A1b","CMS, SSIR No. 42, 1972, page 26","912","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=940"
+133,"Organic Carbon, acid dichromate digestion, FeSO4 titration, automatic titrator","Organic Carbon","WBC2","6A1c","CMS, SSIR No. 42, 1984, page 34",,
+134,"Organic Carbon, 6A","Organic Carbon","unknown","6A","CMS",,
+135,"pH, 1:1 1N KCl, automated system","pH, KCl","PHKCL",,"CMS, SSIR No. 42, version 3, page 419",,
+136,"pH, 1N KCl","pH, KCl","unknown","4C1a2a3","CMS, SSIR No. 42, 1972, page 59","992","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=1020"
+136,"pH, 1N KCl","pH, KCl","unknown","8C1c","CMS, SSIR No. 42, 1972, page 59","992","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=1020"
+136,"pH, 1N KCl","pH, KCl","unknown","8C1c","CMS, SSIR No. 42, 1972, page 59",,
+137,"pH, 1:1 Water","pH, H2O","pHH2O","8C1a","CMS, SSIR No. 42, 1972, page 59",,
+137,"pH, 1:1 Water","pH, H2O","pHH2O","8C1a","CMS, SSIR No. 42, 1972, page 59","992","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=1020"
+138,"pH, 1:1 Water","pH, H2O","unknown","8C1a","CMS",,
+138,"pH, 1:1 Water","pH, H2O","unknown","8C1a","CMS","992","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=1020"
+139,"pH, 1:2 0.01M CaCl2","pH, CaCl2","pHcacl","8C1e","CMS, SSIR No. 42, 1972, page 60",,
+139,"pH, 1:2 0.01M CaCl2","pH, CaCl2","pHcacl","8C1e","CMS, SSIR No. 42, 1972, page 60","992","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=1020"
+140,"pH, 1:2 0.01M CaCl2","pH, CaCl2","unknown","8C1e","CMS",,
+140,"pH, 1:2 0.01M CaCl2","pH, CaCl2","unknown","8C1e","CMS","992","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=1020"
+141,"pH, 1:10 Water","pH, 1:10 H2O","pHh2o10","8C1a","CMS","992","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=1020"
+141,"pH, 1:10 Water","pH, 1:10 H2O","pHh2o10","8C1a","CMS","992","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=1020"
+142,"pH, 1:10 0.01M CaCl2","pH, 1:10 CaCl2","pHcacl10",,"CMS",,
+143,"Phosphorus Adsorption Coefficient","Phosphorus Adsorption Coefficient","PCoeff",,"CMS, SSIR No. 42, 1984, page 52",,
+144,"PSDA, Air-dry,","PSDA, Air-dry,","unknown",,"CMS",,
+145,"Bulk Sample Preparation","Sample Preparation","unknown",,"CMS",,
+146,"Saturated Paste and Soluble Salts","Saturated Paste and Soluble Salts","unknown","4F2","CMS","390","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=418"
+146,"Saturated Paste and Soluble Salts","Saturated Paste and Soluble Salts","unknown","SATP_TAMU","CMS",,
+147,"Saturated Paste and Soluble Salts","Saturated Paste and Soluble Salts","SATP","4F2","CMS, SSIR No. 42, 1972, page 57","390","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=418"
+147,"Saturated Paste and Soluble Salts","Saturated Paste and Soluble Salts","SATP","SATP_TAMU","CMS, SSIR No. 42, 1972, page 57",,
+148,"Cations, Pyrophosphate Extractable","Na-Pyrophosphate Extract","unknown","4G3","CMS","440","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=468"
+149,"Cations, Pyrophosphate Extractable I","Na-Pyrophosphate Extract","PYRO",,"CMS, SSIR No. 42, 1972, page 32",,
+150,"Cations, Pyrophosphate Extractable II","Na-Pyrophosphate Extract","PYRO",,"CMS, SSIR No. 42, 1984, page 38",,
+151,"Cations, Pyrophosphate Extractable III","Na-Pyrophosphate Extract","PYRO",,"CMS, SSIR No. 42, version 3, page 247",,
+152,"Surface Area, EGME","Surface Area","unknown","7D2","CMS","819","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=847"
+153,"Surface Area, EGME","Surface Area","EGME","7D2","CMS, SSIR No. 42, version 3, page 393","819","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=847"
+154,"Surface Area, ethylene glycol","Surface Area","unknown","7D1","CMS",,
+155,"Surface Area, ethylene glycol","Surface Area","SAEG","7D1","CMS, SSIR No. 42, 1972, page 56",,
+156,"Total Carbon, dry combustion, CO2 evolution I, gravimetric","Carbon, Total","TOTC","6A2a","CMS, SSIR No. 42, 1972, page 27","914","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=942"
+157,"Total Carbon, dry combustion, CO2 evolution II, gravimetric","Carbon, Total","TOTC","6A2b","CMS, SSIR No. 42, 1972, page 27","915","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=943"
+158,"Total Carbon, dry combustion, CO2 evolution III","Carbon, Total","TOTC",,"CMS, SSIR No. 42, 1984, page 35",,
+159,"Total Carbon, dry combustion, CO2 evolution IV","Carbon, Total","TOTC","6A2d","CMS, SSIR No. 42, version 1, page 238","836","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=864"
+160,"Total Carbon, dry combustion, CO2 evolution V","Carbon, Total","TOTC","6A2e","CMS, SSIR No. 42, version 3, page 223","713","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=741"
+161,"Total Nitrogen, Kjeldahl digestion, ammonia distillation","Nitrogen, Total","TOTN","6B1a","CMS, SSIR No. 42, 1972, page 29","918","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=946"
+162,"Total Nitrogen, semimicro Kjeldahl, ammonia distillation","Nitrogen, Total","TOTN","6B2a","CMS, SSIR No. 42, 1972, page 29","920","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=948"
+178,"Water Retention, 15 Bar, Pressure-Plate,","Water Retention, 15 Bar,","unknown","4B2b","CMS","165","#page=193"
+179,"Water Retention,","Water Retention, 0.06 Bar, <2mm","H2O.06Br<2",,"CMS, SSIR No. 42, 1984, page 23",,
+180,"Water Retention,","Water Retention, 0.1 Bar, <2mm","H2O.1Bar<2",,"CMS, SSIR No. 42, 1984, page 23",,
+181,"Water Retention,","Water Retention, 2 Bar, <2mm","H2O2Bar<2",,"CMS, SSIR No. 42, 1984, page 23",,
+182,"Water Retention,","Water Retention, 1 Bar, <2mm","H2O1Bar<2",,"CMS, SSIR No. 42, version 1, page 152",,
+183,"Water Retention,","Water Retention, 2 Bar, <2mm","H2O2Bar<2",,"CMS, SSIR No. 42, 1984, page 23",,
+184,"Water Retention, clod, 0.06, 0.1, 0.33, or 1 bar, pressure-plate extraction","Water Retention, 0.33 Bar, clod","H2O.33bclod","4B1c","CMS, SSIR No. 42, 1984, page 23","144","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=172"
+185,"Water Retention, 0.33 Bar, Pressure-Plate, clod, rewet","Water Retention, 0.33 Bar, clod, rewet","H2O.33bcrw","4B1e","CMS, SSIR No. 42, 1984, page 23","155","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=183"
+186,"Water Retention, 0.33 Bar, Pressure-Plate, clod","Water Retention, 0.33 Bar, clod","unknown",,"CMS",,
+187,"Water Retention, Field State, clod","Water Retention, Field State","H2OFSclod","4B4","CMS, SSIR No. 42, 1972, page 17",,
+188,"Water Retention, Field State, clod","Water Retention, Field State","unknown","4B4","CMS",,
+189,"X-ray Diffraction, Thin Film on Glass, Resin Pretreatment I","Clay Mineralogy, X-ray Diffraction","XRAY","7A2b","CMS 7A2b","982","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=1010"
+190,"X-ray Diffraction, Thin Film on Glass, Resin Pretreatment II","Clay Mineralogy, X-ray Diffraction","XRAY","7A2i","CMS",,
+190,"X-ray Diffraction, Thin Film on Glass, Resin Pretreatment II","Clay Mineralogy, X-ray Diffraction","XRAY","7A2i","CMS","801","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=829"
+191,"Index of Accumulation - 8D7","Index of Accumulation","IndxAcc",,"CMS",,
+192,"Ratio, to Total Clay - 8D1","Derived","none","8D1","CMS",,
+193,"Ratio, to Total Clay - 8D1b","Derived","none","8D1b","CMS",,
+194,"Calcium Carbonate Equivalent, HCl, 2-20mm","Calcium Carbonate Equivalent, 2-20mm","CACO3_20","4E1a1a1a2","CMS","370","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=398"
+194,"Calcium Carbonate Equivalent, HCl, 2-20mm","Calcium Carbonate Equivalent, 2-20mm","CACO3_20","6E4","CMS","370","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=398"
+195,"Cations, Potassium Chloride Extractable, 1 N, automatic extractor, ICP II (6G9c)","KCl Extract, Al","AL_KCL","6G9c","CMS, SSIR No. 42, version 3, page 259","749","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=777"
+196,"Cations, Potassium Chloride Extractable, 1N, automatic extractor, AA II (6G9d)","KCl Extract, Al","AL_KCL","6G9d","CMS, SSIR No. 42, version 3, page 265","755","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=783"
+197,"Cations, Potassium Chloride Extractable, 1 N, automatic extractor, ICP I (6G9b)","KCl Extract, Al","AL_KCL","6G9b","CMS, SSIR No. 42, version 3, page 549","852","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=880"
+198,"CEC and Cations, NH4OAc, 2M KCl displacement","CEC and Cations, Routine","CECdNH4","4B1a1a","CMS, duplicate SSIR No. 42, version 4, page 173","230","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=258"
+199,"Cations, Pyrophosphate Extractable IV","Na-Pyrophosphate Extract","PYRO",,"CMS",,
+200,"Cations, Pyrophosphate Extractable V","Na-Pyrophosphate Extract","PYRO",,"CMS",,
+201,"Cations, Dithionite-Citrate Extractable, AA VII","Dithionite-Citrate Extract","DITH",,"CMS",,
+202,"Cations, Dithionite-Citrate Extractable, AA VIII","Dithionite-Citrate Extract","DITH",,"CMS",,
+203,"Phosphorus, New Zealand P Retention I","New Zealand Phosphorus Retention","NZPRET","6S4","CMS","792","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=820"
+163,"Total Nitrogen, Kjeldahl digestion I, ammonia distillation, automatic titrator","Nitrogen, Total","TOTN","6B1b","CMS, SSIR No. 42, 1984, page 36",,
+164,"Total Nitrogen, Kjeldahl digestion II, ammonia steam distillation, automatic titrator","Nitrogen, Total","TOTN","6B3a","CMS, SSIR No. 42, 184, page 36",,
+165,"Total Nitrogen, dry combustion, N2 Evolution","Nitrogen, Total","TOTN","6B4a","CMS, SSIR No. 42, version 3, page 227","716","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=744"
+166,"Nitrogen, Kjeldahl Digestion III, Ammonia Steam Distillation","Nitrogen, Total","TOTN","6B5a","CMS",,
+167,"Total Nitrogen","Nitrogen, Total","unknown",,"CMS",,
+168,"Total Phosphorus, perchloric acid digestion","Phosphorus, Total","TotP","6S1a","CMS, SSIR No. 42, 1972, page 49","973","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=1001"
+169,"Sulfur, Total, SO2 evolution, KIO3 titration","Sulfur, Total","TOTS","6R3a","CMS, SSIR No. 42, 1984, page 51","971","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=999"
+170,"Sulfur, Total, SO2 evolution, infrared I","Sulfur, Total","TOTS","6R3b","CMS, SSIR No. 42, version 1, page 215","871","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=899"
+171,"Sulfur, Total","Sulfur, Total","unknown","6R3c","CMS","464","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=492"
+172,"Water Retention,","Water Retention, ADOD","ADOD",,"CMS, SSIR No. 42, 1984, page 24",,
+173,"Water Retention,","Water Retention, ADOD","unknown",,"CMS",,
+174,"Water Retention,","Water Retention, FMOD","FMOD",,"CMS",,
+175,"Water Retention, 15 Bar, Pressure-Plate,","Water Retention, 15 Bar,","H2O15ba<2",,"CMS, SSIR No. 42, 1972, page 17",,
+176,"Water Retention, 15 Bar, Pressure-Plate,","Water Retention, 15 Bar,","unknown",,"CMS",,
+177,"Water Retention, 15 Bar, Pressure-Plate,","Water Retention, 15 Bar,","H2O15bm<2","4B2b","CMS, SSIR No. 42, 1972, page 17","165","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=193"
+204,"Phosphorus, New Zealand P Retention II","New Zealand Phosphorus Retention","NZPRET","6S4b","CMS","792","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=820"
+205,"Phosphorus, New Zealand P Retention III","New Zealand Phosphorus Retention","NZPRET","6S4c","CMS","792","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=820"
+206,"Phosphorus, New Zealand P Retention IV","New Zealand Phosphorus Retention","NZPRET","6S4d","CMS","792","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=820"
+207,"Phosphorus, New Zealand P Retention V","New Zealand Phosphorus Retention","NZPRET","6S4e","CMS","792","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=820"
+208,"Phosphorus, Bray 1","Phosphorus, Bray 1","BRAYP","4D3","CMS, duplicate","327","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=355"
+208,"Phosphorus, Bray 1","Phosphorus, Bray 1","BRAYP","4D3a1","CMS, duplicate","327","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=355"
+208,"Phosphorus, Bray 1","Phosphorus, Bray 1","BRAYP","6S3b","CMS, duplicate","788","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=816"
+208,"Phosphorus, Bray 1","Phosphorus, Bray 1","BRAYP","6S3d","CMS, duplicate","788","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=816"
+208,"Phosphorus, Bray 1","Phosphorus, Bray 1","BRAYP","6S3e","CMS, duplicate","788","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=816"
+208,"Phosphorus, Bray 1","Phosphorus, Bray 1","BRAYP","6S3f","CMS, duplicate","788","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=816"
+208,"Phosphorus, Bray 1","Phosphorus, Bray 1","BRAYP","BRAYP","CMS, duplicate","788","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=816"
+209,"Phosphorus, Bray 1","Phosphorus, Bray 1","BRAYP","4D3","CMS","327","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=355"
+209,"Phosphorus, Bray 1","Phosphorus, Bray 1","BRAYP","4D3a1","CMS","327","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=355"
+209,"Phosphorus, Bray 1","Phosphorus, Bray 1","BRAYP","6S3b","CMS","788","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=816"
+209,"Phosphorus, Bray 1","Phosphorus, Bray 1","BRAYP","6S3d","CMS","788","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=816"
+209,"Phosphorus, Bray 1","Phosphorus, Bray 1","BRAYP","6S3e","CMS","788","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=816"
+209,"Phosphorus, Bray 1","Phosphorus, Bray 1","BRAYP","6S3f","CMS","788","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=816"
+209,"Phosphorus, Bray 1","Phosphorus, Bray 1","BRAYP","BRAYP","CMS","788","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=816"
+210,"Phosphorus, Bray 1","Phosphorus, Bray 1","BRAYP","4D3","CMS","327","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=355"
+210,"Phosphorus, Bray 1","Phosphorus, Bray 1","BRAYP","4D3a1","CMS","327","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=355"
+210,"Phosphorus, Bray 1","Phosphorus, Bray 1","BRAYP","6S3b","CMS","788","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=816"
+210,"Phosphorus, Bray 1","Phosphorus, Bray 1","BRAYP","6S3d","CMS","788","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=816"
+210,"Phosphorus, Bray 1","Phosphorus, Bray 1","BRAYP","6S3e","CMS","788","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=816"
+210,"Phosphorus, Bray 1","Phosphorus, Bray 1","BRAYP","6S3f","CMS","788","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=816"
+210,"Phosphorus, Bray 1","Phosphorus, Bray 1","BRAYP","BRAYP","CMS","788","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=816"
+211,"Phosphorus, Bray 1","Phosphorus, Bray 1","BRAYP","4D3","CMS","327","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=355"
+211,"Phosphorus, Bray 1","Phosphorus, Bray 1","BRAYP","4D3a1","CMS","327","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=355"
+211,"Phosphorus, Bray 1","Phosphorus, Bray 1","BRAYP","6S3b","CMS","788","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=816"
+211,"Phosphorus, Bray 1","Phosphorus, Bray 1","BRAYP","6S3d","CMS","788","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=816"
+211,"Phosphorus, Bray 1","Phosphorus, Bray 1","BRAYP","6S3e","CMS","788","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=816"
+211,"Phosphorus, Bray 1","Phosphorus, Bray 1","BRAYP","6S3f","CMS","788","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=816"
+211,"Phosphorus, Bray 1","Phosphorus, Bray 1","BRAYP","BRAYP","CMS","788","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=816"
+212,"Phosphorus, Bray 1","Phosphorus, Bray 1","BRAYP","4D3","CMS","327","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=355"
+212,"Phosphorus, Bray 1","Phosphorus, Bray 1","BRAYP","4D3a1","CMS","327","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=355"
+212,"Phosphorus, Bray 1","Phosphorus, Bray 1","BRAYP","6S3b","CMS","788","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=816"
+212,"Phosphorus, Bray 1","Phosphorus, Bray 1","BRAYP","6S3d","CMS","788","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=816"
+212,"Phosphorus, Bray 1","Phosphorus, Bray 1","BRAYP","6S3e","CMS","788","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=816"
+212,"Phosphorus, Bray 1","Phosphorus, Bray 1","BRAYP","6S3f","CMS","788","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=816"
+212,"Phosphorus, Bray 1","Phosphorus, Bray 1","BRAYP","BRAYP","CMS","788","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=816"
+213,"pH, 1N NaF, moist","pH, NaF","PHNAF","8C1i","CMS, moist",,
+214,"Thermogravimetric Analysis, TGA III","Clay Mineralogy, TGA","TGA51","7A4c","CMS 7A4c",,
+216,"Organic Carbon, acid dichromate digestion, FeSO4 titration, automatic titrator, moist","Organic Carbon","WBC2","6A1d","CMS",,
+217,"Total Sulfur, SO2 evolution, infrared II","Sulfur, Total","TOTS","6R3c","SSIR No. 42, version 3, page 317","785","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=813"
+218,"Water Retention, 2 Bar, Pressure-Plate, clod","Water Retention, 2 Bar, clod","H2O2bclod",,"CMS",,
+219,"Differential Scanning Calorimetry, Thermal Analyzer II","Clay Mineralogy, DSC","DSC910S","7A6b","CMS",,
+220,"Thermogravimetric Analysis","Clay Mineralogy, TGA","TGA51","7A2a","CMS 7A4b","887","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=915"
+220,"Thermogravimetric Analysis","Clay Mineralogy, TGA","TGA51","7A2a","CMS 7A4b","887","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=915"
+220,"Thermogravimetric Analysis","Clay Mineralogy, TGA","TGA51","7A4b","CMS 7A4b",,
+221,"CEC and Cations, NH4OAc, pH 7.0, AA I","Extractable Cations","ExCat1",,"CMS",,
+222,"CEC and Cations, NH4OAc, pH 7.0, AA II","Extractable Cations","ExCat2",,"CMS",,
+223,"CEC and Cations, NH4OAc, pH 7.0, AA III","Extractable Cations","ExCat3",,"CMS",,
+224,"CEC and Cations, NH4OAc, pH 7.0, AA IV","Extractable Cations","ExCat4",,"CMS",,
+225,"CEC and Cations, NH4OAc, pH 7.0, AA V","Extractable Cations","ExCat5",,"CMS",,
+226,"CEC and Cations, NH4OAc, pH 7.0, AA VI","Extractable Cations","ExCat6",,"CMS",,
+227,"Carbonate, Saturated Paste and Soluble Salts, titration","Soluble Anions, CO3","SatAn1","6I1b","CMS",,
+228,"Chloride, Saturation Extraction, Anion Chromatograph","Soluble Anions","SatAn2","6K1c","CMS","864","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=892"
+229,"Chloride, Saturation Extraction, Anion Chromatograph, Ionic Suppressor","Soluble Anions","SatAn3","6K1d","CMS","760","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=788"
+230,"Chloride, Saturation Extraction, Flow Injection, Automated Ion Analyzer","Soluble Anions","SatAn4","6K1e","CMS","760","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=788"
+231,"Chloride, Saturation Extraction, Anion Chromatograph, Electronic Ion Suppressor","Soluble Anions","SatAn5","6K1f","CMS","760","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=788"
+232,"Saturated Paste and Soluble Salts, EC","Saturated Paste and Soluble Salts","SATPEC1",,"CMS",,
+287,"Extractable Acidity, BaCl2-Triethanolamine II, Back-Titration with HCl","Extractable Acidity, BaCl2-TEA","EXTRACID","6H2a","CMS, SSIR No. 1, 1972, page 38","944","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=972"
+288,"Extractable Acidity, KCl-Triethanolamine II, Back-Titration with NaOH","Extractable Acidity, BaCl2-TEA","EXTRACID","6H3a","CMS, SSIR No. 1, 1972, page 38","945","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=973"
+289,"Total Analysis, Na2CO3 Fusion","Total Elemental Analysis","TOTANAL","7C1","SSIR No. 42, version 3, page 667","987","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=1015"
+290,"Mineral Content","Mineral Content","MINIGNITE","8F","SSIR No. 42, version 3, page 431","495","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=523"
+291,"pH, 1:1 1N KCl, moist","pH, KCl","PHKCL","8C1k","CMS, SSIR No. 42, version 3, page 419, moist","992","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=1020"
+292,"pH, Routine, 1:1 Water and 1:2 0.01M CaCl2, moist","pH, Routine","PHROUT","8C1j","SSIR No. 42, version 3, page 415, moist","992","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=1020"
+293,"CEC, NH4OAc, pH 7.0, Buchner funnel, Displacement Distillation","CEC and Cations, NH4OAc, pH 7.0","CECNH4b2","5A1b","CMS, SSIR No. 42, 1972, page 22","904","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=932"
+294,"CEC, NH4OAc, pH 7.0, automatic extractor, steam distillation II","CEC and Cations, NH4OAc, pH 7.0","CECNH4aes2","5A8c","CMS, SSIR No. 42, 1984, page 30","700","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=728"
+295,"CEC, NH4OAc, pH 7.0, automatic extractor, steam distillation I, moist","CEC and Cations, NH4OAc, pH 7.0","CECNH4aesm1","5A8e","CMS, SSIR No. 42, 1984, page 30",,
+296,"Calcium, NH4OAc Extraction","Extractable Cations, Ca","CaExCat1","6N2","CMS, SSIR No. 1, 1972, page 42",,
+297,"Calcium, NH4OAc Extraction, EDTA-Alcohol Separation","Extractable Cations, Ca","CaExCat2","6N2a","CMS, SSIR No. 1, 1972, page 42",,
+298,"Calcium, NH4OAc Extraction, Oxalate-Permanganate I","Extractable Cations, Ca","CaExCat3","6N2b","CMS, SSIR No. 1, 1972, page 42",,
+299,"Calcium, NH4OAc Extraction, Oxalate-Permanganate II","Extractable Cations, Ca","CaExCat4","6N2c","CMS, SSIR No. 1, 1972, page 43",,
+300,"Calcium, NH4OAc Extraction, Oxalate-Cerate","Extractable Cations, Ca","CaExCat5","6N2d","CMS, SSIR No. 1, 1972, page 43",,
+301,"Calcium, NH4OAc Extraction, Atomic Absorption I","Extractable Cations, Ca","CaExCat6","6N2e","CMS, SSIR No. 42, version 3, page 309","776","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=804"
+302,"Calcium, NH4OAc Extraction, Atomic Absorption II","Extractable Cations, Ca","CaExCat7","6N2f","CMS, SSIR No. 42, version 3, page 313","780","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=808"
+303,"Calcium, NH4OAc Extraction, Atomic Absorption I, moist","Extractable Cations, Ca","CaExCat8","6N2g","CMS, SSIR No. 42, version 3, page 309, moist","776","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=804"
+304,"Calcium, NH4OAc Extraction, Atomic Absorption II, moist","Extractable Cations, Ca","CaExCat9","6N2h","CMS, SSIR No. 42, version 3, page 313, moist","780","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=808"
+305,"Calcium, NH4OAc Extraction, ICP I","Extractable Cations, Ca","CaExCat10","6N2i","CMS, SSIR No. 42, version 3, page 313, ICP",,
+306,"Calcium, NH4OAc Extraction, ICP I, moist","Extractable Cations, Ca","CaExCat11","6N2j","CMS, SSIR No. 42, version 3, page 313, ICP, moist",,
+307,"Calcium, Saturation Extraction, EDTA Titration","Soluble Salts, Ca","CA_SAT1","6N1a","CMS, SSIR No. 1, 1972, page 41","953","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=981"
+307,"Calcium, Saturation Extraction, EDTA Titration","Soluble Salts, Ca","CA_SAT1","6N1a","CMS, SSIR No. 1, 1972, page 41",,
+308,"Calcium, Saturation Extraction, Atomic Absorption I","Soluble Salts, Ca","CA_SAT2","6N1b","CMS, SSIR No. 42, version 3, page 301","767","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=795"
+309,"Calcium, Saturation Extraction, Atomic Absorption II","Soluble Salts, Ca","CA_SAT3","6N1c","CMS, SSIR No. 42, version 3, page 305","771","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=799"
+310,"Calcium, Saturation Extraction, Atomic Absorption III","Soluble Salts, Ca","CA_SAT4","6N1d","CMS, SSIR No. 42, version 3, page 305, PE 300AA","771","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=799"
+311,"Calcium, NH4Cl-EtOH Extraction, EDTA Titration","Cations, Neutral Salts, Ca","CA_NH4CL1","6N3a","CMS, SSIR No. 1, 1972, page 44","959","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=987"
+312,"Calcium, KCl-TEA Extraction, Oxalate-Permanganate","KCl Extract, Ca","CA_KCL1","6N4a","CMS, SSIR No. 1, 1972, page 44",,
+313,"Calcium, KCl-TEA Extraction, EDTA Titration","KCl Extract, Ca","CA_KCL2","6N4b","CMS, SSIR No. 1, 1972, page 44",,
+314,"Calcium, KCl-TEA Extraction, Atomic Absorption","KCl Extract, Ca","CA_KCL3","6N4c","CMS, SSIR No. 1, 1972, page 45",,
+315,"Magnesium, Saturation Extraction, EDTA Titration","Soluble Salts, Mg","MG_SAT1","6O1a","CMS, SSIR No. 1, 1972, page 45",,
+316,"Magnesium, Saturation Extraction, Atomic Absorption I","Soluble Salts, Mg","MG_SAT2","6O1b","CMS, SSIR No. 1, 1972, page 45","767","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=795"
+316,"Magnesium, Saturation Extraction, Atomic Absorption I","Soluble Salts, Mg","MG_SAT2","6O1b","CMS, SSIR No. 1, 1972, page 45",,
+317,"Magnesium, Saturation Extraction, Atomic Absorption II","Soluble Salts, Mg","MG_SAT3","6O1c","CMS, SSIR No. 42, version 3, page 305","771","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=799"
+318,"Magnesium, Saturation Extraction, Atomic Absorption III","Soluble Salts, Mg","MG_SAT4","6O1d","CMS, SSIR No. 42, version 3, page 305, PE 300AA","771","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=799"
+319,"Magnesium, NH4OAc Extraction","Extractable Cations, Mg","MgExCat1","6O2","CMS, SSIR No. 1, 1972, page 45",,
+320,"Magnesium, NH4OAc Extraction, EDTA-Alcohol Separation","Extractable Cations, Mg","MgExCat2","6O2a","CMS, SSIR No. 1, 1972, page 45",,
+321,"Magnesium, NH4OAc Extraction, Phosphate Titration","Extractable Cations, Mg","MgExCat3","6O2b","CMS, SSIR No. 1, 1972, page 46",,
+322,"Magnesium, NH4OAc Extraction, Gravimetric","Extractable Cations, Mg","MgExCat4","6O2c","CMS, SSIR No. 1, 1972, page 46",,
+323,"Magnesium, NH4OAc Extraction, Atomic Absorption I","Extractable Cations, Mg","MgExCat6","6O2d","CMS, SSIR No. 42, version 3, page 309","776","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=804"
+324,"Magnesium, NH4OAc Extraction, Atomic Absorption II","Extractable Cations, Mg","MgExCat7","6O2e","CMS, SSIR No. 42, version 3, page 313","780","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=808"
+325,"Magnesium, NH4OAc Extraction, Atomic Absorption II, moist","Extractable Cations, Mg","MgExCat8","6O2f","CMS, SSIR No. 42, version 3, page 309, moist","776","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=804"
+326,"Magnesium, NH4OAc Extraction, Atomic Absorption I, moist","Extractable Cations, Mg","MgExCat9","6O2g","CMS, SSIR No. 42, version 3, page 313, moist","780","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=808"
+327,"Magnesium, NH4OAc Extraction, ICP I","Extractable Cations, Mg","MgExCat10","6O2h","CMS, SSIR No. 42, version 3, page 313, ICP",,
+328,"Magnesium, NH4OAc Extraction, ICP I, moist","Extractable Cations, Mg","MgExCat11","6O2i","CMS, SSIR No. 42, version 3, page 313, ICP, moist",,
+329,"Magnesium, NH4Cl-EtOH Extraction, EDTA Titration","Cations, Neutral Salts, Mg","MG_NH4CL1","6O3a","CMS, SSIR No. 1, 1972, page 47","965","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=993"
+330,"Magnesium, KCl-TEA Extraction, Phosphate Titration","KCl Extract, Mg","MGCA_KCL1","6O4a","CMS, SSIR No. 1, 1972, page 47",,
+331,"Magnesium, KCl-TEA Extraction, EDTA Titration","KCl Extract, Mg","MG_KCL2","6O4b","CMS, SSIR No. 1, 1972, page 47",,
+332,"Magnesium, KCl-TEA Extraction, Atomic Absorption","KCl Extract, Mg","MG_KCL3","6O4c","CMS, SSIR No. 1, 1972, page 47",,
+333,"Sodium, Saturation Extraction, Flame Photometry","Soluble Salts, Na","NA_SAT1","6P1a","CMS, SSIR No. 1, 1972, page 47",,
+334,"Sodium, Saturation Extraction, Atomic Absorption I","Soluble Salts, Na","NA_SAT2","6P1b","CMS, SSIR No. 1, 1972, page 47","767","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=795"
+334,"Sodium, Saturation Extraction, Atomic Absorption I","Soluble Salts, Na","NA_SAT2","6P1b","CMS, SSIR No. 1, 1972, page 47",,
+335,"Sodium, Saturation Extraction, Atomic Absorption II","Soluble Salts, Na","NA_SAT3","6P1c","CMS, SSIR No. 42, version 3, page 305","771","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=799"
+336,"Sodium, Saturation Extraction, Atomic Absorption III","Soluble Salts, Na","NA_SAT4","6P1d","CMS, SSIR No. 42, version 3, page 305, PE 300AA","771","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=799"
+337,"Sodium, NH4OAc Extraction","Extractable Cations, Na","NaExCat4","6P2","CMS, SSIR No. 1, 1972, page 47",,
+338,"Sodium, NHOAc Extraction, Flame Photometry","Extractable Cations, Na","NaExCat5","6P2a","CMS, SSIR No. 1, 1972, page 47",,
+339,"Sodium, NH4OAc Extraction, Atomic Absorption I","Extractable Cations, Na","NaExCat6","6P2b","CMS, SSIR No. 1, 1972, page 48",,
+340,"Sodium, NH4OAc Extraction, Atomic Absorption II","Extractable Cations, Na","NaExCat7","6P2c","CMS, SSIR No. 42, version 3, page 313","780","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=808"
+341,"Sodium, NH4OAc Extraction, Atomic Absorption II, moist","Extractable Cations, Na","NaExCat8","6P2d","CMS, SSIR No. 42, version 3, page 309, moist","776","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=804"
+342,"Sodium, NH4OAc Extraction, Atomic Absorption I, moist","Extractable Cations, Na","NaExCat9","6P2e","CMS, SSIR No. 42, version 3, page 313, moist","780","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=808"
+343,"Sodium, NH4OAc Extraction, ICP I","Extractable Cations, Na","NaExCat10","6P2f","CMS, SSIR No. 42, version 3, page 313, ICP",,
+344,"Sodium, NH4OAc Extraction, ICP I, moist","Extractable Cations, Na","NaExCat11","6P2g","CMS, SSIR No. 42, version 3, page 313, ICP, moist",,
+345,"Potassium, Saturation Extraction, Flame Photometry","Soluble Salts, K","K_SAT1","6Q1a","CMS, SSIR No. 1, 1972, page 48",,
+346,"Potassium, Saturation Extraction, Atomic Absorption I","Soluble Salts, K","K_SAT2","6Q1b","CMS, SSIR No. 1, 1972, page 48",,
+346,"Potassium, Saturation Extraction, Atomic Absorption I","Soluble Salts, K","K_SAT2","6Q1b","CMS, SSIR No. 1, 1972, page 48","767","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=795"
+347,"Potassium, Saturation Extraction, Atomic Absorption II","Soluble Salts, K","K_SAT3","6Q1c","CMS, SSIR No. 42, version 3, page 305","771","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=799"
+348,"Potassium, Saturation Extraction, Atomic Absorption III","Soluble Salts, K","K_SAT4","6Q1d","CMS, SSIR No. 42, version 3, page 305, PE 300AA","771","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=799"
+349,"Potassium, NHOAc Extraction","Extractable Cations, K","KExCat4","6Q2","CMS, SSIR No. 1, 1972, page 48",,
+350,"Potassium, NHOAc Extraction, Flame Photometry","Extractable Cations, K","KExCat5","6Q2a","CMS, SSIR No. 1, 1972, page 48",,
+351,"Potassium, NHOAc Extraction, Atomic Absorption I","Extractable Cations, K","KExCat6","6Q2b","CMS, SSIR No. 1, 1972, page 48",,
+352,"Potassium, NHOAc Extraction, Atomic Absorption II","Extractable Cations, K","KExCat7","6Q2c","CMS, SSIR No. 42, version 3, page 313","780","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=808"
+353,"Potassium, NHOAc Extraction, Atomic Absorption II, moist","Extractable Cations, K","KExCat8","6Q2d","CMS, SSIR No. 42, version 3, page 309, moist","776","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=804"
+354,"Potassium, NHOAc Extraction, Atomic Absorption I, moist","Extractable Cations, K","KExCat9","6Q2e","CMS, SSIR No. 42, version 3, page 313, moist","780","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=808"
+355,"Potassium, NHOAc Extraction, ICP I","Extractable Cations, K","KExCat10","6Q2f","CMS, SSIR No. 42, version 3, page 313, ICP",,
+356,"Potassium, NHOAc Extraction, ICP I, moist","Extractable Cations, K","KExCat11","6Q2g","CMS, SSIR No. 42, version 3, page 313, ICP, moist",,
+357,"Aluminum, 1 N KCl Extractable, Automatic Extractor, ICP II, moist","KCl Extract, Al","AL_KCL","6G9e","CMS, SSIR No. 42, version 3, page 259, moist",,
+358,"Aluminum, KCl Extraction I, 30 min., Fluoride Titration","KCl Extract, Al","AL_KCL","6G1d","CMS, SSIR No. 1, 1972, page 37","939","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=967"
+359,"Aluminum, KCl Extraction I, 30 min., Aluminon I","KCl Extract, Al","AL_KCL","6G1a","CMS, SSIR No. 1, 1972, page 36","938","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=966"
+360,"Aluminum, KCl Extraction I, 30 min., Atomic Absorption","KCl Extract, Al","AL_KCL","6G1e","CMS, SSIR No. 1, 1972, page 37","940","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=968"
+361,"Manganese, 1 N KCl Extractable, Automatic Extractor, Inductively Coupled Plasma Spectrometry II","KCl Extract, Mn","MN_KCL","6D3b","CMS, SSIR No. 42, version 3, page 259","749","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=777"
+362,"Manganese, 1 N KCl Extractable, Automatic Extractor, Inductively Coupled Plasma Spectrometry I","KCl Extract, Mn","MN_KCL","6D3","CMS, SSIR No. 42, version 3, page 549","749","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=777"
+363,"Manganese, 1 N KCl Extractable, Automatic Extractor, Inductively Coupled Plasma Spectrometry II, moist","KCl Extract, Mn","MN_KCL","6D3d","CMS, SSIR No. 42, version 3, page 259, moist","742","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=770"
+364,"Iron, Dithionite Extraction, Dichromate Titration","Dithionite Extract, Fe","FE_DITH","6C1a","CMS, SSIR No. 1, 1972, page 30",,
+365,"Iron, Dithionite Extraction, EDTA Titration","Dithionite Extract, Fe","FE_DITH","6C1b","CMS, SSIR No. 1, 1972, page 30",,
+366,"Iron, Dithionite-Citrate Extraction, Atomic Absorption I","Dithionite-Citrate Extract, Fe","FE_DITH","6C2b","CMS, SSIR No. 1, 1972, page 31","721","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=749"
+366,"Iron, Dithionite-Citrate Extraction, Atomic Absorption I","Dithionite-Citrate Extract, Fe","FE_DITH","6C2b","CMS, SSIR No. 1, 1972, page 31",,
+367,"Iron, Dithionite-Citrate Extraction, Atomic Absorption II","Dithionite-Citrate Extract, Fe","FE_DITH","6C2c","CMS, SSIR No. 42, version 3, page 239","726","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=754"
+368,"Iron, Dithionite-Citrate Extraction I, Atomic Absorption I, moist","Dithionite-Citrate Extract, Fe","FE_DITH","6C2d","CMS, SSIR No. 1, 1972, page 31, moist","726","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=754"
+369,"Iron, Dithionite-Citrate Extraction II, Atomic Absorption II","Dithionite-Citrate Extract, Fe","FE_DITH","6C2f",,"726","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=754"
+370,"Iron, Dithionite-Citrate Extraction II, Atomic Absorption II, moist","Dithionite-Citrate Extract, Fe","FE_DITH","6C2g","CMS, SSIR No. 42, version 3, page 239, moist","726","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=754"
+371,"Iron, Dithionite-Citrate Extraction II, Atomic Absorption III","Dithionite-Citrate Extract, Fe","FE_DITH","6C2h",,"726","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=754"
+372,"Iron, Dithionite-Citrate Extraction II, Atomic Absorption III, moist","Dithionite-Citrate Extract, Fe","FE_DITH","6C2i",,"726","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=754"
+373,"Iron, Dithionite-Citrate-Bicarbonate Extraction","Dithionite-Citrate Extract, Fe","FE_DITH","6C3","CMS, SSIR No. 1, 1972, page 31","924","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=952"
+374,"Manganese, Dithionite Extraction, Permanganate Colorimetry","Dithionite Extract, Mn","MN_DITH","6D1a","CMS, SSIR No. 1, 1972, page 33",,
+375,"Manganese, Dithionite-Citrate Extraction, Atomic Absorption I","Dithionite-Citrate Extract, Mn","MN_DITH","6D2a","CMS, SSIR No. 1, 1984, page 38",,
+375,"Manganese, Dithionite-Citrate Extraction, Atomic Absorption I","Dithionite-Citrate Extract, Mn","MN_DITH","6D2a","CMS, SSIR No. 1, 1984, page 38","721","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=749"
+376,"Manganese, Dithionite-Citrate Extraction I, Atomic Absorption I, moist","Dithionite-Citrate Extract, Mn","MN_DITH","6D2c","CMS, SSIR No. 1, 1984, page 38, moist","726","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=754"
+377,"Manganese, Dithionite-Citrate Extraction II, Atomic Absorption II","Dithionite-Citrate Extract, Mn","MN_DITH","6D2e",,"726","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=754"
+378,"Manganese, Dithionite-Citrate Extraction II, Atomic Absorption II, moist","Dithionite-Citrate Extract, Mn","MN_DITH","6D2f",,"726","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=754"
+379,"Manganese, Dithionite-Citrate Extraction II, Atomic Absorption III","Dithionite-Citrate Extract, Mn","MN_DITH","6D2g",,"726","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=754"
+380,"Manganese, Dithionite-Citrate Extraction II, Atomic Absorption III, moist","Dithionite-Citrate Extract, Mn","MN_DITH","6D2h",,"726","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=754"
+381,"Aluminum, Dithionite-Citrate Extraction, Atomic Absorption I","Dithionite-Citrate Extract, Al","AL_DITH","6G7a","CMS, SSIR No. 1, 1972, page 38","721","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=749"
+382,"Aluminum, Dithionite-Citrate Extraction, Atomic Absorption II","Dithionite-Citrate Extract, Al","AL_DITH","6G7b","CMS, SSIR No. 42, version 3, page 233","726","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=754"
+383,"Aluminum, Dithionite-Citrate Extraction I, Atomic Absorption I, moist","Dithionite-Citrate Extract, Al","AL_DITH","6G7c","CMS, SSIR No. 1, 1972, page 38, moist","726","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=754"
+384,"Aluminum, Dithionite-Citrate Extraction II, Atomic Absorption II","Dithionite-Citrate Extract, Al","AL_DITH","6G7e",,"726","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=754"
+385,"Aluminum, Dithionite-Citrate Extraction II, Atomic Absorption II, moist","Dithionite-Citrate Extract, Al","AL_DITH","6G7f","CMS, SSIR No. 42, version 3, page 233, moist","726","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=754"
+386,"Aluminum, Dithionite-Citrate Extraction II, Atomic Absorption III","Dithionite-Citrate Extract, Al","AL_DITH","6G7g",,"726","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=754"
+387,"Aluminum, Dithionite-Citrate Extraction II, Atomic Absorption III, moist","Dithionite-Citrate Extract, Al","AL_DITH","6G7h",,"726","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=754"
+388,"Iron, Ammonium Oxalate Extraction, Atomic Absorption","Acid Oxalate extraction","OXAL","6C6A","CMS, SSIR No. 1, 1972, page 33","941","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=969"
+389,"Aluminum, Ammonium Oxalate Extraction, Atomic Absorption","Acid Oxalate extraction","OXAL","6G6a","CMS, SSIR No. 1, 1972, page 37","941","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=969"
+390,"Aluminum, Sodium Pyrophosphate Extraction I, Atomic Absorption","Na-Pyrophosphate Extract, Al","PYRO","6G5a","CMS, SSIR No. 1, 1972, page 37","941","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=969"
+391,"Aluminum, Sodium Pyrophosphate Extraction II","Na-Pyrophosphate Extract, Al","PYRO","6G10","CMS, SSIR No. 1, 1984, page 44","735","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=763"
+392,"Aluminum, Sodium Pyrophosphate Extraction II, Atomic Absorption II","Na-Pyrophosphate Extract, Al","PYRO","6G10c","CMS","735","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=763"
+393,"Aluminum, Sodium Pyrophosphate Extraction II, Atomic Absorption II, moist","Na-Pyrophosphate Extract, Al","PYRO","6G10d","CMS, moist","735","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=763"
+394,"Organic Carbon, Sodium Pyrophosphate Extraction II, Atomic Absorption","Na-Pyrophosphate Extract, C","PYRO","6A4a","CMS, SSIR No. 42, version 3, page 247","735","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=763"
+395,"Iron, Sodium Pyrophosphate Extraction I, Atomic Absorption","Na-Pyrophosphate Extract, Fe","PYRO","6C5a","CMS, SSIR No. 1, 1972, page 32",,
+396,"Iron, Sodium Pyrophosphate Extraction II, Atomic Absorption","Na-Pyrophosphate Extract, Fe","PYRO","6C8a","CMS, SSIR No. 1, 1984, page 38",,
+397,"Iron, Sodium Pyrophosphate Extraction II, Atomic Absorption II","Na-Pyrophosphate Extract, Fe","PYRO","6C8c","CMS",,
+398,"Iron, Sodium Pyrophosphate Extraction II, Atomic Absorption II, moist","Na-Pyrophosphate Extract, Fe","PYRO","6C8d","CMS, moist",,
+399,"Carbonate, Saturation Extraction, Acid Titration","Soluble Anions, CO2","SatAn6","6I1a","CMS, SSIR No. 1, 1972, page 39",,
+400,"Bicarbonate, Saturation Extraction, Acid Titration","Soluble Anions, HCO3","SatAn6","6J1a","CMS, SSIR No. 1, 1972, page 39","947","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=975"
+401,"Bicarbonate, Saturation Extraction, Acid Titration, Automatic Extractor","Soluble Anions, HCO3","SatAn1","6J1b","CMS, SSIR No. 42, version 3, page 283","415","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=443"
+402,"Chloride, Saturation Extraction, Mohr Titration","Soluble Anions, Cl","SatAn7","6K1a","CMS, SSIR No. 1, 1972, page 39",,
+403,"Chloride, Saturation Extraction, Potentiometric Titration","Soluble Anions, Cl","SatAn8","6K1b","CMS, SSIR No. 1, 1972, page 40","948","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=976"
+404,"Sulfate, Saturation Extraction, Gravimetric, BaSO4","Soluble Anions, SO4","SatAn9","6L1a","CMS, SSIR No. 1, 1972, page 40","949","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=977"
+405,"Sulfate, Saturation Extraction, EDTA Titration","Soluble Anions, SO4","SatAn10","6L1b","CMS, SSIR No. 1, 1972, page 40","950","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=978"
+406,"Sulfate, Saturation Extraction, Anion Chromatograph","Soluble Anions, SO4","SatAn2","6L1c","CMS, SSIR No. 1, 1984, page 48","864","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=892"
+407,"Sulfate, Saturation Extraction, Anion Chromatograph, Ionic Suppressor","Soluble Anions, SO4","SatAn3","6L1d","CMS, SSIR No. 42, version 3, page 287","760","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=788"
+408,"Sulfate, Saturation Extraction, Flow Injection, Automated Ion Analyzer","Soluble Anions, SO4","SatAn4","6L1e","CMS, SSIR No. 42, version 3, page 287, Flow injection","760","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=788"
+409,"Sulfate, Saturation Extraction, Anion Chromatograph, Electronic Ion Suppressor","Soluble Anions, SO4","SatAn5","6L1f","CMS, SSIR No. 42, version 3, page 287, Anion Chromatography, Electronc Ion Suppressor","760","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=788"
+410,"Nitrate, Saturation Extraction, Anion Chromatograph","Soluble Anions, NO3","SatAn2","6M1c","CMS, SSIR No. 1, 1984, page 48","864","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=892"
+411,"Nitrate, Saturation Extraction, Anion Chromatograph, Ionic Suppressor","Soluble Anions, NO3","SatAn3","6M1d","CMS, SSIR No. 42, version 3, page 287","760","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=788"
+412,"Nitrate, Saturation Extraction, Flow Injection, Automated Ion Analyzer","Soluble Anions, NO3","SatAn4","6M1e","CMS, SSIR No. 42, version 3, page 287, Flow injection","760","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=788"
+413,"Nitrate, Saturation Extraction, Anion Chromatograph, Electronic Ion Suppressor","Soluble Anions, NO3","SatAn5","6M1f","CMS, SSIR No. 42, version 3, page 287, Anion Chromatography, Electronc Ion Suppressor","760","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=788"
+414,"Fluoride, Saturation Extraction, Anion Chromatograph","Soluble Anions, Fl","SatAn2","6U1a","CMS, SSIR No. 42, version 3, page 559","864","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=892"
+415,"Fluoride, Saturation Extraction, Anion Chromatograph, Ionic Suppressor","Soluble Anions, Fl","SatAn3","6U1b","CMS, SSIR No. 42, version 3, page 287","760","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=788"
+416,"Fluoride, Saturation Extraction, Flow Injection, Automated Ion Analyzer","Soluble Anions, Fl","SatAn4","6U1c","CMS, SSIR No. 42, version 3, page 287, Flow injection","760","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=788"
+417,"Fluoride, Saturation Extraction, Anion Chromatograph, Electronic Ion Suppressor","Soluble Anions, Fl","SatAn5","6U1d","CMS, SSIR No. 42, version 3, page 287, Anion Chromatography, Electronc Ion Suppressor","760","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=788"
+418,"Nitrite, Saturation Extraction, Anion Chromatograph","Soluble Anions, NO2","SatAn2","6W1a","CMS, SSIR No. 42, version 3, page 559","864","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=892"
+419,"Nitrite, Saturation Extraction, Anion Chromatograph, Ionic Suppressor","Soluble Anions, NO2","SatAn3","6W1b","CMS, SSIR No. 42, version 3, page 287","760","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=788"
+420,"Nitrite, Saturation Extraction, Flow Injection, Automated Ion Analyzer","Soluble Anions, NO2","SatAn4","6W1c","CMS, SSIR No. 42, version 3, page 287, Flow injection","760","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=788"
+421,"Nitrite, Saturation Extraction, Anion Chromatograph, Electronic Ion Suppressor","Soluble Anions, NO2","SatAn5","6W1d","CMS, SSIR No. 42, version 3, page 287, Anion Chromatography, Electronc Ion Suppressor","760","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=788"
+422,"Bromide, Saturation Extraction, Anion Chromatograph, Electronic Ion Suppressor","Soluble Anions, Br","SatAn5","6X1a","CMS, SSIR No. 42, version 3, page 287, Anion Chromatography, Electronc Ion Suppressor","760","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=788"
+423,"Acetate, Saturation Extraction, Anion Chromatograph, Electronic Ion Suppressor","Soluble Anions, OAc","SatAn5","6Y1a","CMS, SSIR No. 42, version 3, page 287, Anion Chromatography, Electronc Ion Suppressor","760","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=788"
+424,"Saturated Paste, Mixed, Saturation Extract, Automatic Extractor Conductivity, Digital Bridge","Saturated Paste and Soluble Salts, EC","SATP","8A3a","CMS, SSIR No. 42, version 3, page 407","397","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=425"
+425,"Nitrate, Saturation Extraction, Phenyldisulfonic (PDS) Acid Colorimetry","Soluble Anions, NO3","SatAn11","6M1a","CMS, SSIR No. 1, 1972, page 41","951","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=979"
+426,"Plasticity Index, Liquid Limit","Atterberg Limits, LL","AttBg0","4F1","CMS, SSIR No. 42, version 3, page 193","218","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=246"
+427,"Plasticity Index, Plastic Limit","Atterberg Limits, PL","AttBg0","4F2","CMS, SSIR No. 42, version 3, page 193","219","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=247"
+428,"Water Content, Saturated Paste","Saturated Paste and Soluble Salts, H2O","SATP","8A","CMS, SSIR No. 42, version 3, page 397","394","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=422"
+429,"Reaction (pH), Saturated Paste","Saturated Paste and Soluble Salts, pH","SATP","8C1b","CMS, SSIR No. 42, version 3, page 411","269","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=297"
+430,"Soil Resistivity, Saturated Paste","Saturated Paste and Soluble Salts, resistivity","SATP","8E1","CMS, SSIR No. 42, version 3, page 427","399","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=427"
+431,"Phosphate, Saturation Extraction, Anion Chromatograph, Electronic Ion Suppressor","Soluble Anions, PO4","SatAn5","6S9a","CMS, SSIR No. 42, version 3, page 287, Anion Chromatography, Electronc Ion Suppressor","760","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=788"
+432,"Particles >2 mm, 75 mm Base","Particles >2 mm, 75 mm Base","CFRAG0",,"CMS, SSIR No. 42, version 3, page 105",,
+433,"Water Retention, Field State","Water Retention, Field State","H2Ofield","3C3","CMS, SSIR No. 42, version 3, page 169","169","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=197"
+433,"Water Retention, Field State","Water Retention, Field State","H2Ofield","4B4","CMS, SSIR No. 42, version 3, page 169","169","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=197"
+434,"Calcium, NH4OAc Extraction, Atomic Absorption III","Extractable Cations, Ca","CaExCat12",,"CMS, SSIR No. 42, version 3, page 313, AAIII",,
+435,"Calcium, NH4OAc Extraction, Atomic Absorption III, moist","Extractable Cations, Ca","CaExCat13",,"CMS, SSIR No. 42, version 3, page 313, AAIII, moist",,
+436,"Magnesium, NH4OAc Extraction, Atomic Absorption III","Extractable Cations, Mg","MgExCat12",,"CMS, SSIR No. 42, version 3, page 313, AAIII",,
+437,"Magnesium, NH4OAc Extraction, Atomic Absorption III, moist","Extractable Cations, Mg","MgExCat13",,"CMS, SSIR No. 42, version 3, page 313, AAIII, moist",,
+438,"Sodium, NH4OAc Extraction, Atomic Absorption III","Extractable Cations, Na","NaExCat12",,"CMS, SSIR No. 42, version 3, page 313, AAIII",,
+439,"Sodium, NH4OAc Extraction, Atomic Absorption III, moist","Extractable Cations, Na","NaExCat13",,"CMS, SSIR No. 42, version 3, page 313, AAIII, moist",,
+440,"Potassium, NH4OAc Extraction, Atomic Absorption III","Extractable Cations, K","KExCat12",,"CMS, SSIR No. 42, version 3, page 313, AAIII",,
+441,"Potassium, NH4OAc Extraction, Atomic Absorption III, moist","Extractable Cations, K","KExCat13",,"CMS, SSIR No. 42, version 3, page 313, AAIII, moist",,
+442,"Iron, Dithionite-Citrate Extraction, Orthophenanthroline Colorimetry","Dithionite-Citrate Extract, Fe","FE_DITH","6C2a","CMS, SSIR No. 1, 1972, page 31","923","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=951"
+443,"Phosphorus, Bray P-1 Absorbed Phosphorus, Spectrophotometer","Phosphorus, Bray 1","BRAYP","6S3","CMS, SSIR No. 42, version 3, page 323","788","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=816"
+444,"Particles >2 mm, Weight Estimates","Particles >2 mm, 75 mm Base","CFRAG1","3B1","CMS, SSIR No. 42, version 3, page 105","91","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=119"
+445,"derived BSESAT, 5C1b","Derived","none","5C1b","CMS, moist",,
+446,"derived Plasticity Index","Atterberg Limits, PI","AttBg0","4F","CMS, SSIR No. 42, version 3, page 193","219","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=247"
+447,"Iron, Sodium Pyrophosphate Extraction II, Atomic Absorption, moist","Na-Pyrophosphate Extract, Fe","PYRO",,"CMS, SSIR No. 1, 1984, page 38, moist",,
+448,"Calcium Carbonate Equivalent, HCl,","Calcium Carbonate Equivalent, <20mm","CACO3_20","6E4b","SSIR No. 42, version 3, page 271","370","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=398"
+449,"Calcium Carbonate Equivalent, HCl,","Calcium Carbonate Equivalent, <20mm","caco3l20","6E4","CMS",,
+450,"Gypsum, H2O Extraction, Acetone Precipitation,","Gypsum, <20mm","GYPL20",,"SSIR No. 42, version 3, page 275",,
+451,"X-ray Diffraction, unspecified","Clay Mineralogy, X-ray Diffraction","XRAY","7A2","CMS",,
+451,"X-ray Diffraction, unspecified","Clay Mineralogy, X-ray Diffraction","XRAY","7A2","CMS","533","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=561"
+451,"X-ray Diffraction, unspecified","Clay Mineralogy, X-ray Diffraction","XRAY","XRAY1","CMS",,
+452,"Differential Thermal Analysis I","Clay Mineralogy, DTA I","DTA1","7A3","CMS 7A3","984","#page=1012"
+453,"Differential Thermal Analysis","Clay Mineralogy, DTA","DTA2","7A3b","CMS 7A3b",,
+454,"Total Analysis, HF Dissolution","Total Elemental Analysis, HF Dissolution","TOTANAL","7C3","CMS 7C3",,
+455,"Optical Analysis, Full Grain Count, Mica Adjusted","Optical Analysis, Mica Adjusted","OPTICAL_Fm",,"CMS",,
+456,"X-ray Diffraction, thin film on tile resin pretreatment","Clay Mineralogy, X-ray Diffraction","XRAY","7A2e","CMS, 7A2e","983","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=1011"
+457,"Cations, Acid Oxalate Extractable, Optical Density","Acid Oxalate extraction","OXAL","8J","CMS","846","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=874"
+457,"Cations, Acid Oxalate Extractable, Optical Density","Acid Oxalate extraction","OXAL","8J1b","CMS","846","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=874"
+457,"Cations, Acid Oxalate Extractable, Optical Density","Acid Oxalate extraction","OXAL","8J1c","CMS","846","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=874"
+458,"Estimated Organic Carbon","Estimated organic carbon","EOC","Est",,,
+460,"pH, 0.01M CaCl2, Histosol","Fiber Analysis, pH CaCl2","ph_hist","8C2a","SSIR No. 42, version 3, page 423","274","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=302"
+461,"Color, Pyrophosphate Extract","Fiber Analysis, Pyrophosphate color","pyr_col","8H","SSIR No. 42, version 3, page 437","497","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=525"
+465,"Biomass, Roots, C","Biomass, Roots, C","BIOROOT","6C1","SSIR No. 42, version 4, page 394","671","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=699"
+466,"Biomass, POM, C","Biomass, POM, C","BIOPOM","6A4","SSIR No. 42, version 4, page 385","660","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=688"
+467,"Biomass, Microbial, C","Biomass, Microbial, C","BIOMASS","6B1a1","SSIR No. 42, version 4, page 388","664","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=692"
+468,"Biomass, CO3, C","Biomass, CO3, C","BIOCO3","6A3a","SSIR No. 42, version 4, page 381","655","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=683"
+469,"Extractable Acidity, BaCl2-Triethanolamine, Centrifuge","Extractable Acidity, BaCl2-TEA","EXTRACIDC","4B2b1a1","SSIR No. 42, version 4, page 194","251","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=279"
+470,"Biomass, 0.02 M KMnO4 Extractable, C","Biomass, 0.02 M KMnO4 Extractable, C","BIOKMNO4","6A2","SSIR No. 42, version 4, page 379","505","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=533"
+471,"Anion Resin Extractable Phosphorus","Phosphorus, Anion Resin Extractable","AnResP","4D1a1a1a","SSIR No. 42, version 4, page 219","287","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=315"
+472,"Electrical Conductivity, 1:20 (w/v)","Electrical Conductivity, 1:20,","EC20","EC20",,,
+473,"Biomass, Glucose, C","Biomass, Glucose, C","BIOGLUCOSE","6A1","SSIR No. 42, version 4, page 376","652","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=680"
+474,"Water Retention, 5 Bar, Pressure-Plate, <2mm","Water Retention, 5 Bar, Pressure-Plate, <2mm","H2O5Bar<2","3C2b","new method",,
+475,"Phosphorus, Ground/Surface Water","Phosphorus, Ground/Surface Water","WatP","4I","SSIR No. 42, version 4, page 352","474","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=502"
+476,"Elements, Mehlich III","Elements, Mehlich III","ElMehl3","4D6b","SSIR No. 42, version 4, page 249","345","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=373"
+477,"Elements, Water Extract","Elements, Water Extract","ElWatExtr","4D2a2d1-22",,"312","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=340"
+478,"Salts, Ground/Surface Water","Salts, Ground/Surface Water","WatSalts","4I2","SSIR No. 42, version 4, page 352","472","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=500"
+479,"Elements, Ground/Surface Water","Elements, Ground/Surface Water","ElWat","4I3","SSIR No. 42, version 4, page 365","649","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=677"
+480,"Anion Resin Water Phosphorus","Phosphorus, Anion Resin Ground/Surface Water","AnResPW","4D1a1a1a","SSIR No. 42, version 4, page 219","287","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=315"
+481,"Equivalent Gypsum Content","Equivalent Gypsum Content","EGC","4E2b1a1",,"380","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=408"
+482,"PSDA, Water Dispersible, Moist, Ultrasonic, Pipet","PSDA, Water Disp, Moist, Ultrasonic, Pipet","H2OPSDAMU","3A1a7b",,"72","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=100"
+483,"PSDA, Water Dispersible, Air-Dry, Ultrasonic, Pipet","PSDA, Water Disp, Air-Dry, Ultrasonic, Pipet","H2OPSDAAU","3A1a7a",,"71","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=99"
+484,"Surface Area N2 Adsorption","Surface Area N2 Adsorption","SA_N2BET","7A5a1","SSIR No. 42, version 4, page 418","540","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=568"
+485,"PSDA, no pretreatment, Pipet","PSDA, Air-dry,","PSDA1","3A1i","Soil Characterization in Indiana, page 13 3A1i",,
+486,"Organic Carbon, acid dichromate digestion, FeSO4 titration, Mebius","Organic Carbon","WBC3","6A1e","Soil Characterization in Indiana, page 19 6A1e",,
+487,"Organic Carbon, acid dichromate digestion, FeSO4 titration, Nelson-Sommers","Organic Carbon","WBC4","6A1f","Soil Characterization in Indiana, page 20 6A1f",,
+488,"PSDA, centrifuge","PSDA, Air-dry,","PSDA2","PSDA2","University of Idaho Laboratory Analysis 3A1j http://soils.ag.uidaho.edu/pedology/Analyses/index.htm",,
+489,"Phosphorus Isotherm","Phosphorus Isotherm","PIsotherm","PIsotherm","University of Idaho Laboratory Analysis http://soils.ag.uidaho.edu/pedology/Analyses/index.htm",,
+490,"Calcium, 1:1 soil/water Extraction, EDTA Titration","Soluble Salts, Ca","CA_11SWEX",,"USDA Handbook 60, titration with EDTA (Versenate), 7",,
+491,"Magnesium, 1:1 soil/water Extraction, EDTA Titration","Soluble Salts, Mg","MG_11SWEX",,"USDA Handbook 60, titration with EDTA (Versenate), 7",,
+492,"Sodium, 1:1 soil/water Extraction, Atomic Absorbtion","Soluble Salts, Na","NA_11SWEX",,"USDA Handbook 60",,
+493,"Potassium, 1:1 soil/water Extraction, Atomic Absorbtion","Soluble Salts, K","K_11SWEX",,"USDA Handbook 60",,
+494,"Carbonate, 1:1 soil/water Extraction, acid titration","Soluble Anions, CO3","11SWEXAn1",,"USDA Handbook 60, titration with acid, 12",,
+495,"Bicarbonate, 1:1 soil/water Extraction, acid titration","Soluble Anions, HCO3","11SWEXAn1",,"USDA Handbook 60, titration with acid, 12",,
+496,"Chloride, 1:1 soil/water Extraction, Mohr titration","Soluble Anions, Cl","11SWEXAn2",,"USDA Handbook 60, titration with silver nitrate, 13",,
+497,"Sulfate, 1:1 soil/water Extraction, titration","Soluble Anions, SO4","11SWEXAn3",,"Fritz and Yamanura. 1955.",,
+498,"1:1 soil/water Extraction","1:1 Extract and Soluble Salts","11SWEX","SWEX","USDA Handbook 60",,
+499,"PSDA, Hydrometer, sand fractions wet sieved","PSDA, hydrometer, Air-dry,","PSDA_hyd1","hyd1","SSSA, Gee and Or, 2002, sand fractions wet sieved",,
+500,"PSDA, coulter counter","PSDA, coulter counter, Air-dry,","PSDA3","PSDA3","University of Idaho Laboratory Analysis http://soils.ag.uidaho.edu/pedology/Analyses/index.htm",,
+501,"X-ray Diffraction, Powder Mount","Mineralogy, X-ray Diffraction Powder Mount","XRAYPM","7A1c1",,,
+502,"P-Nitrophenol, ▀-Glucosidase","P-Nitrophenol, ▀-Glucosidase","BIOBGLUCO","6A5","SSIR No. 42, version 4, page 640","513","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=541"
+503,"Biomass, Hyper POM, C","Biomass, Hyper POM, C","BIOHPOM","6A4","SSIR No. 42, version 4, page 385","509","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=537"
+504,"Visible Near Infrared","Visible Near Infrared","VNIR","7A6",,,
+505,"PSDA, Ethanol Disp, Air-Dry, Ultrasonic, Pipet","PSDA, Ethanol Disp, Air-Dry, Ultrasonic, Pipet","EthPSDAAU","3A1a8a",,,
+506,"Soil Color, C","Soil Color, 'C' standard light source","COLOR_C","Color_C","University of California at Davis analysis - measurement via CR-410",,
+507,"Bulk Density, 3D","Bulk Density, 3D laser scanner","DB_3D","DB_3D","University of California at Davis analysis - https://www.soils.org/publications/sssaj/pdfs/72/6/1591",,
+508,"Aluminum, Dithionite-Citrate-Bicarbonate Extraction","Dithionite-Citrate Extract, Al","AL_DITH","AL_DITH","U of Florida - http://flsoils.ifas.ufl.edu/params/citrate-dithionate.asp",,
+509,"Water Release Curve","Water Release Curve","Wat_Rel_Cur","WatRC","U of Florida - http://flsoils.ifas.ufl.edu/params/waterrelease.asp",,
+510,"Mid Infrared","Mid Infrared","MIR","7A7",,,
+511,"Aluminum, Dithionite-Citrate Extraction, Aluminon I","Dithionite-Citrate Extract, Al","AL_DITH","AL_DITH","University of Idaho","941","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=969"
+512,"Organic Carbon, dry combustion, CO2 evolution, gravimetric","Organic Carbon","OC","6A2d","University of Missouri, modified 6A2d",,
+513,"X-ray Diffraction, Thin Film on Glass, Filter Peel","Clay Mineralogy, X-ray Diffraction","XRAY2","7A1b1",,"520","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=584"
+514,"Elements, Xray Flourescence","Elements, Xray Flourescence","XRAYF","XRAYF","University of California, Soils were ground overnight in a ball mill, to approximately flour-like consistency. Ground samples where then placed into sample cups with a polypropylene cover. Samples were then scanned with a Niton portable X-Ray fluorescence",,
+515,"Calcium Carbonate Equivalent, HCl,","Calcium Carbonate Equivalent, <2mm","CACO3","CACO3","CaCO3 equivalent, Procedure 23b, USDA Handbook 60, US. Salinity Lab. 1954.",,
+516,"Phosphorus, Bray 1","Phosphorus, Bray 1","BRAYP","4D3","Phosphorus, Extractable P, Bry No. 1, Soil Sci. 59:39-45, 1945.","327","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=355"
+516,"Phosphorus, Bray 1","Phosphorus, Bray 1","BRAYP","4D3a1","Phosphorus, Extractable P, Bry No. 1, Soil Sci. 59:39-45, 1945.","327","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=355"
+516,"Phosphorus, Bray 1","Phosphorus, Bray 1","BRAYP","6S3b","Phosphorus, Extractable P, Bry No. 1, Soil Sci. 59:39-45, 1945.","788","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=816"
+516,"Phosphorus, Bray 1","Phosphorus, Bray 1","BRAYP","6S3d","Phosphorus, Extractable P, Bry No. 1, Soil Sci. 59:39-45, 1945.","788","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=816"
+516,"Phosphorus, Bray 1","Phosphorus, Bray 1","BRAYP","6S3e","Phosphorus, Extractable P, Bry No. 1, Soil Sci. 59:39-45, 1945.","788","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=816"
+516,"Phosphorus, Bray 1","Phosphorus, Bray 1","BRAYP","6S3f","Phosphorus, Extractable P, Bry No. 1, Soil Sci. 59:39-45, 1945.","788","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=816"
+516,"Phosphorus, Bray 1","Phosphorus, Bray 1","BRAYP","BRAYP","Phosphorus, Extractable P, Bry No. 1, Soil Sci. 59:39-45, 1945.","788","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=816"
+517,"PSDA, pipette with silt by elutriation, Air-dry,","PSDA, pipette with silt by elutriation, Air-dry,","PSDA4","PSDA4","Silt by elutriation, sand by sieving",,
+518,"Water Retention, 0 Bar, Pressure-Plate, <2mm","Water Retention, 0 Bar, Pressure-Plate, <2mm","H2O0Bar<2","H2O0Bar","Water Content at saturation",,
+519,"Water Retention, 0.33 Bar, Centrifuge, <2mm","Water Retention, 0.33 Bar, Centrifuge, <2mm","H2O.33Br<2",,"Centrifuge. Briggs, L.J. and J.W. McLane \"The Moisture equivalent of soils\". USDA Bureau of Soils Bulletin 45, pp 1-23.",,
+520,"CEC and Cations, NH4OAc","CEC and Cations, Routine","CECNH4_TAMU","4B1a1","modified USDA Handbook 60","230","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=258"
+520,"CEC and Cations, NH4OAc","CEC and Cations, Routine","CECNH4_TAMU","CECNH4_TAMU","modified USDA Handbook 60",,
+521,"Saturated Paste and Soluble Salts","Saturated Paste and Soluble Salts","SATP_TAMU","4F2","modified USDA Handbook 60","390","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=418"
+521,"Saturated Paste and Soluble Salts","Saturated Paste and Soluble Salts","SATP_TAMU","SATP_TAMU","modified USDA Handbook 60",,
+522,"Carbonate, Chittick gasometric apparatus","Carbonate, Chittick","CARB_TAMU","CARB_TAMU","Quantitative gasometric determination of calcite and dolomite by using Chittick apparatus (http://www.geotech.ou.edu/ART/research/ChittickProcedure.pdf)","655","http://www.nrcs.usda.gov/Internet/FSE_DOCUMENTS/stelprdb1253872.pdf#page=683"
+523,"Organic Matter by Loss on Ignition","OM LOI","OM_LOI","OMLOI",,,
+524,"Magnesium, NH4OAc Extraction, Colorimetric","Extractable Cations, Mg","MgExCat12","6O2f","Color was developed by successive additions of hydroxylamine chloride solution, gum Arabic solution, clayton yellow solution and NaOH solution. Each addition is followed by shaking. The color of the test solution is compared visually with the colors of pr",,

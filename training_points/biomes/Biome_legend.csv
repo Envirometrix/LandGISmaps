@@ -1,0 +1,39 @@
+"Value","New_global_consolidated_biome_scheme","Original_biome_classification","Mega_biome_classification","R","G","B"
+1,"tropical evergreen broadleaf forest","tropical evergreen broadleaf forest","tropical forest",28,85,16
+2,"tropical semi-evergreen broadleaf forest","tropical semi-evergreen broadleaf forest","tropical forest",101,146,8
+3,"tropical deciduous broadleaf forest and woodland","tropical deciduous broadleaf forest and woodland","tropical forest",174,125,32
+4,"warm-temperate evergreen and mixed forest","warm-temperate evergreen broadleaf and mixed forest","warm-temperate forest",0,0,101
+5,"warm-temperate evergreen and mixed forest","warm-temperate evergreen broadleaf forest","warm-temperate forest",106,97,45
+6,"warm-temperate evergreen and mixed forest","warm-temperate rainforest","warm-temperate forest",198,98,141
+7,"cool-temperate rainforest","wet sclerophyll forest","warm-temperate forest",187,203,53
+8,"cool evergreen needleleaf forest","cool evergreen needleleaf forest","temperate forest",0,154,24
+9,"cool mixed forest","cool mixed forest","temperate forest",202,255,202
+10,"cool-temperate rainforest","cool-temperate rainforest","temperate forest",120,157,188
+11,"cool mixed forest","cool-temperate evergreen needleleaf and mixed forest","temperate forest",113,36,53
+12,"warm-temperate evergreen and mixed forest","temperate evergreen needleleaf forest","temperate forest",24,130,113
+13,"temperate deciduous broadleaf forest","temperate deciduous broadleaf forest","temperate forest",85,235,73
+14,"cold deciduous forest","cold deciduous forest","boreal forest",101,178,255
+15,"cold evergreen needleleaf forest","cold evergreen needleleaf forest","boreal forest",0,32,202
+16,"temperate sclerophyll woodland and shrubland","temperate sclerophyll woodland and shrubland","savanna and dry woodland",142,162,40
+17,"temperate evergreen needleleaf open woodland","temperate evergreen needleleaf open woodland","savanna and dry woodland",255,154,223
+18,"tropical savanna","tropical savanna","savanna and dry woodland",186,255,53
+19,"temperate deciduous broadleaf savanna","savanna and dry woodland",117,255,53,255
+20,"xerophytic woods/scrub","tropical xerophytic shrubland","grassland and dry shrubland",255,186,154
+21,"xerophytic woods/scrub","temperate xerophytic shrubland","grassland and dry shrubland",255,223,202
+22,"steppe","tropical grassland","grassland and dry shrubland",255,186,53
+23,"steppe","temperate grassland","grassland and dry shrubland",255,223,154
+24,"steppe","steppe","grassland and dry shrubland",240,198,66
+25,"xerophytic woods/scrub","xerophytic woods/scrub","grassland and dry shrubland",245,14,78
+26,"steppe","temperate grassland and xerophytic shrubland","grassland and dry shrubland",250,134,17
+27,"desert","desert","desert",247,255,202
+28,"graminoid and forb tundra","graminoid and forb tundra","dry tundra",231,231,24
+29,"graminoid and forb tundra","cushion-forb tundra (cushion forb, lichen and moss tundra)","tundra",154,101,255
+30,"erect dwarf shrub tundra","erect dwarf-shrub tundra","tundra",121,134,73
+31,"low and high shrub tundra","low and high shrub tundra","tundra",101,255,154
+32,"prostrate dwarf shrub tundra","prostrate dwarf-shrub tundra","tundra",210,158,150
+33,"graminoid and forb tundra","tundra undiferentiated","tundra",176,137,193
+34,"graminoid and forb tundra","alpine grassland","tundra",133,65,156
+35,"cool mixed forest","cold mixed forest","temperate forest",210,255,210
+36,"graminoid and forb tundra","cool grassland","grassland and dry shrubland",210,223,154
+37,"steppe","temperate or tropical grassland and xerophytic shrubland","grassland and dry shrubland",225,223,120
+38,"xerophytic woods/scrub","temperate xerophytic woods scrub","grassland and dry shrubland",255,225,212
