@@ -29,9 +29,10 @@ LandGIS — Open Land Data service
 LandGIS
 -------
 
-LandGIS is a Web-GIS system providing access to spatial layers and services covering global land mass
-(at spatial resolutions of 1 km, 250 m or finer resolution). It aims at becoming an OpenStreetMap for land data.
-Access to spatial layers is possible via interactive visualizations and/or Open Source software solutions. 
+LandGIS is a Web-GIS system providing access to spatial layers and services 
+covering global land mass (at spatial resolutions of 1 km, 250 m or finer resolution). 
+It aims at becoming an OpenStreetMap for land data. Access to spatial layers is 
+possible via interactive visualizations and/or Open Source software solutions. 
 Read more about this project [here](http://opengeohub.org/about-landgis/).
 
 ![LandGIS](img/LandGIS_Logo-full-550x250-02.png)
@@ -126,15 +127,21 @@ Order	"Alfisols"
 
 To list all available layers use: https://landgisapi.opengeohub.org/query/layers
 
-To query values for multiple points (currently limited to **max 20 points**) provide a GeoJSON with point feature collection and layer name from the table:
+To query values for multiple points (currently limited to **max 100 points**) 
+provide a GeoJSON with point feature collection and layer name from the table:
 
 ```	
 curl -X POST --form "points=@test_points.geojson" --form "layer=pnv_fapar_proba.v.jul_d_1km_s0..0cm_2014..2017_v0.1.tif" https://landgisapi.opengeohub.org/query/points -o results.json 
 ```	
 
-where `test_points.geojson` is the GeoJSON file containing coordinates of points. More examples of how to construct spatial queries are available at: https://landgisapi.opengeohub.org
+where `test_points.geojson` is the GeoJSON file containing coordinates of points. 
+More examples of how to construct spatial queries are available at: 
+https://landgisapi.opengeohub.org
 
-In addition to the REST access, you can access the LandGIS data using the [Web Coverage Service (WCS) functionality of the Geoserver](https://geoserver.opengeohub.org/landgisgeoserver/web/) e.g. to subset layers using a bounding box. For example, to download [surface temperature for July](https://maps.opengeohub.org/layers/layers1km:clm_lst_mod11a2.jul.day_m_1km_s0..0cm_2000..2017_v1.0) for an area of about 300 by 300 km you can use:
+In addition to the REST access, you can access the LandGIS data using the 
+[Web Coverage Service (WCS) functionality of the Geoserver](https://geoserver.opengeohub.org/landgisgeoserver/web/) e.g. to subset layers using a bounding box. 
+For example, to download [surface temperature for July](https://maps.opengeohub.org/layers/layers1km:clm_lst_mod11a2.jul.day_m_1km_s0..0cm_2000..2017_v1.0) for an area 
+of about 300 by 300 km you can use:
 
 ```
 https://geoserver.opengeohub.org/landgisgeoserver/ows?service=WCS&version=2.0.1&
@@ -143,7 +150,9 @@ coverageId=layers1km:clm_lst_mod11a2.jul.day_m_1km_s0..0cm_2000..2017_v1.0&
 subset=Lat(41,45)&subset=Long(32,35)
 ```
 
-The read limit for WCS is 4GB and response size limit is 200MB. This means that WCS might fail if you try to fetch too large bounding boxes. If this happens we recommend instead downloading whole GeoTIFFs from Zenodo.
+The read limit for WCS is 8GB and response size limit is 400MB. This means that 
+WCS might fail if you try to fetch too large bounding boxes. If this happens we 
+recommend instead downloading whole GeoTIFFs from Zenodo.
 
 ![LandGIS world mask](img/landgis_wms_settings.png)
 *Image: Parameter settings for adding LandGIS WMS to QGIS.*
@@ -160,7 +169,8 @@ To download whole layers from zenodo you can use the R packages jsonlite and RCu
 > library(rgdal)
 ```
 
-You first need to authenticate yourself by using a Zenodo API TOKEN (see: [how to obtain API TOKEN](http://developers.zenodo.org/#quickstart-upload)):
+You first need to authenticate yourself by using a Zenodo API TOKEN 
+(see: [how to obtain API TOKEN](http://developers.zenodo.org/#quickstart-upload)):
 
 ```
 > TOKEN = scan("~/TOKEN_ACCESS", what="character")
@@ -363,8 +373,10 @@ This will add tiles and optimize compression. `CO=YES` indicates that the GeoTIF
 Relief and geology
 ------------------
 
-Relief parameters were derived derived using SAGA GIS (http://www.saga-gis.org/) and the MERIT DEM (Yamazaki et al. 2017) projected in the 
-Equi7 grid system (Bauer-Marschallinger et al. 2014). Once derived, DEM derivatives were then reprojected to the lon-lat system. See [processing steps](https://github.com/Envirometrix/LandGISmaps/tree/master/input_layers/MERIT).
+Relief parameters were derived derived using SAGA GIS (http://www.saga-gis.org/) 
+and the MERIT DEM (Yamazaki et al. 2017) projected in the Equi7 grid system 
+(Bauer-Marschallinger et al. 2014). Once derived, DEM derivatives were then 
+reprojected to the lon-lat system. See [processing steps](https://github.com/Envirometrix/LandGISmaps/tree/master/input_layers/MERIT).
 
 1.1 Slope in radians
 
@@ -421,10 +433,144 @@ Based on the USGS global earthquakes database (http://earthquake.usgs.gov/earthq
 Processing steps are explained [here](https://github.com/Envirometrix/LandGISmaps/tree/master/input_layers/earthquakes).
 
 ```
-dtm_earthquakes.dens_earthquake.usgs_m_1km_s0..0cm_1910..2017_v1.0
+dtm_earthquakes.dens_earthquake.usgs_m_1km_s0..0cm_1910..2017_v1.0.tif
 ```
 :open_file_folder: [Download layer](https://doi.org/10.5281/zenodo.1458946)
 
+1.7 Cosine of the aspect
+
+Based on the MERIT DEM (Yamazaki et al. 2017) described in [Amatulli et al. (2019; Geomorpho90m dataset)](https://dx.doi.org/10.7287/peerj.preprints.27595v1).
+
+```
+dtm_aspect-cosine_merit.dem_m_250m_s0..0cm_2018_v1.0.tif
+```
+:open_file_folder: [Download layer](https://drive.google.com/drive/folders/1D4YHUycBBhNFVVsz4ohaJI7QXV9BEh94)
+
+1.8 Sine of the aspect
+
+Based on the MERIT DEM (Yamazaki et al. 2017) described in [Amatulli et al. (2019; Geomorpho90m dataset)](https://dx.doi.org/10.7287/peerj.preprints.27595v1).
+
+```
+dtm_aspect-sine_merit.dem_m_250m_s0..0cm_2018_v1.0.tif
+```
+:open_file_folder: [Download layer](https://drive.google.com/drive/folders/1D4YHUycBBhNFVVsz4ohaJI7QXV9BEh94)
+
+1.9 Convergence
+
+Based on the MERIT DEM (Yamazaki et al. 2017) described in [Amatulli et al. (2019; Geomorpho90m dataset)](https://dx.doi.org/10.7287/peerj.preprints.27595v1). Derived using GRASS and Equi7 grid system.
+
+```
+dtm_convergence_merit.dem_m_250m_s0..0cm_2018_v1.0.tif
+```
+:open_file_folder: [Download layer](https://drive.google.com/drive/folders/1D4YHUycBBhNFVVsz4ohaJI7QXV9BEh94)
+
+1.10 Compound topographic index
+
+Based on the MERIT DEM (Yamazaki et al. 2017) described in [Amatulli et al. (2019; Geomorpho90m dataset)](https://dx.doi.org/10.7287/peerj.preprints.27595v1). Derived using GRASS and Equi7 grid system.
+
+```
+dtm_cti_merit.dem_m_250m_s0..0cm_2018_v1.0.tif
+```
+:open_file_folder: [Download layer](https://drive.google.com/drive/folders/1D4YHUycBBhNFVVsz4ohaJI7QXV9BEh94)
+
+1.11 Maximum multiscale deviation
+
+Based on the MERIT DEM (Yamazaki et al. 2017) described in [Amatulli et al. (2019; Geomorpho90m dataset)](https://dx.doi.org/10.7287/peerj.preprints.27595v1). Derived using WHITEBOX and Equi7 grid system.
+
+```
+dtm_dev-magnitude_merit.dem_m_250m_s0..0cm_2018_v1.0.tif
+```
+:open_file_folder: [Download layer](https://drive.google.com/drive/folders/1D4YHUycBBhNFVVsz4ohaJI7QXV9BEh94)
+
+1.12 Scale of the maximum multiscale deviation
+
+Based on the MERIT DEM (Yamazaki et al. 2017) described in [Amatulli et al. (2019; Geomorpho90m dataset)](https://dx.doi.org/10.7287/peerj.preprints.27595v1). Derived using WHITEBOX and Equi7 grid system.
+
+```
+dtm_dev-scale_merit.dem_m_250m_s0..0cm_2018_v1.0.tif
+```
+:open_file_folder: [Download layer](https://drive.google.com/drive/folders/1D4YHUycBBhNFVVsz4ohaJI7QXV9BEh94)
+
+1.13 Easthness
+
+Based on the MERIT DEM (Yamazaki et al. 2017) described in [Amatulli et al. (2019; Geomorpho90m dataset)](https://dx.doi.org/10.7287/peerj.preprints.27595v1). Derived using GDAL.
+
+```
+dtm_easthness_merit.dem_m_250m_s0..0cm_2018_v1.0.tif
+```
+:open_file_folder: [Download layer](https://drive.google.com/drive/folders/1D4YHUycBBhNFVVsz4ohaJI7QXV9BEh94)
+
+1.14 Geomorphon clasess
+
+Based on the MERIT DEM (Yamazaki et al. 2017) described in [Amatulli et al. (2019; Geomorpho90m dataset)](https://dx.doi.org/10.7287/peerj.preprints.27595v1). Derived using GRASS and Equi7 grid system. See description of [the geomorphon classes](https://grass.osgeo.org/grass74/manuals/addons/r.geomorphon.html).
+
+```
+dtm_geom_merit.dem_c_250m_s0..0cm_2018_v1.0.tif
+```
+:open_file_folder: [Download layer](https://drive.google.com/drive/folders/1D4YHUycBBhNFVVsz4ohaJI7QXV9BEh94)
+
+1.15 Northness
+
+Based on the MERIT DEM (Yamazaki et al. 2017) described in [Amatulli et al. (2019; Geomorpho90m dataset)](https://dx.doi.org/10.7287/peerj.preprints.27595v1). Derived using GDAL.
+
+```
+dtm_northness_merit.dem_m_250m_s0..0cm_2018_v1.0.tif
+```
+:open_file_folder: [Download layer](https://drive.google.com/drive/folders/1D4YHUycBBhNFVVsz4ohaJI7QXV9BEh94)
+
+1.16 Profile curvature
+
+Based on the MERIT DEM (Yamazaki et al. 2017) described in [Amatulli et al. (2019; Geomorpho90m dataset)](https://dx.doi.org/10.7287/peerj.preprints.27595v1). Derived using GRASS and Equi7 grid system.
+
+```
+dtm_pcurv_merit.dem_m_250m_s0..0cm_2018_v1.0.tif
+```
+:open_file_folder: [Download layer](https://drive.google.com/drive/folders/1D4YHUycBBhNFVVsz4ohaJI7QXV9BEh94)
+
+1.17 Maximum multiscale roughness
+
+Based on the MERIT DEM (Yamazaki et al. 2017) described in [Amatulli et al. (2019; Geomorpho90m dataset)](https://dx.doi.org/10.7287/peerj.preprints.27595v1). Derived using WHITEBOX and Equi7 grid system.
+
+```
+dtm_rough-magnitude_merit.dem_m_250m_s0..0cm_2018_v1.0.tif
+```
+:open_file_folder: [Download layer](https://drive.google.com/drive/folders/1D4YHUycBBhNFVVsz4ohaJI7QXV9BEh94)
+
+1.18 Roughness
+
+Based on the MERIT DEM (Yamazaki et al. 2017) described in [Amatulli et al. (2019; Geomorpho90m dataset)](https://dx.doi.org/10.7287/peerj.preprints.27595v1). Derived using GDAL.
+
+```
+dtm_roughness_merit.dem_m_250m_s0..0cm_2018_v1.0.tif
+```
+:open_file_folder: [Download layer](https://drive.google.com/drive/folders/1D4YHUycBBhNFVVsz4ohaJI7QXV9BEh94)
+
+1.19 Scale of the maximum multiscale roughness
+
+Based on the MERIT DEM (Yamazaki et al. 2017) described in [Amatulli et al. (2019; Geomorpho90m dataset)](https://dx.doi.org/10.7287/peerj.preprints.27595v1). Derived using WHITEBOX and Equi7 grid system.
+
+```
+dtm_rough-scale_merit.dem_m_250m_s0..0cm_2018_v1.0.tif
+```
+:open_file_folder: [Download layer](https://drive.google.com/drive/folders/1D4YHUycBBhNFVVsz4ohaJI7QXV9BEh94)
+
+1.20 Tangential curvature
+
+Based on the MERIT DEM (Yamazaki et al. 2017) described in [Amatulli et al. (2019; Geomorpho90m dataset)](https://dx.doi.org/10.7287/peerj.preprints.27595v1). Derived using GRASS and Equi7 grid system.
+
+```
+dtm_tcurv_merit.dem_m_250m_s0..0cm_2018_v1.0.tif
+```
+:open_file_folder: [Download layer](https://drive.google.com/drive/folders/1D4YHUycBBhNFVVsz4ohaJI7QXV9BEh94)
+
+1.21 Vector ruggedness measure
+
+Based on the MERIT DEM (Yamazaki et al. 2017) described in [Amatulli et al. (2019; Geomorpho90m dataset)](https://dx.doi.org/10.7287/peerj.preprints.27595v1). Derived using GRASS and Equi7 grid system.
+
+```
+dtm_vrm_merit.dem_m_250m_s0..0cm_2018_v1.0.tif
+```
+:open_file_folder: [Download layer](https://drive.google.com/drive/folders/1D4YHUycBBhNFVVsz4ohaJI7QXV9BEh94)
 
 Land cover, land use and administrative data
 --------------------------------------------
@@ -629,8 +775,9 @@ The most important sources of training points include:
 
 Additional points, if not available through these databases, have been also imported from the [WoSIS Soil Profile Database](https://www.isric.org/explore/wosis) (Batjes et al. 2017).
 
-Predictions are based on 3D Machine Learning ensemble models estimated using the SuperLearner and caret packages.
-Modeling steps and sample outputs are described in detail in [Hengl and MacMillan (2019)](http://soilmapper.org).
+Predictions are based on 3D Machine Learning ensemble models estimated using 
+the SuperLearner and caret packages. Predictive Soil Mapping steps and sample outputs are 
+described in detail in [Hengl and MacMillan (2019)](http://soilmapper.org).
 
 For soil variable names we use consistently the National Cooperative Soil Characterization Database 
 column names and codes. For example:
@@ -774,6 +921,18 @@ sol_ph.h2o_usda.4c1a2a_m_250m_b*..*cm_1950..2017_v0.2.tif
 ```
 :open_file_folder: [Download layer](https://doi.org/10.5281/zenodo.1475459)
 
+6.9 Soil water content at 33kPa (field capacity)
+
+Based on machine learning predictions from global compilation of soil profiles and samples.
+Training points are based on a global compilation of soil profiles 
+([USDA NCSS](https://ncsslabdatamart.sc.egov.usda.gov/), [AfSPDB](https://www.isric.org/projects/africa-soil-profiles-database-afsp), [ISRIC WISE](https://data.isric.org/geonetwork/srv/eng/catalog.search#/metadata/a351682c-330a-4995-a5a1-57ad160e621c), [EGRPR](http://egrpr.esoil.ru/), [SPADE](https://esdac.jrc.ec.europa.eu/content/soil-profile-analytical-database-2), [CanNPDB](https://open.canada.ca/data/en/dataset/6457fad6-b6f5-47a3-9bd1-ad14aea4b9e0), [UNSODA](https://data.nal.usda.gov/dataset/unsoda-20-unsaturated-soil-hydraulic-database-database-and-program-indirect-methods-estimating-unsaturated-hydraulic-properties), [SWIG](https://doi.pangaea.de/10.1594/PANGAEA.885492), [HYBRAS](http://www.cprm.gov.br/en/Hydrology/Research-and-Innovation/HYBRAS-4208.html) and [HydroS](http://dx.doi.org/10.4228/ZALF.2003.273)). 
+Data import steps are available [here](https://github.com/Envirometrix/LandGISmaps/blob/master/training_points/soil/Import_soilWater_variables.R). Spatial prediction steps are described in detail [here](https://github.com/Envirometrix/LandGISmaps/tree/master/soil/soil_water). 
+
+```
+sol_watercontent.33kPa_usda.4b1c_m_250m_b*..*cm_1950..2017_v0.1.tif
+```
+:open_file_folder: [Download layer](https://doi.org/10.5281/zenodo.2629589)
+
 
 Potential Natural Vegetation
 ----------------------------
@@ -812,67 +971,71 @@ pnv_fapar_proba.v.annualdiff_d_1km_s0..0cm_2014..2017_v0.1.tif
 References
 ==========
 
-1.  Batjes N.H., Ribeiro E., van Oostrum A., Leenaars J., Hengl T., and Mendes de Jesus J. (2017) 
+1.  Amatulli G, McInerney D, Sethi T, Strobl P, Domisch S. (2019). 
+      *Geomorpho90m - Global high-resolution geomorphometry layers: empirical evaluation and accuracy assessment*. 
+      PeerJ Preprints 7:e27595v1 https://doi.org/10.7287/peerj.preprints.27595v1
+
+2.  Batjes N.H., Ribeiro E., van Oostrum A., Leenaars J., Hengl T., and Mendes de Jesus J. (2017). 
       *WoSIS — Providing standardised soil profile data for the world*, 
       Earth System Science Data 9, 1-14, https://doi.org/10.5194/essd-9-1-2017
 
-2.  Fick, S. E., & Hijmans, R. J. (2017). *WorldClim 2: new 1‐km spatial resolution climate surfaces for global land areas*. 
+3.  Fick, S. E., & Hijmans, R. J. (2017). *WorldClim 2: new 1‐km spatial resolution climate surfaces for global land areas*. 
        International Journal of Climatology, 37(12), 4302-4315. https://doi.org/10.1002/joc.5086
 
-3.  Hartmann, J., & Moosdorf, N. (2012). *The new global lithological map database GLiM: 
+4.  Hartmann, J., & Moosdorf, N. (2012). *The new global lithological map database GLiM: 
        A representation of rock properties at the Earth surface*. 
        Geochemistry, Geophysics, Geosystems, 13(12). https://doi.org/10.1029/2012GC004370
 
-4.  Hengl, T., MacMillan, R.A., (2019). [*Predictive Soil Mapping with R*](http://soilmapper.org). 
+5.  Hengl, T., MacMillan, R.A., (2019). [*Predictive Soil Mapping with R*](http://soilmapper.org). 
        OpenGeoHub foundation, Wageningen, the Netherlands, 340 pages. ISBN: 978-0-359-30635-0.
 
-5.  Hengl T., Walsh M.G., Sanderman J., Wheeler I., Harrison S.P., Prentice I.C. (2018) 
+6.  Hengl T., Walsh M.G., Sanderman J., Wheeler I., Harrison S.P., Prentice I.C. (2018) 
       *Global mapping of potential natural vegetation: an assessment of machine learning algorithms for estimating land potential*. PeerJ 6:e5457 
       https://doi.org/10.7717/peerj.5457
 
-6.  Hengl, T., de Jesus, J.M., Heuvelink, G.B., Gonzalez, M.R.,
+7.  Hengl, T., de Jesus, J.M., Heuvelink, G.B., Gonzalez, M.R.,
       Kilibarda, M., Blagotić, A., Shangguan, W., Wright, M.N., Geng,
       X., Bauer-Marschallinger, B. and Guevara, M.A., (2017).
       *SoilGrids250m: Global gridded soil information based on machine learning*. 
       PLoS one, 12(2), p.e0169748. https://doi.org/10.1371/journal.pone.0169748 
 
-7.  Karger, D. N., Conrad, O., Böhner, J., Kawohl, T., Kreft, H., Soria-Auza, R. W., ... & Kessler, M. (2017). 
+8.  Karger, D. N., Conrad, O., Böhner, J., Kawohl, T., Kreft, H., Soria-Auza, R. W., ... & Kessler, M. (2017). 
       *Climatologies at high resolution for the earth’s land surface areas*. 
       Scientific data, 4, 170122. https://doi.org/10.1038/sdata.2017.122
 
-8.  Klein Goldewijk, K., Beusen, A., Doelman, J., Stehfest, E. (2017). 
+9.  Klein Goldewijk, K., Beusen, A., Doelman, J., Stehfest, E. (2017). 
       *Anthropogenic land-use estimates for the holocene - hyde 3.2*. 
       Earth Syst. Sci. Data, 9, 927-953. https://doi.org/10.5194/essd-9-927-2017 
 
-9.  Bauer-Marschallinger, B., Sabel, D., & Wagner, W. (2014). 
+10.  Bauer-Marschallinger, B., Sabel, D., & Wagner, W. (2014). 
       *Optimisation of global grids for high-resolution remote sensing data*. 
       Computers & Geosciences, 72, 84-93. https://doi.org/10.1016/j.cageo.2014.07.005
 
-10.  Pekel, J. F., Cottam, A., Gorelick, N., & Belward, A. S. (2016). 
+11.  Pekel, J. F., Cottam, A., Gorelick, N., & Belward, A. S. (2016). 
       *High-resolution mapping of global surface water and its long-term changes*. 
      Nature, 540(7633), 418. http://dx.doi.org/10.1038/nature20584
 
-11.  Potapov, P., Hansen, M. C., Laestadius, L., Turubanova, S., Yaroshenko, A. et al. (2013). 
+12.  Potapov, P., Hansen, M. C., Laestadius, L., Turubanova, S., Yaroshenko, A. et al. (2013). 
       *The last frontiers of wilderness: Tracking loss of intact forest landscapes from 2000 to 2013*. 
       Science Advances, 2017; 3:e1600821 https://dx.doi.org/10.1126/sciadv.1600821
 
-12.  Ramcharan, A., Hengl, T., Nauman, T., Brungard, C., Waltman, S., Wills, S., & Thompson, J. (2018). 
+13.  Ramcharan, A., Hengl, T., Nauman, T., Brungard, C., Waltman, S., Wills, S., & Thompson, J. (2018). 
        *Soil Property and Class Maps of the Conterminous United States at 100-Meter Spatial Resolution*. 
        Soil Science Society of America Journal, 82(1), 186-201. https://dl.sciencesocieties.org/publications/sssaj/abstracts/82/1/186
 
-13.  Samuel-Rosa, A., Dalmolin, R., Gubiani, P., Teixeira, W., Olivieira, S. D. M., Viana, J., ... & Ottoni, M. (2018). 
+14.  Samuel-Rosa, A., Dalmolin, R., Gubiani, P., Teixeira, W., Olivieira, S. D. M., Viana, J., ... & Ottoni, M. (2018). 
        *Bringing together brazilian soil scientists to share soil data*. In Embrapa Solos-Artigo em anais de congresso (ALICE). 
        In: REUNIÃO SUL BRASILEIRA DE CIÊNCIA DO SOLO, 12., 2018, Xanxerê. Solo, água, ar e biodiversidade: 
        componentes essenciais para a vida: anais. Chapecó: Argos, 2018.
 
-14.  Sanderman, J., Hengl, T., Fiske, G., (2017). *The soil carbon debt of 12,000 years of human land use*. 
+15.  Sanderman, J., Hengl, T., Fiske, G., (2017). *The soil carbon debt of 12,000 years of human land use*. 
        PNAS, https://dx.doi.org/10.1073/pnas.1706103114
 
-15.  Sayre, R., Dangermond, J., Frye, C., Vaughan, R., Aniello, P., Breyer, S., ... & Wright, D. (2014). 
+16.  Sayre, R., Dangermond, J., Frye, C., Vaughan, R., Aniello, P., Breyer, S., ... & Wright, D. (2014). 
        *A new map of global ecological land units—an ecophysiographic stratification approach*.
        Washington, DC: Association of American Geographers. 
 
-16.  Yamazaki, D., Ikeshima, D., Tawatari, R., Yamaguchi, T., O'Loughlin,
+17.  Yamazaki, D., Ikeshima, D., Tawatari, R., Yamaguchi, T., O'Loughlin,
       F., Neal, J.C., Sampson, C.C., Kanae, S. and Bates, P.D., (2017) 
       *A high‐accuracy map of global terrain elevations*. Geophysical
       Research Letters, 44(11), pp.5844-5853. https://doi.org/10.1002/2017GL072874
