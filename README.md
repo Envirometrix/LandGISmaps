@@ -127,7 +127,7 @@ Order	"Alfisols"
 
 To list all available layers use: https://landgisapi.opengeohub.org/query/layers
 
-To query values for multiple points (currently limited to **max 100 points**) 
+To query values for multiple points (currently limited to **max 50 points**) 
 provide a GeoJSON with point feature collection and layer name from the table:
 
 ```	
@@ -153,6 +153,18 @@ subset=Lat(41,45)&subset=Long(32,35)
 The read limit for WCS is 8GB and response size limit is 400MB. This means that 
 WCS might fail if you try to fetch too large bounding boxes. If this happens we 
 recommend instead downloading whole GeoTIFFs from Zenodo.
+
+To produce the whole world GeoTIFFs clay content map at e.g. 5 km you can use:
+
+```
+https://geoserver.opengeohub.org/landgisgeoserver/ows?service=WCS&version=2.0.1
+&request=GetCoverage
+&coverageId=predicted250m:sol_clay.wfraction_usda.3a1a1a_m_250m_b30..30cm_1950..2017_v0.2
+&scalefactor=0.05
+```
+
+Here `scalefactor` multiplies the input pixel size accordingly. Note, you can 
+also convert to other projection systems on-the-fly (see [this tutorial](https://geoserver.geo-solutions.it/edu/en/wcs/get.html) for more info).
 
 ![LandGIS world mask](img/landgis_wms_settings.png)
 *Image: Parameter settings for adding LandGIS WMS to QGIS.*
