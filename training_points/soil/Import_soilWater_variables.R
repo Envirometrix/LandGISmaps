@@ -69,6 +69,7 @@ hydrosprops.NCSS[which(!is.na(hydrosprops.NCSS$w3cld) & hydrosprops.NCSS$oc>12)[
 #file.copy(ncss.csv, to = gsub("/data/", "/data/git/SoilWaterModeling/", ncss.csv), overwrite = TRUE)
 
 ## ISIS ----
+## https://isis.isric.org/
 ## https://wur.on.worldcat.org/search?queryString=isric+soil+brief
 isis.xy <- read.csv("/data/Soil_points/INT/ISRIC_ISIS/Sites.csv", stringsAsFactors = FALSE)
 str(isis.xy)
@@ -137,6 +138,7 @@ head(hydrosprops.AfSPDB)
 #file.copy(afspdb.csv, to = gsub("/data/", "/data/git/SoilWaterModeling/", afspdb.csv), overwrite = TRUE)
 
 ## ISRIC WISE ----
+## https://data.isric.org/geonetwork/srv/eng/catalog.search#/metadata/a351682c-330a-4995-a5a1-57ad160e621c
 ## https://www.isric.org/sites/default/files/isric_report_2008_02.pdf
 cols2dms <- function(x,y,z,e){ifelse(is.na(e)|is.na(x), NA, as(sp::char2dms(paste(x, "d", y, "'", z, "\"", e, sep="")), "numeric"))}
 wise.SITE <- read.csv("/data/Soil_points/INT/ISRIC_WISE/WISE3_SITE.csv", stringsAsFactors=FALSE)
@@ -177,6 +179,7 @@ head(hydrosprops.WISE)
 #file.copy(wise.csv, to = gsub("/data/", "/data/git/SoilWaterModeling/", wise.csv), overwrite = TRUE)
 
 ## Russian SPDB ----
+## http://egrpr.esoil.ru/
 russ.HOR = read.csv("/data/Soil_points/Russia/EGRPR/Russia_EGRPR_soil_pedons.csv")
 russ.HOR$SOURCEID = paste(russ.HOR$CardID, russ.HOR$SOIL_ID, sep="_")
 russ.HOR$SNDPPT <- russ.HOR$TEXTSAF + russ.HOR$TEXSCM
@@ -302,6 +305,7 @@ hist(hydrosprops.UNSODA$w15l2, breaks=45, col="gray")
 #file.copy(unsoda.csv, to = gsub("/data/", "/data/git/SoilWaterModeling/", unsoda.csv), overwrite = TRUE)
 
 ## HydroS ----
+## http://dx.doi.org/10.4228/ZALF.2003.273
 hydros.tbl = read.csv("/data/Soil_points/INT/HydroS/int_rawret.csv", sep="\t", stringsAsFactors = FALSE, dec = ",")
 hydros.tbl = hydros.tbl[!is.na(hydros.tbl$TENSION),]
 summary(hydros.tbl$TENSION)
