@@ -1,5 +1,4 @@
 ## Fit spatial prediction models and make global soil maps
-## Attribution: some functions and code is based on https://github.com/ISRICWorldSoil/SoilGrids250m
 ## tom.hengl@gmail.com
 
 library(rgdal)
@@ -64,6 +63,7 @@ str(rm.tax$tax_grtgroup.f)
 col.legend = read.csv("/data/Soil_points/generic/TAXOUSDA_GreatGroups_complete.csv")
 col.legend$Group = tolower(col.legend$Great_Group)
 col.legend$Number = 1:nrow(col.legend)
+## TH: Note the typo "endoaquert" and "endoaquerts" are the same class!
 
 save.image.pigz(n.cores = 64)
 saveRDS.gz(rm.tax, "/data/LandGIS/training_points/soil/regression.matrix_tax_grtgroup.pnts.rds")
@@ -201,3 +201,47 @@ sfStop()
 
 mosaick_ll(varn="grtgroup", i="C", out.tif="/data/LandGIS/predicted250m/sol_grtgroup_usda.soiltax_c_250m_s0..0cm_1950..2017_v0.1.tif", dominant = TRUE, in.path="/data/tt/LandGIS/grid250m", out.path="/data/LandGIS/predicted250m", tr=cellsize, te=paste(te, collapse = " "), ot="Int16", dstnodata=-32768, aggregate=FALSE)
 write.csv(col.legend[,c("Number","Group","Great_Group_2015_match","Suborder","Order")], "/data/LandGIS/predicted250m/sol_grtgroup_usda.soiltax_c_250m_s0..0cm_1950..2017_v0.1.tif.csv")
+
+## Orders, suborders ----
+## Create maps with higher level classification
+input.tif = list.files("/data/LandGIS/predicted250m", pattern=glob2rx("sol_grtgroup_usda.soiltax.*_p_250m_b0..0cm_1950..2017_v0.1.tif$"), full.names = TRUE)
+## 340
+#grtgroup_generalize(i="T38715", input.tif = input.tif, tile.tbl=tile.tbl, col.legend=col.legend)
+
+## takes ca 10hrs!
+library(snowfall)
+sfInit(parallel=TRUE, cpus=64)
+sfExport("input.tif", "grtgroup_generalize", "tile.tbl", "col.legend")
+sfLibrary(rgdal)
+out <- sfClusterApplyLB(pr.dirs, function(x){ try( grtgroup_generalize(x, input.tif = input.tif, tile.tbl=tile.tbl, col.legend=col.legend) )})
+sfStop()
+
+so.lst = tolower(levels(col.legend$Suborder))
+filename2 = paste0("/data/LandGIS/predicted250m/sol_suborder_usda.soiltax.", so.lst, "_p_250m_s0..0cm_1950..2017_v0.1.tif")
+save.image.pigz(n.cores = 64)
+
+library(snowfall)
+sfInit(parallel=TRUE, cpus=15) 
+sfExport("so.lst", "mosaick_ll", "filename2", "te", "cellsize")
+out <- sfClusterApplyLB(1:length(so.lst), function(x){ try( mosaick_ll(out.tif=filename2[x], in.path="/data/tt/LandGIS/grid250m", out.path="/data/LandGIS/predicted250m", tr=cellsize, te=paste(te, collapse = " "), ot="Byte", dstnodata=255, aggregate=FALSE, pattern=paste0("T*_", so.lst[x], ".tif$")) )})
+sfStop()
+
+inputO.tif = list.files("/data/LandGIS/predicted250m", pattern=glob2rx("sol_suborder_usda.soiltax.*_p_250m_s0..0cm_1950..2017_v0.1.tif$"), full.names = TRUE)
+## 73
+#grtgroup_generalize(i="T38715", input.tif = inputO.tif, tile.tbl=tile.tbl, col.legend=col.legend, type="orders")
+library(snowfall)
+sfInit(parallel=TRUE, cpus=64)
+sfExport("inputO.tif", "grtgroup_generalize", "tile.tbl", "col.legend")
+sfLibrary(rgdal)
+out <- sfClusterApplyLB(pr.dirs, function(x){ try( grtgroup_generalize(x, input.tif = inputO.tif, tile.tbl=tile.tbl, col.legend=col.legend, type="orders") )})
+sfStop()
+
+so2.lst = tolower(levels(col.legend$Order))
+filename3 = paste0("/data/LandGIS/predicted250m/sol_order_usda.soiltax.", so2.lst, "_p_250m_s0..0cm_1950..2017_v0.1.tif")
+
+library(snowfall)
+sfInit(parallel=TRUE, cpus=12) 
+sfExport("so2.lst", "mosaick_ll", "filename3", "te", "cellsize")
+out <- sfClusterApplyLB(1:length(so2.lst), function(x){ try( mosaick_ll(out.tif=filename3[x], in.path="/data/tt/LandGIS/grid250m", out.path="/data/LandGIS/predicted250m", tr=cellsize, te=paste(te, collapse = " "), ot="Byte", dstnodata=255, aggregate=FALSE, pattern=paste0("T*_", so2.lst[x], ".tif$")) )})
+sfStop()
+save.image.pigz(n.cores = 64)

@@ -207,7 +207,7 @@ stack_mean_sd <- function(i, tile.tbl, tif.sel, var, out=c("mean","sd"), out.dir
   }
 }
 
-mosaick_ll <- function(varn=NULL, i, out.tif, in.path="/data/tt/OpenLandData/covs250m", out.path="/data/GEOG", ot="Int16", dstnodata=-32768, dominant=FALSE, resample="near", metadata=NULL, aggregate=FALSE, te, tr, only.metadata=TRUE, pattern=NULL){
+mosaick_ll <- function(varn=NULL, i, out.tif, in.path="/data/tt/LandGIS/grid250m", out.path="/data/LandGIS/predicted250m", ot="Int16", dstnodata=-32768, dominant=FALSE, resample="near", metadata=NULL, aggregate=FALSE, te, tr, only.metadata=TRUE, pattern=NULL){
   if(missing(out.tif)){
     out.tif <- paste0(out.path, "/", varn, "_", i, "_250m_ll.tif")
   }
@@ -223,10 +223,12 @@ mosaick_ll <- function(varn=NULL, i, out.tif, in.path="/data/tt/OpenLandData/cov
     if(length(tmp.lst)>1){
       out.tmp <- tempfile(fileext = ".txt")
       vrt.tmp <- tempfile(fileext = ".vrt")
+      tif.tmp <- tempfile(fileext = ".tif")
       cat(tmp.lst, sep="\n", file=out.tmp)
       system(paste0('gdalbuildvrt -input_file_list ', out.tmp, ' ', vrt.tmp))
-      system(paste0('gdalwarp ', vrt.tmp, ' ', out.tif, ' -ot \"', paste(ot), '\" -dstnodata \"',  paste(dstnodata), '\" -r \"near\" -co \"COMPRESS=DEFLATE\" -co \"BIGTIFF=YES\" -multi -wo \"NUM_THREADS=2\" -wm 2000 -tr ', tr, ' ', tr, ' -te ', te))
-      system(paste0('gdaladdo ', out.tif, ' 2 4 8 16 32 64 128'))
+      system(paste0('gdalwarp ', vrt.tmp, ' ', tif.tmp, ' -ot \"', paste(ot), '\" -dstnodata \"',  paste(dstnodata), '\" -r \"near\" -co \"BIGTIFF=YES\" -multi -wo \"NUM_THREADS=2\" -wm 2000 -tr ', tr, ' ', tr, ' -te ', te))
+      system(paste0('gdaladdo ', tif.tmp, ' 2 4 8 16 32 64 128'))
+      system(paste0('gdal_translate ', tif.tmp,' ', out.tif, ' -mo \"CO=YES\" -co \"TILED=YES\" -co \"BLOCKXSIZE=512\" -co \"BLOCKYSIZE=512\" -co \"COMPRESS=LZW\" -co \"COPY_SRC_OVERVIEWS=YES\" --config GDAL_TIFF_OVR_BLOCKSIZE 512'))
       if(!is.null(metadata)){ 
         m = paste('-mo ', '\"', names(metadata), "=", as.vector(metadata), '\"', sep="", collapse = " ")
         command = paste0('gdal_edit.py ', m,' ', out.tif)
@@ -242,6 +244,7 @@ mosaick_ll <- function(varn=NULL, i, out.tif, in.path="/data/tt/OpenLandData/cov
       }
       unlink(vrt.tmp)
       unlink(out.tmp)
+      unlink(tif.tmp)
     }
   }
   if(!is.null(metadata)&only.metadata==TRUE){ 
@@ -994,5 +997,43 @@ awc_tile = function(i, n.lst=c("w3cld","w15l2","db_od","wpg2"), db.h2o=1, out.pa
     #s$tv = rowSums( data.frame(mapply(`*`, as.data.frame(v)/100, )), na.rm = TRUE )
     s$tv = rowSums( as.data.frame(v), na.rm = TRUE )
     writeGDAL(s["tv"], out.tv, type="Int16", mvFlag=-32768, options="COMPRESS=DEFLATE")
+  }
+}
+
+## Aggregate soil types ----
+grtgroup_generalize = function(i, tile.tbl, input.tif, mask.tif="/data/LandGIS/layers250m/lcv_landmask_esacci.lc.l4_c_250m_s0..0cm_2000..2015_v1.0.tif", out.dir="/data/tt/LandGIS/grid250m", col.legend, type="suborders"){ 
+  i.n = which(tile.tbl$ID == strsplit(i, "T")[[1]][2])
+  m = readGDAL(fname=mask.tif, offset=unlist(tile.tbl[i.n,c("offset.y","offset.x")]), region.dim=unlist(tile.tbl[i.n,c("region.dim.y","region.dim.x")]), output.dim=unlist(tile.tbl[i.n,c("region.dim.y","region.dim.x")]), silent = TRUE)
+  m = as(m, "SpatialPixelsDataFrame")
+  sel.p = !is.na(m$band1)
+  if(sum(sel.p)>0){
+    if(type=="suborders"){
+      so.lst = tolower(levels(col.legend$Suborder))
+    }
+    if(type=="orders"){
+      so.lst = tolower(levels(col.legend$Order))
+    }
+    for(c in so.lst){
+      out.tif <- paste0(out.dir, "/T", tile.tbl[i.n,"ID"], "/T", tile.tbl[i.n,"ID"], "_", c, ".tif")
+      if(!file.exists(out.tif)){
+        ## read all probs:
+        if(type=="suborders"){ p.lst = col.legend$Group[which(tolower(col.legend$Suborder) %in% c)] }
+        if(type=="orders"){ p.lst = tolower(unique(col.legend$Suborder[which(tolower(col.legend$Order) %in% c)])) }
+        f.lst = unlist(sapply(p.lst, function(x){grep(x, input.tif, fixed = TRUE)}))
+        f.lst = f.lst[which(!f.lst==0)]
+        if(length(f.lst)>0){
+          for(j in 1:length(f.lst)){
+            m@data[,attr(f.lst, "names")[j]] = readGDAL(fname=input.tif[f.lst[j]], offset=unlist(tile.tbl[i.n,c("offset.y","offset.x")]), region.dim=unlist(tile.tbl[i.n,c("region.dim.y","region.dim.x")]), output.dim=unlist(tile.tbl[i.n,c("region.dim.y","region.dim.x")]), silent=TRUE)$band1[m@grid.index]
+          }
+          ## sum probabilities:
+          if(length(f.lst)==1){
+            m$cl <- m@data[,attr(f.lst, "names")]
+          } else {
+            m$cl <- rowSums(m@data[,attr(f.lst, "names")], na.rm = TRUE) 
+          }
+          writeGDAL(m["cl"], out.tif, type="Byte", mvFlag=255, options="COMPRESS=DEFLATE")
+        }
+      }
+    }
   }
 }
