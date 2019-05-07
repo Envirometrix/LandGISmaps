@@ -6,6 +6,7 @@ library(RCurl)
 library(raster)
 library(rgdal)
 library(fasterize)
+load(".RData")
 TOKEN = scan("~/TOKEN_ACCESS", what="character")
 dep.id = "2591215"
 # https://zenodo.org/record/2591215/files/SM2RAIN_ASCAT_0125_2007.nc?download=1
@@ -88,10 +89,11 @@ library(Rfast)
 m.lst <- c("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec")
 m0.lst <- c(paste0("0", 1:9), 10:12)
 mask10km = readGDAL("/mnt/DATA/SMRAIN/raw/lcv_landmask_esacci.lc.l4_c_10km_s0..0cm_2000..2015_v1.0.tif")
-mask10km = as(mask10km, "SpatialPixelsDataFrame")
-mask10km = mask10km[!mask10km$band1==2,]
-str(mask10km@grid.index)
+#mask10km = as(mask10km, "SpatialPixelsDataFrame")
+#mask10km = mask10km[!mask10km$band1==2,]
+#str(mask10km@grid.index)
 ## 1,219,379
+
 
 for(i in 1:length(m.lst)){
   out.file = paste0('clm_precipitation_sm2rain.', tolower(m.lst[i]),'_m_10km_s0..0cm_2007..2018_v1.0.tif')
@@ -99,14 +101,20 @@ for(i in 1:length(m.lst)){
   if(!file.exists(out.file)){
     x.lst = list.files(pattern=glob2rx(paste0('daily.rainfall_*-', m0.lst[i], '-*_10km.tif$')))
     ## read about 350 tifs to memory
-    m = parallel::mclapply(1:length(x.lst), function(j){ readGDAL(x.lst[j], silent=TRUE)$band1[mask10km@grid.index] }, mc.cores=64)
+    #m = parallel::mclapply(1:length(x.lst), function(j){ readGDAL(x.lst[j], silent=TRUE)$band1[mask10km@grid.index] }, mc.cores=64)
     ## 1.7GB
+    m = parallel::mclapply(1:length(x.lst), function(j){ readGDAL(x.lst[j], silent=TRUE)$band1 }, mc.cores=64)
+    ## 5.7GB
     m = as.matrix(data.frame(m))
-    m[is.na(m)] <- 0
-    mask10km$m = Rfast::rowsums(m, indices = NULL, parallel = TRUE)/12
+    ## what to do with missing values?
+    #m[is.na(m)] <- 0
+    mask10km$m = rowSums(m, na.rm=TRUE)/12
+    ## Rfast has no flexibility considering the missing values
+    #mask10km$m = Rfast::rowsums(m, indices = NULL, parallel = TRUE)/12
     writeGDAL(mask10km["m"], out.file, type = "Int16", mvFlag = -32768, options = c("COMPRESS=DEFLATE"))
     if(!file.exists(out.file.sd)){
-      mask10km$sd = Rfast::rowVars(m, suma = NULL, std = TRUE)*10
+      #mask10km$sd = Rfast::rowVars(m, suma = NULL, std = TRUE)*10
+      mask10km$sd = matrixStats::rowSds(m, na.rm = TRUE)*10
       writeGDAL(mask10km["sd"], out.file.sd, type = "Int16", mvFlag = -32768, options=c("COMPRESS=DEFLATE"))
     }
     rm(m)
@@ -114,3 +122,4 @@ for(i in 1:length(m.lst)){
   }
 }
 
+save.image()
