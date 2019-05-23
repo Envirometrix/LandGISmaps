@@ -5,17 +5,20 @@ library(rgdal)
 library(parallel)
 library(raster)
 library(data.table)
+load(".RData")
 source("/mnt/DATA/LandGIS/R/LandGIS_functions.R")
 days <- as.numeric(format(seq(ISOdate(2015,1,1), ISOdate(2015,12,31), by="month"), "%j"))-1
 m.lst <- c("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec")
 
-## Dowload WorldClim v2:
+## WorldClim v2 ----
+## http://biogeo.ucdavis.edu/data/worldclim/v2.0/
 setwd("/mnt/DATA/clim1km/WorldClim")
 bil.lst <- c("http://biogeo.ucdavis.edu/data/worldclim/v2.0/tif/base/wc2.0_30s_prec.zip", "http://biogeo.ucdavis.edu/data/worldclim/v2.0/tif/base/wc2.0_30s_tavg.zip", "http://biogeo.ucdavis.edu/data/worldclim/v2.0/tif/base/wc2.0_30s_tmin.zip", "http://biogeo.ucdavis.edu/data/worldclim/v2.0/tif/base/wc2.0_30s_tmax.zip", "http://biogeo.ucdavis.edu/data/worldclim/v2.0/tif/base/wc2.0_30s_srad.zip")
 x = mclapply(bil.lst, function(i){system(paste0("wget -nv -q ", i, " /mnt/DATA/WorldClim/", basename(i)))}, mc.cores = 5)
 system('7z e /mnt/DATA/WorldClim/wc2.0_30s_prec.zip')
 
-## Download Chelsa climate:
+## Chelsa climate ----
+## http://chelsa-climate.org/downloads/
 setwd("/mnt/DATA/clim1km/CHELSA")
 z.lst = c(
   paste0("https://www.wsl.ch/lud/chelsa/data/climatologies/prec/CHELSA_prec_", 1:12, "_land.7z"), 
@@ -35,7 +38,8 @@ x = mclapply(list.files("/mnt/DATA/clim1km/CHELSA", pattern=glob2rx("CHELSA_t*_*
 tif.lst = list.files("/mnt/DATA/clim1km/CHELSA", pattern=glob2rx("CHELSA_bio10_*.tif$"), full.names = TRUE)
 x = parallel::mclapply(tif.lst, function(i){ system(paste0('gdalwarp ', i, ' /data/LandGIS/layers1km/', gsub(".tif", "_1km.tif", basename(i)), ' -tr ', 1/120, ' ', 1/120, ' -te ', paste(te, collapse = " "), ' -co \"COMPRESS=DEFLATE\"')) }, mc.cores = length(tif.lst))
 
-## IMERGE images (https://pmm.nasa.gov/gpm/imerg-global-image):
+## IMERGE images ----
+## https://pmm.nasa.gov/gpm/imerg-global-image
 ## downloaded from ftp://jsimpson.pps.eosdis.nasa.gov/NRTPUB/imerg/gis/
 ## /mnt/nas/IMERGE/2015$ wget -N -nv -r -np -nH --accept "3B-MO-L.GIS.IMERG.*.*.zip" --reject=\"index.html\" --cut-dirs=4 --level=5 --ftp-user=tom.hengl@gmail.com --ftp-password=tom.hengl@gmail.com "ftp://jsimpson.pps.eosdis.nasa.gov/NRTPUB/imerg/gis/2015/"
 ## uncompress:
@@ -99,21 +103,34 @@ snowfall::sfExport("convert_mm", "imerge.lst", "m.lst")
 x <- snowfall::sfClusterApplyLB(1:length(imerge.lst), function(j){ convert_mm(imerge.lst[j], m.lst[j]) })
 snowfall::sfStop()
 
+## SM2RAIN aggreated ----
+## https://doi.org/10.5281/zenodo.2615278
+## mask out sea areas:
+mask10km = readGDAL("/mnt/DATA/SMRAIN/raw/lcv_landmask_esacci.lc.l4_c_10km_s0..0cm_2000..2015_v1.0.tif")
+for(i in 1:length(m.lst)){
+  tif.in = paste0("/mnt/DATA/SMRAIN/raw/clm_precipitation_sm2rain.", tolower(m.lst[i]),"_m_10km_s0..0cm_2007..2018_v1.0.tif")
+  mask10km$v = readGDAL(tif.in)$band1
+  mask10km$v0 = ifelse(mask10km$band1==2 & mask10km$v==0, NA, mask10km$v)
+  #spplot(mask10km["v0"])
+  writeGDAL(mask10km["v0"], gsub("_m_", "_mf_", tif.in), mvFlag = -32768, options=c("COMPRESS=DEFLATE"))
+}
 
 ## derive mean precipitation ----
 ## TAKES 3 HOURS!
 for(i in 1:12){
-  saga_grid_stats(in.tif.lst=c(paste0("/mnt/DATA/WorldClim/wc2.0_30s_prec_", dsel[i], ".tif"), paste0("/mnt/DATA/CHELSA/CHELSA_prec_", i, "_V1.2_land.tif"), paste0("/mnt/DATA/IMERGE/monthly_stats/IMERG_", m.lst[i], "_meanC_2014_2018_10km.tif")), out.tif.lst=c(paste0("mPREC_M_", m.lst[i], "_1km_ll.tif"), paste0("mPREC_sd_", m.lst[i], "_1km_ll.tif")), r.lst=c("near","near","cubicspline"), d.lst=c(-32767, -32767, -32767), out.ot="Int16", a_nodata=-32768, tr=1/120, te=te, p4s=p4s)
+  saga_grid_stats(in.tif.lst=c(paste0("/mnt/DATA/WorldClim/wc2.0_30s_prec_", dsel[i], ".tif"), paste0("/mnt/DATA/CHELSA/CHELSA_prec_", i, "_V1.2_land.tif"), paste0("/mnt/DATA/IMERGE/monthly_stats/IMERG_", m.lst[i], "_meanC_2014_2018_10km.tif"), paste0("/mnt/DATA/SMRAIN/raw/clm_precipitation_sm2rain.", tolower(m.lst[i]),"_mf_10km_s0..0cm_2007..2018_v1.0.tif")), out.tif.lst=c(paste0("mPREC_M_", m.lst[i], "_1km_ll.tif"), paste0("mPREC_sd_", m.lst[i], "_1km_ll.tif")), r.lst=c("near","near","cubicspline","cubicspline"), d.lst=c(-32767, -32767, -32767, -32767), out.ot="Int16", a_nodata=-32768, tr=1/120, te=te, p4s=p4s, cleanup=TRUE)
 }
 
-## save to arhive:
-file.copy(from=paste0("mPREC_M_", m.lst, "_1km_ll.tif"), to=paste0("/mnt/DATA/LandGIS/layers1km/clm_precipitation_imerge.", tolower(m.lst), "_m_1km_s0..0cm_2014..2018_v0.1.tif"), overwrite = TRUE)
+## save to arhive ----
+#file.copy(from=paste0("mPREC_M_", m.lst, "_1km_ll.tif"), to=paste0("/mnt/DATA/LandGIS/layers1km/clm_precipitation_imerge.", tolower(m.lst), "_m_1km_s0..0cm_2014..2018_v0.1.tif"), overwrite = TRUE)
+unlink(paste0("/mnt/DATA/LandGIS/layers1km/clm_precipitation_imerge.", tolower(m.lst), "_m_1km_s0..0cm_2014..2018_v0.1.tif"))
+file.copy(from=paste0("mPREC_M_", m.lst, "_1km_ll.tif"), to=paste0("/mnt/DATA/LandGIS/layers1km/clm_precipitation_sm2rain.", tolower(m.lst), "_m_1km_s0..0cm_2007..2018_v0.2.tif"), overwrite = TRUE)
 
 ## Total annual precipitation ----
-Ml <- paste0("/mnt/DATA/LandGIS/layers1km/clm_precipitation_imerge.", tolower(m.lst), "_m_1km_s0..0cm_2014..2018_v0.1.tif")
+Ml <- paste0("/mnt/DATA/LandGIS/layers1km/clm_precipitation_sm2rain.", tolower(m.lst), "_m_1km_s0..0cm_2007..2018_v0.2.tif")
 sumf <- function(x){calc(x, sum, na.rm=TRUE)}
 beginCluster()
-r1 <- clusterR(raster::stack(Ml), fun=sumf, filename="/mnt/DATA/LandGIS/layers1km/clm_precipitation_imerge.annual_m_1km_s0..0cm_2014..2018_v0.1.tif", datatype="INT2S", options=c("COMPRESS=DEFLATE"))
+r1 <- clusterR(raster::stack(Ml), fun=sumf, filename="/mnt/DATA/LandGIS/layers1km/clm_precipitation_sm2rain.annual_m_1km_s0..0cm_2007..2018_v0.2.tif", datatype="INT2S", options=c("COMPRESS=DEFLATE"), overwrite=TRUE)
 endCluster()
 
 ## Mean min and max daily temperature as average between WorldClim and CHELSA climate:
