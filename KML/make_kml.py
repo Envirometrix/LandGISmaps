@@ -79,10 +79,10 @@ def link_layer(r):
     return link(layer_href, r.layer_title_description)
 
 def setup_legend(screen):
-    screen.overlayxy = simplekml.OverlayXY(x=1,y=1,xunits=simplekml.Units.fraction,
+    screen.overlayxy = simplekml.OverlayXY(x=0,y=0.5,xunits=simplekml.Units.fraction,
                                        yunits=simplekml.Units.fraction)
-    screen.screenxy = simplekml.ScreenXY(x=15,y=15,xunits=simplekml.Units.insetpixels,
-                                         yunits=simplekml.Units.insetpixels)
+    screen.screenxy = simplekml.ScreenXY(x=10,y=0.5,xunits=simplekml.Units.pixel,
+                                         yunits=simplekml.Units.fraction)
     '''
     screen.size.x = -1
     screen.size.y = -1
@@ -98,11 +98,11 @@ def setup_network_link(parent, name, layer_name, when=None, description=None,
     # NetworkLink
     netlink = fld.newnetworklink()
     netlink.name = name
-    #netlink.style = link_style_hidden
+    netlink.style = link_style_hidden
     if description is not None:
         fld.description = description
-    #netlink.visibility = 0
-    #netlink.open = 0
+    netlink.visibility = 0
+    netlink.open = 0
     netlink.link.href = 'https://geoserver.opengeohub.org/landgisgeoserver/wms/kml?layers={}'.format(layer_name)
     if when is not None:
         netlink.timestamp.when = when
@@ -111,13 +111,13 @@ def setup_network_link(parent, name, layer_name, when=None, description=None,
     # Legend
     legend_link = get_legend_link(layer_name)
     if legend_link is not None:
-        screen = fld.newscreenoverlay(name='Legend')
+        screen = fld.newscreenoverlay(name='Legend', visibility=0)
         screen.icon.href = legend_link
         setup_legend(screen)
     
     fld.visibility = 0
-    fld.open = 0
-    fld.style = link_style_hidden
+    fld.open = 1
+    #fld.style = link_style_hidden
         
         
 #%%
@@ -236,5 +236,5 @@ if __name__=='__main__':
     make_kml('LandGIS.kmz')
     
     # for testing
-    # make_kml('LandGIS.kml','kml')
+    make_kml('LandGIS.kml','kml')
     
