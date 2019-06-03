@@ -21,6 +21,7 @@ gee_account_name = ''
 # %%
 
 input_fld = '/data/layers/layers_to_display/'
+sld_fld = '/data/layers/styles'
 tmp_fld = '/content/tmp_data/'
 gcs_bucket = 'landgis_ogh'
 gee_folder = 'landgis'
@@ -160,6 +161,10 @@ def layer_metadata(layer_unique_number):
     props['system:description'] = props['description']
     props['provider'] = row.layer_organization
     props['provider_url'] = 'https://landgis.opengeohub.org/'
+
+    props['sld_link']  = 'https://geoserver.opengeohub.org/landgisgeoserver/wms?Service=WMS&Request=GetStyles&layers={}:{}'.format(
+        row.layer_distribution_folder, osp.splitext(row.layer_filename_pattern)[0]
+    )
 
     if row.layer_gee_product_list is not None:
         # list(row.layer_gee_product_list.split(','))
@@ -372,7 +377,7 @@ def gee_upload_imagecollection(md):
         gcs_id = md['gcs_filename']+'/'+osp.basename(s['filename'])
         # print(gee_id,gcs_id)
         if gee_modified_time(gee_id) is None:
-            res = gee_upload_image(gee_id, gcs_id, properties, bands=None)
+            res = gee_upload_image(gee_id, gcs_id, properties, bands=None, pyramidingPolicy=pyramidingPolicy)
 
         res_ids.append(res['id'])
 
@@ -513,14 +518,18 @@ def set_all_properties_gee():
         print(lun, ' ', end='')
         print(gee_update_properties(md))
 
+
 def test():
     for lun in layer_table.layer_unique_number:
         md = layer_metadata(lun)
         print(lun)
 
+#%%
+
 if __name__ == '__main__':
     #init_gc()
     init_ee('josipkrizan')
+    #init_ee('opengeohub')
     # make_all_3DSS()
     # upload_all_gcs()
     # upload_all_gee()
