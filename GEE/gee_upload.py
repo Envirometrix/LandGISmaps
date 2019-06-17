@@ -34,11 +34,6 @@ layer_table = pandas.read_csv(layer_table_path, sep=',', dtype={'layer_unique_nu
 # Only public layers
 layer_table = layer_table.loc[layer_table.layer_public_download == 1]
 
-# GDAL_TRANSLATE OPTIONS
-# TILED=YES; BLOCKXSIZE=512; BLOCKYSIZE=512
-# "COPY_SRC_OVERVIEWS=NO" -- no need it's default
-# gdal_options={'F': ["COMPRESS=LZW","PREDICTOR=2","NUM_THREADS=ALL_CPUS","BIGTIFF=YES"],
-#              'N': ["COMPRESS=LZW","PREDICTOR=2","NUM_THREADS=ALL_CPUS","BIGTIFF=YES"]}
 gdal_options = ["COMPRESS=LZW", "PREDICTOR=2", "NUM_THREADS=ALL_CPUS",
                 "BIGTIFF=YES", "TILED=YES", "BLOCKXSIZE=512", "BLOCKYSIZE=512"]
 gdal_config = ["GDAL_DISABLE_READDIR_ON_OPEN TRUE", "GDAL_CACHEMAX 5000"]
@@ -47,6 +42,7 @@ def init_gc():
     # This needs to be run only once 
     cmd = '/content/gc_auth.sh'
     cp = subprocess.run(cmd, universal_newlines=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+
 
 def init_ee(account_name):
     import json
@@ -60,7 +56,7 @@ def init_ee(account_name):
             'Credentials not defined for account name {}!'.format(account_name))
     credentials = oauth2client.client.OAuth2Credentials(
         None, ee.oauth.CLIENT_ID, ee.oauth.CLIENT_SECRET, refresh_token, None, 'https://accounts.google.com/o/oauth2/token', None)
-    # print(credentials)
+
     ee.Reset()
     ee.Initialize(credentials=credentials)
     gee_account_name = account_name
@@ -145,8 +141,6 @@ def raster_type(filename):
     raster = gdal.Open(filename)
     band = raster.GetRasterBand(1)
     return band.DataType
-    # print(band.DataType)
-    # print(gdal.GetDataTypeName(band.DataType))
 
 
 def layer_metadata(layer_unique_number):
@@ -171,11 +165,10 @@ def layer_metadata(layer_unique_number):
         props['product_tags'] = row.layer_gee_product_list
 
     # props['sample']=''# https://maps.opengeohub.org/uploaded/thumbs/layer-48c98d30-6bfd-4fb3-a2e4-c414ac4ce3aa-thumb.png
-    # props['thumb'] = '' # ISTO, treba naći id od geoserver layera (pomoću WMSA?)
+    # props['thumb'] = '' # 
     filename_pattern = osp.join(input_fld, row.layer_distribution_folder,
                                 row.layer_filename_pattern.replace('*..*', '*')).strip()
-    # if layer_unique_number==6.5:
-    #    filename_pattern = filename_pattern.replace('v0.2', 'v0.1')
+
     type_spatial, type_value = row.layer_display_type.split('_')
 
     ret = {'properties': props}
