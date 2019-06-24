@@ -8,6 +8,7 @@ LandGIS — Open Land Data service
 -   [General specifications](#landgis)
 -   [Accessing data](#accessing-data)
 -   [Accessing data from Zenodo](#accessing-data-from-zenodo)
+-   [Accessing data from Google Earth Engine](#accessing-data-from-google-earth-engine)
 -   [The file naming convention](#the-file-naming-convention)
 -   [The land mask](#the-land-mask)
 -   [Cloud-optimized GeoTIFF](#cloud-optimized-geotiff)
@@ -239,6 +240,18 @@ which gives a total of 9 files:
 ```
 
 these can be further downloaded using `download.file` function or similar.
+
+Accessing data from Google Earth Engine
+---------------------------------------
+
+[Google Earth Engine users](https://code.earthengine.google.com/?asset=users/opengeohub/landgis) can access a snapshot of OpenLandMap.org layers using the following address:
+
+- https://code.earthengine.google.com/?asset=users/opengeohub/landgis
+
+Description of layer names and units used can be find [here](GEE/OpenLandMap_layers_for_GEE.pdf).
+Note that sync between the layers on the OpenLandMap.org and Google Earth Engine is done 
+only once a year, hence, if you wish to use the most up-to-date layers at any moment, 
+downloading maps from either Zenodo or via the WCS is recommended.
 
 The file naming convention
 --------------------------
