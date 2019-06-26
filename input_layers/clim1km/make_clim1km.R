@@ -56,12 +56,14 @@ for(i in 1:length(zp.lst)){
 
 ## IMERGE stats per month ----
 im.lst <- list.files("/mnt/DATA/IMERGE/monthly", pattern=glob2rx("*.V0??.tif$"), full.names = TRUE)
-## 54 files
+## 65 files
 GDALinfo(im.lst[2])
 ## 3B-MO-L.GIS.IMERG.20140501.V04A.tif
 dsel <- c(paste0("0", 1:9), "10", "11", "12") 
 ## TAKES 15 mins:
-x = parallel::mclapply(1:length(dsel), function(i){ stack_stats_inram(tif.sel=im.lst[unlist(sapply(paste0(".", 2014:2018, dsel[i]), function(y){ grep(y, im.lst) }))], out.tifs=paste0("/mnt/DATA/IMERGE/monthly_stats/IMERG_", m.lst[i], "_", c("min", "med","max"), "_2014_2018_10km.tif"), type="Int16", mvFlag=-32767) }, mc.cores = 12)
+x = list.files("/mnt/DATA/IMERGE/monthly_stats", pattern=glob2rx("IMERG_*.tif"), full.names = TRUE)
+unlink(x)
+x = parallel::mclapply(1:length(dsel), function(i){ stack_stats_inram(tif.sel=im.lst[unlist(sapply(paste0(".", 2014:2019, dsel[i]), function(y){ grep(y, im.lst) }))], out.tifs=paste0("/mnt/DATA/IMERGE/monthly_stats/IMERG_", m.lst[i], "_", c("min", "med","max"), "_2014_2019_10km.tif"), type="Int16", mvFlag=-32767) }, mc.cores = 24)
 ## IMERGE values = 0.001 mm/h to convert to mm/month = x 0.73
 
 ## (optional) import precipitation station data and derive callibrated prec?
@@ -85,9 +87,10 @@ v.x3 = lapply(c("/mnt/DATA/WorldClim/wc2.0_30s_prec_09.tif", "/mnt/DATA/CHELSA/C
 sapply(v.x3, mean, na.rm=TRUE)
 v.x4 = lapply(c("/mnt/DATA/WorldClim/wc2.0_30s_prec_11.tif", "/mnt/DATA/CHELSA/CHELSA_prec_11_V1.2_land.tif","/mnt/DATA/IMERGE/monthly_stats/IMERG_Nov_mean_2014_2018_10km.tif"), function(i){ raster::extract(raster(i), x) })
 sapply(v.x4, mean, na.rm=TRUE)
+
 ## IMERGE about 10-20% higher values than WorldClim because it is expressed in 0.001 / ha
 ## correction - multiply by x 0.73
-imerge.lst = paste0("/mnt/DATA/IMERGE/monthly_stats/IMERG_", m.lst, "_mean_2014_2018_10km.tif")
+imerge.lst = paste0("/mnt/DATA/IMERGE/monthly_stats/IMERG_", m.lst, "_mean_2014_2019_10km.tif")
 #GDALinfo(imerge.lst[1])
 convert_mm = function(i, i.month){
   Sys.setlocale("LC_TIME", "C")
@@ -105,25 +108,32 @@ snowfall::sfStop()
 
 ## SM2RAIN aggreated ----
 ## https://doi.org/10.5281/zenodo.2615278
-## mask out sea areas:
-mask10km = readGDAL("/mnt/DATA/SMRAIN/raw/lcv_landmask_esacci.lc.l4_c_10km_s0..0cm_2000..2015_v1.0.tif")
+## mask out sea areas and merge with IMERGE:
 for(i in 1:length(m.lst)){
+  tifI.in = paste0("/mnt/DATA/IMERGE/monthly_stats/IMERG_", m.lst[i], "_meanC_2014_2019_10km.tif")
   tif.in = paste0("/mnt/DATA/SMRAIN/raw/clm_precipitation_sm2rain.", tolower(m.lst[i]),"_m_10km_s0..0cm_2007..2018_v1.0.tif")
+  mask10km = readGDAL("/mnt/DATA/SMRAIN/raw/lcv_landmask_esacci.lc.l4_c_10km_s0..0cm_2000..2015_v1.0.tif")
   mask10km$v = readGDAL(tif.in)$band1
-  mask10km$v0 = ifelse(mask10km$band1==2 & mask10km$v==0, NA, mask10km$v)
-  #spplot(mask10km["v0"])
-  writeGDAL(mask10km["v0"], gsub("_m_", "_mf_", tif.in), mvFlag = -32768, options=c("COMPRESS=DEFLATE"))
+  mask10km$v0 = ifelse(mask10km$band1==2, NA, mask10km$v) ## & mask10km$v==0
+  maskI10km = readGDAL(tifI.in)
+  r10km = raster::resample(raster(mask10km["v0"]), raster(maskI10km))
+  maskI10km$v0 = as(r10km, "SpatialGridDataFrame")$v0
+  #spplot(maskI10km["v0"])
+  #maskI10km@data[which(!is.na(maskI10km$v0))[1000000],c("band1","v0","v0")]
+  ## Note: 3 times higher weights to SMRAIN
+  maskI10km$m = rowMeans(maskI10km@data[,c("band1","v0","v0","v0")], na.rm = TRUE)
+  writeGDAL(maskI10km["m"], gsub("_m_", "_mf_", tif.in), mvFlag = -32767, options=c("COMPRESS=DEFLATE"))
 }
 
 ## derive mean precipitation ----
 ## TAKES 3 HOURS!
 for(i in 1:12){
-  saga_grid_stats(in.tif.lst=c(paste0("/mnt/DATA/WorldClim/wc2.0_30s_prec_", dsel[i], ".tif"), paste0("/mnt/DATA/CHELSA/CHELSA_prec_", i, "_V1.2_land.tif"), paste0("/mnt/DATA/IMERGE/monthly_stats/IMERG_", m.lst[i], "_meanC_2014_2018_10km.tif"), paste0("/mnt/DATA/SMRAIN/raw/clm_precipitation_sm2rain.", tolower(m.lst[i]),"_mf_10km_s0..0cm_2007..2018_v1.0.tif")), out.tif.lst=c(paste0("mPREC_M_", m.lst[i], "_1km_ll.tif"), paste0("mPREC_sd_", m.lst[i], "_1km_ll.tif")), r.lst=c("near","near","cubicspline","cubicspline"), d.lst=c(-32767, -32767, -32767, -32767), out.ot="Int16", a_nodata=-32768, tr=1/120, te=te, p4s=p4s, cleanup=TRUE)
+  saga_grid_stats(in.tif.lst=c(paste0("/mnt/DATA/WorldClim/wc2.0_30s_prec_", dsel[i], ".tif"), paste0("/mnt/DATA/CHELSA/CHELSA_prec_", i, "_V1.2_land.tif"), paste0("/mnt/DATA/SMRAIN/raw/clm_precipitation_sm2rain.", tolower(m.lst[i]),"_mf_10km_s0..0cm_2007..2018_v1.0.tif")), out.tif.lst=c(paste0("mPREC_M_", m.lst[i], "_1km_ll.tif"), paste0("mPREC_sd_", m.lst[i], "_1km_ll.tif")), r.lst=c("near","near","cubicspline"), d.lst=c(-32768, -32767, -32767), out.ot="Int16", a_nodata=-32768, tr=1/120, te=te, p4s=p4s, cleanup=TRUE)
 }
 
 ## save to arhive ----
 #file.copy(from=paste0("mPREC_M_", m.lst, "_1km_ll.tif"), to=paste0("/mnt/DATA/LandGIS/layers1km/clm_precipitation_imerge.", tolower(m.lst), "_m_1km_s0..0cm_2014..2018_v0.1.tif"), overwrite = TRUE)
-unlink(paste0("/mnt/DATA/LandGIS/layers1km/clm_precipitation_imerge.", tolower(m.lst), "_m_1km_s0..0cm_2014..2018_v0.1.tif"))
+unlink(paste0("/mnt/DATA/LandGIS/layers1km/clm_precipitation_imerge.", tolower(m.lst), "_m_1km_s0..0cm_2014..2018_v0.2.tif"))
 file.copy(from=paste0("mPREC_M_", m.lst, "_1km_ll.tif"), to=paste0("/mnt/DATA/LandGIS/layers1km/clm_precipitation_sm2rain.", tolower(m.lst), "_m_1km_s0..0cm_2007..2018_v0.2.tif"), overwrite = TRUE)
 
 ## Total annual precipitation ----
