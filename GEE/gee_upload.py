@@ -135,6 +135,16 @@ def gee_running_tasks():
     # pprint.pprint(list(tl_running))
     return tl_running
 
+def gee_layer_resolution(layer_distribution_folder):
+    m = re.match(r'\D+(\d+)(\D+)', layer_distribution_folder)
+    if m is None:
+        return None
+    
+    amount = int(m.group(1))
+    if m.group(2).lower()=='km':
+        amount=amount*1000
+    
+    return dict(units='METERS', amount=amount)  
 
 def raster_type(filename):
     from osgeo import gdal
@@ -142,6 +152,33 @@ def raster_type(filename):
     band = raster.GetRasterBand(1)
     return band.DataType
 
+def read_zenodo_desc(url):
+    import urllib
+    from bs4 import BeautifulSoup
+
+    ret = ""
+    srchtml = urllib.request.urlopen(url).read().decode('utf8')
+
+    src = BeautifulSoup(srchtml,'html.parser')
+    dst = BeautifulSoup(features='html.parser')
+
+    h1 = src.h1
+    rest = list(h1.next_siblings)
+    dst.append(h1)
+    # Title
+    for t in rest:
+        if type(t).__name__ == 'Tag':
+            if 'panel' in t.get('class',[]):
+                break
+            if 'alert' in t.get('class',[]):
+                break        
+            if len(t.find_all('img',class_='inline-orcid'))>0:            
+                continue
+        
+        dst.append(t)
+
+    ret = dst.prettify()
+    return ret
 
 def layer_metadata(layer_unique_number):
     row = layer_table.loc[layer_table.layer_unique_number ==
@@ -156,7 +193,7 @@ def layer_metadata(layer_unique_number):
     props['provider'] = row.layer_organization
     props['provider_url'] = 'https://landgis.opengeohub.org/'
 
-    props['sld_link']  = 'https://geoserver.opengeohub.org/landgisgeoserver/wms?Service=WMS&Request=GetStyles&layers={}:{}'.format(
+    props['sld_link']  = 'https://geoserver.opengeohub.org/landgisgeoserver/wms?service=WMS&version=1.1.1&request=GetStyles&layers={}:{}'.format(
         row.layer_distribution_folder, osp.splitext(row.layer_filename_pattern)[0]
     )
 
@@ -186,6 +223,7 @@ def layer_metadata(layer_unique_number):
     ret['gcs_source_filename'] = filename_pattern
 
     # Fining time_start and time_end
+    year_start = None; year_end = None
     if type_spatial != 'TS':
         m = re.findall(r'_(\d+)\.\.(\d+)_v', filename_pattern)
         if len(m) > 0:
@@ -201,7 +239,9 @@ def layer_metadata(layer_unique_number):
             ret['properties']['system:time_start'] = dt_convert_msepoch(
                 time_start)
             ret['properties']['system:time_end'] = dt_convert_msepoch(time_end)
-    
+    ret['year_start'] = year_start
+    ret['year_end'] = year_end
+
     ret['gcs_id'] = ret['gee_id']+'.tif'
     ret['gcs_updated'] = gcs_modified_time(ret['gcs_id'])
 
@@ -262,8 +302,9 @@ def layer_metadata(layer_unique_number):
     else:
         wms_layer_name = "{}:{}".format(
             row['layer_distribution_folder'], osp.splitext(row.layer_filename_pattern)[0])
-    ret['properties']['thumbs'] = "https://geoserver.opengeohub.org/landgisgeoserver/wms/reflect?layers={}&format=image/png8&width=256".format(
-        wms_layer_name)
+    ret['wms_layer_name'] = wms_layer_name
+    ret['wms_server'] = 'https://geoserver.opengeohub.org/landgisgeoserver/wms'
+    ret['properties']['thumbs'] = ret["wms_server"] + "/reflect?layers={}&format=image/png8&width=256".format(wms_layer_name)
 
     if ret['need_tmp']:
         lun = ret['layer_unique_number']
@@ -518,17 +559,135 @@ def test():
         print(lun)
 
 #%%
+def get_gee_vis(md):
+    import urllib
+    from bs4 import BeautifulSoup
+    
+    url = md['properties' ]['sld_link']
+    
+    sld = urllib.request.urlopen(url).read().decode('utf8')
+
+    src = BeautifulSoup(sld,'xml')  
+    cme = src.find_all('ColorMapEntry')
+    min = float(cme[0]['quantity'])
+    max = float(cme[-1]['quantity'])
+    palette = list(map(lambda x: x['color'].strip('#'), cme))
+    return dict(min=[min], max=[max], palette=palette)
+
+def gee_catalog(lun):
+#%%
+    from collections import OrderedDict
+    import yaml
+    from markdownify import markdownify as mdf
+    import io
+    from pprint import pprint
+
+    class literal(str): pass
+    def literal_presenter(dumper, data):
+        return dumper.represent_scalar('tag:yaml.org,2002:str', data, style='|')
+    yaml.add_representer(literal, literal_presenter)
+    def ordered_dict_presenter(dumper, data):
+        return dumper.represent_dict(data.items())
+    yaml.add_representer(OrderedDict, ordered_dict_presenter)
+    
+    # Nemogu ga natjerat da radi ... probat sa ovim packagem:
+    # OK, sada radi samo za neke literale daje "|-" a za neke samo "|"
+    #### https://pypi.org/project/ruamel.yaml/
+    #### https://stackoverflow.com/questions/6432605/any-yaml-libraries-in-python-that-support-dumping-of-long-strings-as-block-liter
+    
+
+    md = layer_metadata(lun)
+    pr = md['properties']
+    row = md['row']
+    bbox = "-10,30,30,70"
+    import yaml
+    # print(yaml.dump({'pero':{'drugi':[1,2,3]}},default_flow_style=False))
+
+    root = OrderedDict(id=md['gee_id'])
+
+    # dataset
+    dataset = OrderedDict()
+    root['dataset'] = dataset
+    # Parent dataset properties ?
+    dataset['title'] = "OpenLandMap " + pr['title']
+    dataset['coverage'] = OrderedDict(extent="GLOBAL") #TODO Check how to get real extent    
+    dataset['user_uploaded'] = True
+    dataset['thumbnailUrl'] ='{}/reflect?layers={}&format=image/png8&width=256&height=256&bbox={}'.format(
+        md['wms_server'], md['wms_layer_name'], bbox)
+     
+    if 'zenodo' in row['layer_download_url']:
+        desc_html = read_zenodo_desc(row['layer_download_url'])
+    else:
+        desc_html = pr['description']
+    desc_md = mdf(desc_html).strip()
+    dataset['description'] = literal(desc_md)
+    dataset['footer'] = literal('footer')   #TODO: fix
+    dataset['term_of_use'] = literal('[{}]({})'.format(row['layer_data_license'], row['layer_data_license_url']))
+    dataset['citations'] = ['"{}\n[{}]({})"'.format(
+        row['layer_citation_title'], row['layer_citation_doi'], row['layer_download_url'])]
+    dataset['productTags'] = pr['product_tags'].split(',')
+    dataset['sourceTags'] = ['OpenGeoHub']
+    dataset['providers'] = [{'name': 'OpenGeoHub', 'link': 'https://opengeohub.org'}]
+    
+    # visualizations
+    vis = dict(displayName = pr['title'])
+    vis['imageVisualization']=dict(global_vis=get_gee_vis(md))
+    viss = io.StringIO()
+    pprint([vis], viss)
+    viss = viss.getvalue().replace("'",'"')
+    dataset['visualizations'] = literal(viss)
+    
+    
+    #imageCollection
+    imgcol = OrderedDict()
+    root['imageCollection'] = imgcol
+    imgcol['x_resolution'] = gee_layer_resolution(row['layer_distribution_folder'])
+    
+    #TODO: 3D, TS, SS 
+    if md['type_spatial'] == '2D':
+        # cadence 
+        if md['year_start'] is not None:
+            imgcol['cadence'] = OrderedDict(interval = int(md['year_end'])-int(md['year_start'])+1, unit='YEAR')
+
+        #bands
+        band = OrderedDict(id=row['layer_variable_generic_name'], 
+                    description=row['layer_title'], 
+                    units=row['layer_units'])
+        band['estimated_min_value'] = vis['imageVisualization']['global_vis']['min'][0]
+        band['estimated_max_value'] = vis['imageVisualization']['global_vis']['max'][0]
+        imgcol['bands'] = [band]
+
+    return yaml.dump(root, default_flow_style=False)
+
+def gee_catalog_all():
+    
+    table_2d = layer_table.loc[layer_table.layer_display_type.apply(lambda x: x.split('_')[0])=='2D']
+
+    for i,r in table_2d.iterrows():
+        
+        gee_id = r['layer_gee_id']
+        print(i,gee_id)
+
+        yml = gee_catalog(r['layer_unique_number'])
+        with open(osp.join('/content/LandGISmaps/GEE/catalog/test_2D',gee_id+'.yaml.txt'),'w') as fid:
+            fid.write(yml)
+
+
+#%%
+#%%
 
 if __name__ == '__main__':
     #init_gc()
-    init_ee('josipkrizan')
-    #init_ee('opengeohub')
+    #init_ee('josipkrizan')
+    init_ee('opengeohub')
     # make_all_3DSS()
     # upload_all_gcs()
     # upload_all_gee()
-    set_all_properties_gee()
+    #set_all_properties_gee()
     # test()
+    gee_catalog_all()
     pass
 
 
 #%%
+# -20,30,20,70

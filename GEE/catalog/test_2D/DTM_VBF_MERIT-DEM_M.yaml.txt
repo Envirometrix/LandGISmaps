@@ -1,0 +1,114 @@
+id: DTM_VBF_MERIT-DEM_M
+dataset:
+  title: OpenLandMap Module Multiresolution Index of Valley Bottom Flatness (MRVBF)
+  coverage:
+    extent: GLOBAL
+  user_uploaded: true
+  thumbnailUrl: https://geoserver.opengeohub.org/landgisgeoserver/wms/reflect?layers=layers250m:dtm_vbf_merit.dem_m_250m_s0..0cm_2017_v1.0&format=image/png8&width=256&height=256&bbox=-10,30,30,70
+  description: "Global DEM derivatives at 250 m, 1 km and 2 km based on the MERIT\
+    \ DEM\n======================================================================\n\
+    \n   Layers include: various DEM derivatives computed using SAGA GIS at 250 m\
+    \ and using MERIT DEM (Yamazaki et al., 2017) as input. Antartica is not included.\
+    \ MERIT DEM was first reprojected to 6 global tiles based on the Equi7 grid system\
+    \ (Bauer-Marschallinger et al. 2014) and then these were used to derive all DEM\
+    \ derivatives. To access original DEM tiles please refer to MERIT DEM [ download\
+    \ page ](http://hydro.iis.u-tokyo.ac.jp/~yamadai/MERIT_DEM/) . \n\n  To access\
+    \ and visualize maps use: ** [ https://landgis.opengeohub.org ](https://landgis.opengeohub.org)\
+    \ ** \n\n  If you discover a bug, artifact or inconsistency in the LandGIS maps,\
+    \ or if you have a question please use some of the following channels: \n\n  *\
+    \  Technical issues and questions about the code: [ https://github.com/Envirometrix/LandGISmaps/issues\
+    \ ](https://github.com/Envirometrix/LandGISmaps/issues) \n *  General questions\
+    \ and comments: [ https://disqus.com/home/forums/landgis/ ](https://disqus.com/home/forums/landgis/)\
+    \ \n   All files internally compressed using \"COMPRESS=DEFLATE\" creation option\
+    \ in GDAL. File naming convention: \n\n  *  dtm = theme: digital terrain models,\
+    \ \n *  twi = variable: SAGA GIS Topographic Wetness Index, \n *  merit.dem =\
+    \ determination method: MERIT DEM, \n *  m = mean value, \n *  1km = spatial resolution\
+    \ / block support: 1 km, \n *  s0..0cm = vertical reference: land surface, \n\
+    \ *  2017 = time reference: year 2017, \n *  v1.0 = version number: 1.0,"
+  footer: |-
+    footer
+  term_of_use: |-
+    [Creative Commons Attribution Share-Alike 4.0](https://creativecommons.org/licenses/by-sa/4.0/)
+  citations:
+  - '"Global DEM derivatives at 250 m, 1 km and 2 km based on the MERIT DEM
+
+    [10.5281/zenodo.1447209](https://doi.org/10.5281/zenodo.1447209)"'
+  productTags:
+  - vbf
+  - merit
+  - dem
+  sourceTags:
+  - OpenGeoHub
+  providers:
+  - link: https://opengeohub.org
+    name: OpenGeoHub
+  visualizations: |
+    [{"displayName": "Module Multiresolution Index of Valley Bottom Flatness "
+                     "(MRVBF)",
+      "imageVisualization": {"global_vis": {"max": [1198.0],
+                                            "min": [0.0],
+                                            "palette": ["fde725",
+                                                        "f1e51d",
+                                                        "e5e419",
+                                                        "d8e219",
+                                                        "cae11f",
+                                                        "bddf26",
+                                                        "b0dd2f",
+                                                        "a2da37",
+                                                        "95d840",
+                                                        "89d548",
+                                                        "7cd250",
+                                                        "70cf57",
+                                                        "65cb5e",
+                                                        "5ac864",
+                                                        "50c46a",
+                                                        "46c06f",
+                                                        "3dbc74",
+                                                        "35b779",
+                                                        "2eb37c",
+                                                        "28ae80",
+                                                        "24aa83",
+                                                        "21a585",
+                                                        "1fa188",
+                                                        "1e9c89",
+                                                        "1f978b",
+                                                        "20928c",
+                                                        "218e8d",
+                                                        "23898e",
+                                                        "25848e",
+                                                        "27808e",
+                                                        "297b8e",
+                                                        "2a768e",
+                                                        "2c718e",
+                                                        "2e6d8e",
+                                                        "31688e",
+                                                        "33638d",
+                                                        "355e8d",
+                                                        "38598c",
+                                                        "3a538b",
+                                                        "3d4e8a",
+                                                        "3f4889",
+                                                        "414287",
+                                                        "433d84",
+                                                        "453781",
+                                                        "46307e",
+                                                        "472a7a",
+                                                        "482475",
+                                                        "481d6f",
+                                                        "481769",
+                                                        "471063",
+                                                        "46085c",
+                                                        "440154"]}}}]
+imageCollection:
+  x_resolution:
+    amount: 250
+    units: METERS
+  cadence:
+    interval: 1
+    unit: YEAR
+  bands:
+  - id: vbf
+    units: index
+    description: Module Multiresolution Index of Valley Bottom Flatness (MRVBF)
+    estimated_min_value: 0.0
+    estimated_max_value: 1198.0

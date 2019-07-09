@@ -1,0 +1,59 @@
+id: LCV_NIGHTLIGHTS-STABLE_DMSP-PC2_M
+dataset:
+  title: OpenLandMap Nightlights changes
+  coverage:
+    extent: GLOBAL
+  user_uploaded: true
+  thumbnailUrl: https://geoserver.opengeohub.org/landgisgeoserver/wms/reflect?layers=layers1km:lcv_nightlights.stable_dmsp.pc2_m_1km_s0..0cm_1992..2013_v1.0&format=image/png8&width=256&height=256&bbox=-10,30,30,70
+  description: "Nighttime Lights PC1-4 based on the Version 4 DMSP-OLS Nighttime Lights\
+    \ Time Series 1997\u20132014\n==============================================================================================\n\
+    \n   Nighttime Lights PC1-4 based on the Version 4 [ DMSP-OLS Nighttime Lights\
+    \ Time Series ](https://ngdc.noaa.gov/eog/dmsp/downloadV4composites.html) 1997\u2013\
+    2014. Derived using SAGA GIS Principal Component analysis. Image and data processing\
+    \ by NOAA's National Geophysical Data Center. DMSP data collected by US Air Force\
+    \ Weather Agency. \n\n  To access and visualize maps use: ** [ https://landgis.opengeohub.org\
+    \ ](https://landgis.opengeohub.org) ** \n\n  If you discover a bug, artifact or\
+    \ inconsistency in the LandGIS maps, or if you have a question please use some\
+    \ of the following channels: \n\n  *  Technical issues and questions about the\
+    \ code: [ https://github.com/Envirometrix/LandGISmaps/issues ](https://github.com/Envirometrix/LandGISmaps/issues)\
+    \ \n *  General questions and comments: [ https://disqus.com/home/forums/landgis/\
+    \ ](https://disqus.com/home/forums/landgis/)"
+  footer: |-
+    footer
+  term_of_use: |-
+    [Creative Commons Attribution Share-Alike 4.0](https://creativecommons.org/licenses/by-sa/4.0/)
+  citations:
+  - '"nan
+
+    [10.5281/zenodo.1458946](https://doi.org/10.5281/zenodo.1458946)"'
+  productTags:
+  - nightlights
+  - dmsp-ols
+  sourceTags:
+  - OpenGeoHub
+  providers:
+  - link: https://opengeohub.org
+    name: OpenGeoHub
+  visualizations: |
+    [{"displayName": "Nightlights changes",
+      "imageVisualization": {"global_vis": {"max": [145.0],
+                                            "min": [115.0],
+                                            "palette": ["ff0000",
+                                                        "ffc000",
+                                                        "ffffff",
+                                                        "80ff80",
+                                                        "00c0ff",
+                                                        "0000ff"]}}}]
+imageCollection:
+  x_resolution:
+    amount: 1000
+    units: METERS
+  cadence:
+    interval: 22
+    unit: YEAR
+  bands:
+  - id: nightlights.stable
+    units: index
+    description: Nightlights changes
+    estimated_min_value: 115.0
+    estimated_max_value: 145.0
