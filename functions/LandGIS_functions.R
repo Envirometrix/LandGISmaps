@@ -1,5 +1,5 @@
 ## Functions for LandGIS (https://github.com/Envirometrix/LandGIS_data)
-## tom.hengl@gmail.com
+## tom.hengl@opengeohub.org
 
 unregister <- function() {
   env <- foreach:::.foreachGlobals
@@ -1036,4 +1036,84 @@ grtgroup_generalize = function(i, tile.tbl, input.tif, mask.tif="/data/LandGIS/l
       }
     }
   }
+}
+
+## Convert to Goode Homolosine projection ----
+latlon2gh = function(input.file, output.file, land.grid, pixsize, ot, dstnodata, tmp.dir="/data/tmp/tiled/", cleanup.files=TRUE, te, proj, resample="near"){
+  ## reproject grid in tiles:
+  out.files = paste0(tmp.dir, "T", land.grid$ID, "_", RSAGA::set.file.extension(basename(input.file), ".tif"))
+  te.lst = apply(land.grid@data[,1:4], 1, function(x){paste(x, collapse=" ")})
+  if(missing(proj)){ proj = "+proj=igh +ellps=WGS84 +units=m +no_defs" }
+  if(missing(te)){ te = "-20037508 -6728980 20037508 8421750" }
+  snowfall::sfInit(parallel=TRUE, cpus=parallel::detectCores())
+  snowfall::sfExport("land.grid", "te.lst", "proj", "out.files")
+  #sfLibrary(rgdal)
+  x <- snowfall::sfClusterApplyLB(1:length(out.files), function(i){ invisible( system(paste0('gdalwarp ', input.file, ' ', out.files[i], ' -r \"', resample, '\" --config CHECK_WITH_INVERT_PROJ TRUE -t_srs \"', proj, '\" -tr ', pixsize, ' ', pixsize, ' -te ', te.lst[i]), show.output.on.console = FALSE, intern = TRUE) ) }) ## -co \"COMPRESS=DEFLATE\" 
+  snowfall::sfStop()
+  ## mosaic:
+  tmp.lst = list.files(path=tmp.dir, pattern=tools::file_path_sans_ext(basename(input.file)), full.names=TRUE)
+  out.tmp <- tempfile(fileext = ".txt")
+  vrt.tmp <- tempfile(fileext = ".vrt")
+  cat(tmp.lst, sep="\n", file=out.tmp)
+  system(paste0('gdalbuildvrt -input_file_list ', out.tmp, ' ', vrt.tmp))
+  if(missing(te)){
+    system(paste0('gdalwarp ', vrt.tmp, ' ', output.file, ' -ot \"', ot, '\" -dstnodata \"', dstnodata, '\" -co \"BIGTIFF=YES\" -multi -wo \"NUM_THREADS=ALL_CPUS\" -wm 2000 -co \"COMPRESS=DEFLATE\" -r \"near\"'))
+  } else {
+    system(paste0('gdalwarp ', vrt.tmp, ' ', output.file, ' -ot \"', ot, '\" -dstnodata \"', dstnodata, '\" -co \"BIGTIFF=YES\" -multi -wo \"NUM_THREADS=ALL_CPUS\" -wm 2000 -co \"COMPRESS=DEFLATE\" -r \"near\" -te ', te))
+  }
+  if(cleanup.files==TRUE){ unlink(out.files) }
+}
+
+raster_calc_P <- function(i, tile.tbl, out.path="/data/tmp/tiled", in.tif){
+  out.tif = paste0(out.path, "/T_", tile.tbl[i,"ID"], ".tif")
+  if(!file.exists(out.tif)){
+    m <- readGDAL(in.tif, offset=unlist(tile.tbl[i,c("offset.y","offset.x")]),
+                  region.dim=unlist(tile.tbl[i,c("region.dim.y","region.dim.x")]),
+                  output.dim=unlist(tile.tbl[i,c("region.dim.y","region.dim.x")]),
+                  silent = TRUE)
+    m$X = ifelse(is.na(m$band1)|m$band1<1, 0, 100)
+    #if(!sum(m$X)=0){
+    writeGDAL(m["X"], out.tif, type="Byte", options="COMPRESS=DEFLATE", mvFlag=255) 
+    #}
+  }
+}
+
+grid_sum_tiled <- function(i, tile.tbl, g.lst, out.path="/data/tmp/tiled", landmask.tif="./lcv_water.seasonal_probav.glc.lc100_p_250m_b0..0cm_2015_v2.0.1.gh.tif", lcmask.tif="./lcv_landmask_esacci.lc.l4_c_250m_s0..0cm_2000..2015_v1.0.gh.tif"){
+  out.tif = paste0(out.path, "/T", tile.tbl[i,"ID"], "_hydrogrids.tif")
+  if(!file.exists(out.tif)){
+    m = readGDAL(fname=landmask.tif, offset=unlist(tile.tbl[i,c("offst_y","offst_x")]), region.dim=unlist(tile.tbl[i,c("rgn_dm_y","rgn_dm_x")]), output.dim=unlist(tile.tbl[i,c("rgn_dm_y","rgn_dm_x")]), silent = TRUE)
+    m$band2 = readGDAL(fname=lcmask.tif, offset=unlist(tile.tbl[i,c("offst_y","offst_x")]), region.dim=unlist(tile.tbl[i,c("rgn_dm_y","rgn_dm_x")]), output.dim=unlist(tile.tbl[i,c("rgn_dm_y","rgn_dm_x")]), silent = TRUE)$band1
+    sel.land = !is.na(m$band1) | (!is.na(m$band2) & !m$band2 == 2)
+    if(sum(sel.land)>1){
+      m = as(m, "SpatialPixelsDataFrame")
+      m = m[m@grid.index %in% which(sel.land),]
+      gf.lst = g.lst[-which(g.lst %in% c(landmask.tif, lcmask.tif))]
+      for(j in 1:length(gf.lst)){
+        m@data[,j+2] = readGDAL(fname=gf.lst[j], offset=unlist(tile.tbl[i,c("offst_y","offst_x")]), region.dim=unlist(tile.tbl[i,c("rgn_dm_y","rgn_dm_x")]), output.dim=unlist(tile.tbl[i,c("rgn_dm_y","rgn_dm_x")]), silent = TRUE)$band1[m@grid.index]  
+      }
+      names(m) = basename(c(landmask.tif, lcmask.tif, gf.lst))
+      m$ID = as.numeric(tile.tbl[i,"ID"])
+      ## correct seasonal water
+      m$lcv_water.seasonal_probav.glc.lc100_p_250m_b0..0cm_2015_v2.0.1.gh.tif = ifelse(is.na(m$lcv_water.seasonal_probav.glc.lc100_p_250m_b0..0cm_2015_v2.0.1.gh.tif), 0, m$lcv_water.seasonal_probav.glc.lc100_p_250m_b0..0cm_2015_v2.0.1.gh.tif)
+      ## Correct river density:
+      m$hyd_river.density_gloric_p_250m_b0..0cm_2018_v10.gh.tif = ifelse(m$lcv_landmask_esacci.lc.l4_c_250m_s0..0cm_2000..2015_v1.0.gh.tif==2, NA, m$hyd_river.density_gloric_p_250m_b0..0cm_2018_v10.gh.tif)
+      m$hyd_log1p.upstream.area_merit.hydro_m_250m_b0..0cm_2017_v1.0.gh.tif = ifelse(m$lcv_landmask_esacci.lc.l4_c_250m_s0..0cm_2000..2015_v1.0.gh.tif==2, NA, m$hyd_log1p.upstream.area_merit.hydro_m_250m_b0..0cm_2017_v1.0.gh.tif)
+      ## wetland tropics
+      for(k in c(20,30,40,50,60,70,80,90,100)){
+        m@data[,paste0("lcv_wetlands.tropics.", k, "_icraf.v2_c_250m_b0..200cm_2010..2015_v1.0.gh.tif")] = ifelse(!m@data[,"lcv_wetlands.tropics_icraf.v2_c_250m_b0..200cm_2010..2015_v1.0.gh.tif"]==k | is.na(m@data[,"lcv_wetlands.tropics_icraf.v2_c_250m_b0..200cm_2010..2015_v1.0.gh.tif"]), 0, 100)
+      }
+      ## wetland classes
+      for(d in c(1,2,3)){
+        m@data[,paste0("lcv_wetlands.cw.", d, "_upmc.wtd_c_250m_b0..200cm_2010..2015_v1.0.gh.tif")] = ifelse(!m@data[,"lcv_wetlands.cw_upmc.wtd_c_250m_b0..200cm_2010..2015_v1.0.gh.tif"]==d | is.na(m@data[,"lcv_wetlands.cw_upmc.wtd_c_250m_b0..200cm_2010..2015_v1.0.gh.tif"]), 0, 100)
+      }
+      m$lcv_wetlands.tropics_icraf.v2_c_250m_b0..200cm_2010..2015_v1.0.gh.tif = NULL
+      m$lcv_wetlands.cw_upmc.wtd_c_250m_b0..200cm_2010..2015_v1.0.gh.tif = NULL
+      m$lcv_landmask_esacci.lc.l4_c_250m_s0..0cm_2000..2015_v1.0.gh.tif = NULL
+      writeGDAL(m, out.tif, type="Int16", options="COMPRESS=DEFLATE", mvFlag=-32768)
+    }
+  } else {
+    m = readGDAL(out.tif)
+  }
+  tbl = round(colMeans(m@data, na.rm = TRUE), 2)
+  return(tbl)
 }
