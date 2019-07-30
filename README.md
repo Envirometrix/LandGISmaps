@@ -369,6 +369,30 @@ It contains the following values:
 
 -   4 = permanent ice (consistently ice 2000–2015)
 
+If you need a global equal area projection (e.g. to be able to derive total stocks / density of features in N/km-squared) 
+we advise using the [Goode Homolosine projection](https://doi.org/10.5281/zenodo.3355006):
+
+```
++proj=igh +ellps=WGS84 +units=m +no_defs
+```
+
+![LandGIS world mask in Goode Homolosine projection](img/001_preview_GH_100km_grid.png)
+*Image: 100 by 100 km blocks and land mask in the Goode Homolosine projection.*
+
+
+The bounding box would in this case be:
+
+```
+Xmin = -20037508
+Ymin = -6728980
+Xmax = 20037508
+Ymax = 8421750
+```
+
+and the corresponding image sizes is:
+
+-   250m = 172800P x 71698L,
+
 
 Cloud-optimized GeoTIFF
 -----------------------
