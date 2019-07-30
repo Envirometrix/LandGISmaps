@@ -379,6 +379,7 @@ we advise using the [Goode Homolosine projection](https://doi.org/10.5281/zenodo
 ![LandGIS world mask in Goode Homolosine projection](img/001_preview_GH_100km_grid.png)
 *Image: 100 by 100 km blocks and land mask in the Goode Homolosine projection.*
 
+:open_file_folder: [Download layer](https://doi.org/10.5281/zenodo.3355006)
 
 The bounding box would in this case be:
 
