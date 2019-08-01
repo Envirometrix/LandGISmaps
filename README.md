@@ -19,6 +19,7 @@ LandGIS — Open Land Data service
 -   [Climatic layers](#climatic-layers)
 -   [Soil properties and classes](#soil-properties-and-classes)
 -   [Potential natural vegetation](#potential-natural-vegetation)
+-   [Hydrology and water dynamics](#hydrology-and-water-dynamics)
 -   [References](#references)
 
 ------------------------------------------------------------------------
@@ -1018,6 +1019,43 @@ pnv_fapar_proba.v.annualdiff_d_1km_s0..0cm_2014..2017_v0.1.tif
 :open_file_folder: [Download layer](http://dx.doi.org/10.7910/DVN/QQHCIK)
 
 
+Hydrology and water dynamics
+----------------------------
+
+8.1 FLO1K mean annual streamflow 1960-2015
+
+[FLO1K](https://www.nature.com/articles/sdata201852) mean annual streamflow in m3 / sec 1960-2015 derived at 1 km resolution 
+using data from 1960 through 2015.
+
+```
+hyd_ann.streamflow_flo1k.mean_m_1km_s0..0cm_*_v1.0.tif
+```
+
+:open_file_folder: [Download layer](https://dx.doi.org/10.6084/m9.figshare.c.3890224)
+
+8.2 FLO1K maximum annual streamflow 1960-2015
+
+[FLO1K](https://www.nature.com/articles/sdata201852) maximum annual streamflow in m3 / sec 1960-2015 derived at 1 km resolution 
+using data from 1960 through 2015.
+
+```
+hyd_ann.streamflow_flo1k.max_m_1km_s0..0cm_*_v1.0.tif
+```
+
+:open_file_folder: [Download layer](https://dx.doi.org/10.6084/m9.figshare.c.3890224)
+
+8.3 FLO1K minimum annual streamflow 1960-2015
+
+[FLO1K](https://www.nature.com/articles/sdata201852) minimum annual streamflow in m3 / sec 1960-2015 derived at 1 km resolution 
+using data from 1960 through 2015.
+
+```
+hyd_ann.streamflow_flo1k.min_m_1km_s0..0cm_*_v1.0.tif
+```
+
+:open_file_folder: [Download layer](https://dx.doi.org/10.6084/m9.figshare.c.3890224)
+
+
 References
 ==========
 
@@ -1025,67 +1063,70 @@ References
       *Geomorpho90m - Global high-resolution geomorphometry layers: empirical evaluation and accuracy assessment*. 
       PeerJ Preprints 7:e27595v1 https://doi.org/10.7287/peerj.preprints.27595v1
 
-2.  Batjes N.H., Ribeiro E., van Oostrum A., Leenaars J., Hengl T., and Mendes de Jesus J. (2017). 
+2. Barbarossa, V., Huijbregts, M. A., Beusen, A. H., Beck, H. E., King, H., & Schipper, A. M. (2018). 
+      *FLO1K, global maps of mean, maximum and minimum annual streamflow at 1 km resolution from 1960 through 2015*. Scientific data, 5, 180052. https://doi.org/10.1038/sdata.2018.52
+
+3.  Batjes N.H., Ribeiro E., van Oostrum A., Leenaars J., Hengl T., and Mendes de Jesus J. (2017). 
       *WoSIS — Providing standardised soil profile data for the world*, 
       Earth System Science Data 9, 1-14, https://doi.org/10.5194/essd-9-1-2017
 
-3.  Fick, S. E., & Hijmans, R. J. (2017). *WorldClim 2: new 1‐km spatial resolution climate surfaces for global land areas*. 
+4.  Fick, S. E., & Hijmans, R. J. (2017). *WorldClim 2: new 1‐km spatial resolution climate surfaces for global land areas*. 
        International Journal of Climatology, 37(12), 4302-4315. https://doi.org/10.1002/joc.5086
 
-4.  Hartmann, J., & Moosdorf, N. (2012). *The new global lithological map database GLiM: 
+5.  Hartmann, J., & Moosdorf, N. (2012). *The new global lithological map database GLiM: 
        A representation of rock properties at the Earth surface*. 
        Geochemistry, Geophysics, Geosystems, 13(12). https://doi.org/10.1029/2012GC004370
 
-5.  Hengl, T., MacMillan, R.A., (2019). [*Predictive Soil Mapping with R*](http://soilmapper.org). 
+6.  Hengl, T., MacMillan, R.A., (2019). [*Predictive Soil Mapping with R*](http://soilmapper.org). 
        OpenGeoHub foundation, Wageningen, the Netherlands, 340 pages. ISBN: 978-0-359-30635-0.
 
-6.  Hengl T., Walsh M.G., Sanderman J., Wheeler I., Harrison S.P., Prentice I.C. (2018) 
+7.  Hengl T., Walsh M.G., Sanderman J., Wheeler I., Harrison S.P., Prentice I.C. (2018) 
       *Global mapping of potential natural vegetation: an assessment of machine learning algorithms for estimating land potential*. PeerJ 6:e5457 
       https://doi.org/10.7717/peerj.5457
 
-7.  Hengl, T., de Jesus, J.M., Heuvelink, G.B., Gonzalez, M.R.,
+8.  Hengl, T., de Jesus, J.M., Heuvelink, G.B., Gonzalez, M.R.,
       Kilibarda, M., Blagotić, A., Shangguan, W., Wright, M.N., Geng,
       X., Bauer-Marschallinger, B. and Guevara, M.A., (2017).
       *SoilGrids250m: Global gridded soil information based on machine learning*. 
       PLoS one, 12(2), p.e0169748. https://doi.org/10.1371/journal.pone.0169748 
 
-8.  Karger, D. N., Conrad, O., Böhner, J., Kawohl, T., Kreft, H., Soria-Auza, R. W., ... & Kessler, M. (2017). 
+9.  Karger, D. N., Conrad, O., Böhner, J., Kawohl, T., Kreft, H., Soria-Auza, R. W., ... & Kessler, M. (2017). 
       *Climatologies at high resolution for the earth’s land surface areas*. 
       Scientific data, 4, 170122. https://doi.org/10.1038/sdata.2017.122
 
-9.  Klein Goldewijk, K., Beusen, A., Doelman, J., Stehfest, E. (2017). 
+10.  Klein Goldewijk, K., Beusen, A., Doelman, J., Stehfest, E. (2017). 
       *Anthropogenic land-use estimates for the holocene - hyde 3.2*. 
       Earth Syst. Sci. Data, 9, 927-953. https://doi.org/10.5194/essd-9-927-2017 
 
-10.  Bauer-Marschallinger, B., Sabel, D., & Wagner, W. (2014). 
+11.  Bauer-Marschallinger, B., Sabel, D., & Wagner, W. (2014). 
       *Optimisation of global grids for high-resolution remote sensing data*. 
       Computers & Geosciences, 72, 84-93. https://doi.org/10.1016/j.cageo.2014.07.005
 
-11.  Pekel, J. F., Cottam, A., Gorelick, N., & Belward, A. S. (2016). 
+12.  Pekel, J. F., Cottam, A., Gorelick, N., & Belward, A. S. (2016). 
       *High-resolution mapping of global surface water and its long-term changes*. 
      Nature, 540(7633), 418. http://dx.doi.org/10.1038/nature20584
 
-12.  Potapov, P., Hansen, M. C., Laestadius, L., Turubanova, S., Yaroshenko, A. et al. (2013). 
+13.  Potapov, P., Hansen, M. C., Laestadius, L., Turubanova, S., Yaroshenko, A. et al. (2013). 
       *The last frontiers of wilderness: Tracking loss of intact forest landscapes from 2000 to 2013*. 
       Science Advances, 2017; 3:e1600821 https://dx.doi.org/10.1126/sciadv.1600821
 
-13.  Ramcharan, A., Hengl, T., Nauman, T., Brungard, C., Waltman, S., Wills, S., & Thompson, J. (2018). 
+14.  Ramcharan, A., Hengl, T., Nauman, T., Brungard, C., Waltman, S., Wills, S., & Thompson, J. (2018). 
        *Soil Property and Class Maps of the Conterminous United States at 100-Meter Spatial Resolution*. 
        Soil Science Society of America Journal, 82(1), 186-201. https://dl.sciencesocieties.org/publications/sssaj/abstracts/82/1/186
 
-14.  Samuel-Rosa, A., Dalmolin, R., Gubiani, P., Teixeira, W., Olivieira, S. D. M., Viana, J., ... & Ottoni, M. (2018). 
+15.  Samuel-Rosa, A., Dalmolin, R., Gubiani, P., Teixeira, W., Olivieira, S. D. M., Viana, J., ... & Ottoni, M. (2018). 
        *Bringing together brazilian soil scientists to share soil data*. In Embrapa Solos-Artigo em anais de congresso (ALICE). 
        In: REUNIÃO SUL BRASILEIRA DE CIÊNCIA DO SOLO, 12., 2018, Xanxerê. Solo, água, ar e biodiversidade: 
        componentes essenciais para a vida: anais. Chapecó: Argos, 2018.
 
-15.  Sanderman, J., Hengl, T., Fiske, G., (2017). *The soil carbon debt of 12,000 years of human land use*. 
+16.  Sanderman, J., Hengl, T., Fiske, G., (2017). *The soil carbon debt of 12,000 years of human land use*. 
        PNAS, https://dx.doi.org/10.1073/pnas.1706103114
 
-16.  Sayre, R., Dangermond, J., Frye, C., Vaughan, R., Aniello, P., Breyer, S., ... & Wright, D. (2014). 
+17.  Sayre, R., Dangermond, J., Frye, C., Vaughan, R., Aniello, P., Breyer, S., ... & Wright, D. (2014). 
        *A new map of global ecological land units—an ecophysiographic stratification approach*.
        Washington, DC: Association of American Geographers. 
 
-17.  Yamazaki, D., Ikeshima, D., Tawatari, R., Yamaguchi, T., O'Loughlin,
+18.  Yamazaki, D., Ikeshima, D., Tawatari, R., Yamaguchi, T., O'Loughlin,
       F., Neal, J.C., Sampson, C.C., Kanae, S. and Bates, P.D., (2017) 
       *A high‐accuracy map of global terrain elevations*. Geophysical
       Research Letters, 44(11), pp.5844-5853. https://doi.org/10.1002/2017GL072874
