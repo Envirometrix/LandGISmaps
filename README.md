@@ -1022,9 +1022,9 @@ pnv_fapar_proba.v.annualdiff_d_1km_s0..0cm_2014..2017_v0.1.tif
 Hydrology and water dynamics
 ----------------------------
 
-8.1 FLO1K mean annual streamflow 1960-2015
+8.1 FLO1K mean annual streamflow 1960–2015
 
-[FLO1K](https://www.nature.com/articles/sdata201852) mean annual streamflow in m3 / sec 1960-2015 derived at 1 km resolution 
+[FLO1K](https://www.nature.com/articles/sdata201852) mean annual streamflow in m3 / sec 1960–2015 derived at 1 km resolution 
 using data from 1960 through 2015.
 
 ```
@@ -1033,9 +1033,9 @@ hyd_ann.streamflow_flo1k.mean_m_1km_s0..0cm_*_v1.0.tif
 
 :open_file_folder: [Download layer](https://dx.doi.org/10.6084/m9.figshare.c.3890224)
 
-8.2 FLO1K maximum annual streamflow 1960-2015
+8.2 FLO1K maximum annual streamflow 1960–2015
 
-[FLO1K](https://www.nature.com/articles/sdata201852) maximum annual streamflow in m3 / sec 1960-2015 derived at 1 km resolution 
+[FLO1K](https://www.nature.com/articles/sdata201852) maximum annual streamflow in m3 / sec 1960–2015 derived at 1 km resolution 
 using data from 1960 through 2015.
 
 ```
@@ -1044,9 +1044,9 @@ hyd_ann.streamflow_flo1k.max_m_1km_s0..0cm_*_v1.0.tif
 
 :open_file_folder: [Download layer](https://dx.doi.org/10.6084/m9.figshare.c.3890224)
 
-8.3 FLO1K minimum annual streamflow 1960-2015
+8.3 FLO1K minimum annual streamflow 1960–2015
 
-[FLO1K](https://www.nature.com/articles/sdata201852) minimum annual streamflow in m3 / sec 1960-2015 derived at 1 km resolution 
+[FLO1K](https://www.nature.com/articles/sdata201852) minimum annual streamflow in m3 / sec 1960–2015 derived at 1 km resolution 
 using data from 1960 through 2015.
 
 ```
