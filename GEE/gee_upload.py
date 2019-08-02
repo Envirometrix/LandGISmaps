@@ -180,6 +180,7 @@ def read_zenodo_desc(url):
     ret = dst.prettify()
     return ret
 
+
 def layer_metadata(layer_unique_number):
     row = layer_table.loc[layer_table.layer_unique_number ==
                           layer_unique_number].iloc[0]
