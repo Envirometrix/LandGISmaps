@@ -53,10 +53,8 @@ image:
     units: METERS
   bands:
   - units: factor
-    id: biome.type
     description: Potential distribution of biomes
-    estimated_min_value: 1.0
-    estimated_max_value: 32.0
+    id: biome.type
     classes:
     - color: 1c5510
       description: tropical evergreen broadleaf forest
@@ -118,3 +116,5 @@ image:
     - color: d29e96
       description: prostrate dwarf shrub tundra
       value: '32'
+    min: 1
+    max: 32

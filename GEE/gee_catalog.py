@@ -4,6 +4,7 @@ from gee_upload import init_ee
 from collections import OrderedDict
 import os.path as osp
 from pathlib import Path
+import json
 
 # literal for yaml
 class literal(str): pass
@@ -69,6 +70,56 @@ def save_yaml(root):
     dst_file.write_text(text)
 
 
+def make_manifest(luns, dest_path, inbands):
+    '''
+    {
+    "name": "projects/earthengine-legacy/assets/users/username/some_folder/some_asset_id",
+    "tilesets": [
+        {
+        "id": "tileset_for_band1",
+        "sources": [
+            {
+            "uris": [
+                "gs://bucket/band1.tif"
+            ]
+            }
+        ]
+        },
+        {
+        "id": "tileset_for_band2",
+        "sources": [
+            {
+            "uris": [
+                "gs://bucket/band2.tif"
+            ]
+            }
+        ]
+        }
+    ]
+    }
+    '''
+    manifest = OrderedDict(name=dest_path)
+    tilesets=[]
+    for lun in luns:
+        md = layer_metadata(lun)
+        ts = OrderedDict(id=lun, sources=[dict(uris=md['gcs_filename'])])
+        tilesets.append(ts)
+        # for sl in md['sublayers']:
+        #     bands.append(dict(id=sl['band_name']))
+    manifest['tilesets'] = tilesets
+    manifest['bands'] = [dict(id=b['id']) for b in inbands]
+
+    return manifest
+
+def update_band(md, band, vis):
+    if md['type_value']=='N':           
+        band['estimated_min_value'] = vis['imageVisualization']['global_vis']['min'][0]
+        band['estimated_max_value'] = vis['imageVisualization']['global_vis']['max'][0]      
+    elif md['type_value']=='F':
+        band['classes'] = get_gee_classes(md)
+        classes_values = [int(c['value']) for c in band['classes']]
+        band['min'] = min(classes_values)
+        band['max'] = max(classes_values)
 
 #%%
 def gee_catalog_root(lun):
@@ -77,19 +128,12 @@ def gee_catalog_root(lun):
     import io
     from pprint import pprint
 
-    
-    # Nemogu ga natjerat da radi ... probat sa ovim packagem:
-    # OK, sada radi samo za neke literale daje "|-" a za neke samo "|"
-    #### https://pypi.org/project/ruamel.yaml/
-    #### https://stackoverflow.com/questions/6432605/any-yaml-libraries-in-python-that-support-dumping-of-long-strings-as-block-liter
-    
-
     md = layer_metadata(lun)
     pr = md['properties']
     row = md['row']
     bbox = "-10,30,30,70"
 
-    root = OrderedDict(id=md['gee_id'])
+    root = OrderedDict(id=row['layer_gee_catalog_id'])
 
     # dataset
     dataset = OrderedDict()
@@ -141,11 +185,22 @@ def gee_catalog_root(lun):
         band = OrderedDict(id=row['layer_variable_generic_name'], 
                     description=row['layer_title'], 
                     units=row['layer_units'])
-        band['estimated_min_value'] = vis['imageVisualization']['global_vis']['min'][0]
-        band['estimated_max_value'] = vis['imageVisualization']['global_vis']['max'][0]        
-        band['classes'] = get_gee_classes(md)
+        update_band(md, band, vis)
 
         imgcol['bands'] = [band]
+    elif md['type_spatial'] == 'SS':
+        root['image'] = imgcol
+
+        # bands
+        bands = []
+        for sublayer in md['sublayers']:
+            band = OrderedDict(id=sublayer['band_name'], description=row['layer_title'], units = row['layer_units'])
+            update_band(md, band, vis)
+
+            bands.append(band)
+        
+        imgcol['bands'] = bands
+
     elif md['type_spatial'] == 'TS':
         root['imageCollection'] = imgcol
         # cadence         
@@ -159,9 +214,25 @@ def gee_catalog_root(lun):
 #%%
 def gee_catalog_pnv():
 #%%
-    lun = '7.1'
-    root = gee_catalog_root(lun)
+    # gee_catalog_id = 'PNV_FAPAR_PROBA-V_D'
+    # luns = layer_table.loc[layer_table.layer_gee_catalog_id==gee_catalog_id,'layer_unique_number'].values
+    #luns = ['7.2']
+    # 7.3 and 7.4 are alredy included in 7.2 dataset
+
+    # take all properties from first lun 
+    root = gee_catalog_root('7.2')
+    # TODO Last band has different visualisation from layer 7.4
+    # md = layer_metadata('7.4')
+    # vis = get_gee_vis(md)
+
     save_yaml(root)
+
+    root = gee_catalog_root('7.1')
+    save_yaml(root)
+    #gee_path = 'users/landgis/' + root['id']
+    # manifest_dict = make_manifest(luns, gee_path, root['image']['bands'])
+    # manifest_json = json.dumps(manifest_dict)
+    
 
 
 

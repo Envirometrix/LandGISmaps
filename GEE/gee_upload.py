@@ -194,9 +194,10 @@ def layer_metadata(layer_unique_number):
     props['provider'] = row.layer_organization
     props['provider_url'] = 'https://landgis.opengeohub.org/'
 
-    props['sld_link']  = 'https://geoserver.opengeohub.org/landgisgeoserver/wms?service=WMS&version=1.1.1&request=GetStyles&layers={}:{}'.format(
-        row.layer_distribution_folder, osp.splitext(row.layer_filename_pattern)[0]
-    )
+    #props['sld_link']  = 'https://geoserver.opengeohub.org/landgisgeoserver/wms?service=WMS&version=1.1.1&request=GetStyles&layers={}:{}'.format(
+    #    row.layer_distribution_folder, osp.splitext(row.layer_filename_pattern)[0])
+    props['sld_link'] = 'https://geoserver.opengeohub.org/landgisgeoserver/rest/styles/{}'.format(row.layer_filename_sld)
+    
 
     if row.layer_gee_product_list is not None:
         # list(row.layer_gee_product_list.split(','))
