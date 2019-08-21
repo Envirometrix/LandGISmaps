@@ -123,5 +123,8 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
+# vscode
+.vscode
+
 # LANDGIS_GEE
-/tmp
+tmp/
