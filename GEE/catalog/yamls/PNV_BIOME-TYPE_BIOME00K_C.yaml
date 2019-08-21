@@ -61,8 +61,8 @@ image:
     amount: 1000
     units: METERS
   bands:
-  - id: biome.type
-    units: factor
+  - units: factor
+    id: biome.type
     description: Potential distribution of biomes
     classes:
     - color: 1c5510

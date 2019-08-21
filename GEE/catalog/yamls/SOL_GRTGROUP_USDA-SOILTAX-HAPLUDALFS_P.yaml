@@ -26,7 +26,8 @@ dataset:
   term_of_use: |-
     [Creative Commons Attribution Share-Alike 4.0](https://creativecommons.org/licenses/by-sa/4.0/)
   citations:
-  - '"nan
+  - '"Tomislav Hengl, & Travis Nauman. (2018). Predicted USDA soil great groups at
+    250 m (probabilities) (Version v0.1) [Data set]. Zenodo.
 
     [10.5281/zenodo.1476844](https://doi.org/10.5281/zenodo.1476844)"'
   productTags:
@@ -50,8 +51,8 @@ image:
     amount: 250
     units: METERS
   bands:
-  - id: grtgroup
-    units: fraction
+  - units: fraction
+    id: grtgroup
     description: Hapludalfs
     estimated_min_value: 0.0
     estimated_max_value: 35.0

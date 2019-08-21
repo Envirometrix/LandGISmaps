@@ -40,7 +40,9 @@ dataset:
   term_of_use: |-
     [Creative Commons Attribution Share-Alike 4.0](https://creativecommons.org/licenses/by-sa/4.0/)
   citations:
-  - '"nan
+  - '"Tomislav Hengl, & Surya Gupta. (2019). Soil water content (volumetric %) for
+    33kPa and 1500kPa suctions predicted at 6 standard depths (0, 10, 30, 60, 100
+    and 200 cm) at 250 m resolution (Version v0.1) [Data set]. Zenodo.
 
     [10.5281/zenodo.2629589](https://doi.org/10.5281/zenodo.2629589)"'
   productTags:
@@ -66,33 +68,33 @@ image:
     amount: 250
     units: METERS
   bands:
-  - id: b0
-    units: '%'
+  - units: '%'
+    id: b0
     description: Soil water content at 33kPa (field capacity) at 0 cm depth
     estimated_min_value: 0.0
     estimated_max_value: 52.9740182135385
-  - id: b10
-    units: '%'
+  - units: '%'
+    id: b10
     description: Soil water content at 33kPa (field capacity) at 10 cm depth
     estimated_min_value: 0.0
     estimated_max_value: 52.9740182135385
-  - id: b30
-    units: '%'
+  - units: '%'
+    id: b30
     description: Soil water content at 33kPa (field capacity) at 30 cm depth
     estimated_min_value: 0.0
     estimated_max_value: 52.9740182135385
-  - id: b60
-    units: '%'
+  - units: '%'
+    id: b60
     description: Soil water content at 33kPa (field capacity) at 60 cm depth
     estimated_min_value: 0.0
     estimated_max_value: 52.9740182135385
-  - id: b100
-    units: '%'
+  - units: '%'
+    id: b100
     description: Soil water content at 33kPa (field capacity) at 100 cm depth
     estimated_min_value: 0.0
     estimated_max_value: 52.9740182135385
-  - id: b200
-    units: '%'
+  - units: '%'
+    id: b200
     description: Soil water content at 33kPa (field capacity) at 200 cm depth
     estimated_min_value: 0.0
     estimated_max_value: 52.9740182135385

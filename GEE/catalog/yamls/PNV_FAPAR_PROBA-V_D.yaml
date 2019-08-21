@@ -36,73 +36,73 @@ image:
     amount: 1000
     units: METERS
   bands:
-  - id: jan
-    units: fraction
+  - units: fraction
+    id: jan
     description: Potential FAPAR monthly
     estimated_min_value: 0.0
     estimated_max_value: 220.0
-  - id: feb
-    units: fraction
+  - units: fraction
+    id: feb
     description: Potential FAPAR monthly
     estimated_min_value: 0.0
     estimated_max_value: 220.0
-  - id: mar
-    units: fraction
+  - units: fraction
+    id: mar
     description: Potential FAPAR monthly
     estimated_min_value: 0.0
     estimated_max_value: 220.0
-  - id: apr
-    units: fraction
+  - units: fraction
+    id: apr
     description: Potential FAPAR monthly
     estimated_min_value: 0.0
     estimated_max_value: 220.0
-  - id: may
-    units: fraction
+  - units: fraction
+    id: may
     description: Potential FAPAR monthly
     estimated_min_value: 0.0
     estimated_max_value: 220.0
-  - id: jun
-    units: fraction
+  - units: fraction
+    id: jun
     description: Potential FAPAR monthly
     estimated_min_value: 0.0
     estimated_max_value: 220.0
-  - id: jul
-    units: fraction
+  - units: fraction
+    id: jul
     description: Potential FAPAR monthly
     estimated_min_value: 0.0
     estimated_max_value: 220.0
-  - id: aug
-    units: fraction
+  - units: fraction
+    id: aug
     description: Potential FAPAR monthly
     estimated_min_value: 0.0
     estimated_max_value: 220.0
-  - id: sep
-    units: fraction
+  - units: fraction
+    id: sep
     description: Potential FAPAR monthly
     estimated_min_value: 0.0
     estimated_max_value: 220.0
-  - id: oct
-    units: fraction
+  - units: fraction
+    id: oct
     description: Potential FAPAR monthly
     estimated_min_value: 0.0
     estimated_max_value: 220.0
-  - id: nov
-    units: fraction
+  - units: fraction
+    id: nov
     description: Potential FAPAR monthly
     estimated_min_value: 0.0
     estimated_max_value: 220.0
-  - id: dec
-    units: fraction
+  - units: fraction
+    id: dec
     description: Potential FAPAR monthly
     estimated_min_value: 0.0
     estimated_max_value: 220.0
-  - id: annual
-    units: fraction
+  - units: fraction
+    id: annual
     description: Potential FAPAR monthly
     estimated_min_value: 0.0
     estimated_max_value: 220.0
-  - id: annualdiff
-    units: fraction
+  - units: fraction
+    id: annualdiff
     description: Potential FAPAR monthly
     estimated_min_value: 0.0
     estimated_max_value: 220.0

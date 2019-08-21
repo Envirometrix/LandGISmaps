@@ -26,9 +26,8 @@ dataset:
   term_of_use: |-
     [Creative Commons Attribution Share-Alike 4.0](https://creativecommons.org/licenses/by-sa/4.0/)
   citations:
-  - '"nan
-
-    [10.5281/zenodo.1476844](https://doi.org/10.5281/zenodo.1476844)"'
+  - "\"Tomislav Hengl, & Travis Nauman. (2018). Predicted USDA soil great groups at\
+    \ 250 m (probabilities) (Version v0.1) [Data set]. Zenodo. \n[10.5281/zenodo.1476844](https://doi.org/10.5281/zenodo.1476844)\""
   productTags:
   - soil
   - taxonomy
@@ -289,8 +288,8 @@ image:
     amount: 250
     units: METERS
   bands:
-  - id: grtgroup
-    units: factor
+  - units: factor
+    id: grtgroup
     description: USDA soil taxonomy great groups
     classes:
     - color: FFFFFF

@@ -26,7 +26,8 @@ dataset:
   term_of_use: |-
     [Creative Commons Attribution Share-Alike 4.0](https://creativecommons.org/licenses/by-sa/4.0/)
   citations:
-  - '"nan
+  - '"Tomislav Hengl. (2018). Clay content in % (kg / kg) at 6 standard depths (0,
+    10, 30, 60, 100 and 200 cm) at 250 m resolution (Version v0.2) [Data set].
 
     [10.5281/zenodo.1476854](https://doi.org/10.5281/zenodo.1476854)"'
   productTags:
@@ -86,33 +87,33 @@ image:
     amount: 250
     units: METERS
   bands:
-  - id: b0
-    units: '%'
+  - units: '%'
+    id: b0
     description: Clay content in % (kg / kg) at 0 cm depth
     estimated_min_value: 2.0
     estimated_max_value: 100.0
-  - id: b10
-    units: '%'
+  - units: '%'
+    id: b10
     description: Clay content in % (kg / kg) at 10 cm depth
     estimated_min_value: 2.0
     estimated_max_value: 100.0
-  - id: b30
-    units: '%'
+  - units: '%'
+    id: b30
     description: Clay content in % (kg / kg) at 30 cm depth
     estimated_min_value: 2.0
     estimated_max_value: 100.0
-  - id: b60
-    units: '%'
+  - units: '%'
+    id: b60
     description: Clay content in % (kg / kg) at 60 cm depth
     estimated_min_value: 2.0
     estimated_max_value: 100.0
-  - id: b100
-    units: '%'
+  - units: '%'
+    id: b100
     description: Clay content in % (kg / kg) at 100 cm depth
     estimated_min_value: 2.0
     estimated_max_value: 100.0
-  - id: b200
-    units: '%'
+  - units: '%'
+    id: b200
     description: Clay content in % (kg / kg) at 200 cm depth
     estimated_min_value: 2.0
     estimated_max_value: 100.0

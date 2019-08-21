@@ -26,7 +26,8 @@ dataset:
   term_of_use: |-
     [Creative Commons Attribution Share-Alike 4.0](https://creativecommons.org/licenses/by-sa/4.0/)
   citations:
-  - '"nan
+  - '"Tomislav Hengl. (2018). Soil texture classes (USDA system) for 6 soil depths
+    (0, 10, 30, 60, 100 and 200 cm) at 250 m (Version v0.2) [Data set]. Zenodo.
 
     [10.5281/zenodo.1475451](https://doi.org/10.5281/zenodo.1475451)"'
   productTags:
@@ -59,8 +60,8 @@ image:
     amount: 250
     units: METERS
   bands:
-  - id: b0
-    units: factor
+  - units: factor
+    id: b0
     description: Soil texture class (USDA system) at 0 cm depth
     classes:
     - color: d5c36b
@@ -104,8 +105,8 @@ image:
       value: '255'
     min: 1
     max: 255
-  - id: b10
-    units: factor
+  - units: factor
+    id: b10
     description: Soil texture class (USDA system) at 10 cm depth
     classes:
     - color: d5c36b
@@ -149,8 +150,8 @@ image:
       value: '255'
     min: 1
     max: 255
-  - id: b30
-    units: factor
+  - units: factor
+    id: b30
     description: Soil texture class (USDA system) at 30 cm depth
     classes:
     - color: d5c36b
@@ -194,8 +195,8 @@ image:
       value: '255'
     min: 1
     max: 255
-  - id: b60
-    units: factor
+  - units: factor
+    id: b60
     description: Soil texture class (USDA system) at 60 cm depth
     classes:
     - color: d5c36b
@@ -239,8 +240,8 @@ image:
       value: '255'
     min: 1
     max: 255
-  - id: b100
-    units: factor
+  - units: factor
+    id: b100
     description: Soil texture class (USDA system) at 100 cm depth
     classes:
     - color: d5c36b
@@ -284,8 +285,8 @@ image:
       value: '255'
     min: 1
     max: 255
-  - id: b200
-    units: factor
+  - units: factor
+    id: b200
     description: Soil texture class (USDA system) at 200 cm depth
     classes:
     - color: d5c36b

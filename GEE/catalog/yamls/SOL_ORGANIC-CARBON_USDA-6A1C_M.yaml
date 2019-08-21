@@ -32,7 +32,9 @@ dataset:
   term_of_use: |-
     [Creative Commons Attribution Share-Alike 4.0](https://creativecommons.org/licenses/by-sa/4.0/)
   citations:
-  - '"nan
+  - '"Tomislav Hengl, & Ichsani Wheeler. (2018). Soil organic carbon content in x
+    5 g / kg at 6 standard depths (0, 10, 30, 60, 100 and 200 cm) at 250 m resolution
+    (Version v0.2) [Data set]. Zenodo.
 
     [10.5281/zenodo.1475457](https://doi.org/10.5281/zenodo.1475457)"'
   productTags:
@@ -63,33 +65,33 @@ image:
     amount: 250
     units: METERS
   bands:
-  - id: b0
-    units: x 5 g / kg
+  - units: x 5 g / kg
+    id: b0
     description: Soil organic carbon content in x 5 g / kg at 0 cm depth
     estimated_min_value: 0.0
     estimated_max_value: 120.0
-  - id: b10
-    units: x 5 g / kg
+  - units: x 5 g / kg
+    id: b10
     description: Soil organic carbon content in x 5 g / kg at 10 cm depth
     estimated_min_value: 0.0
     estimated_max_value: 120.0
-  - id: b30
-    units: x 5 g / kg
+  - units: x 5 g / kg
+    id: b30
     description: Soil organic carbon content in x 5 g / kg at 30 cm depth
     estimated_min_value: 0.0
     estimated_max_value: 120.0
-  - id: b60
-    units: x 5 g / kg
+  - units: x 5 g / kg
+    id: b60
     description: Soil organic carbon content in x 5 g / kg at 60 cm depth
     estimated_min_value: 0.0
     estimated_max_value: 120.0
-  - id: b100
-    units: x 5 g / kg
+  - units: x 5 g / kg
+    id: b100
     description: Soil organic carbon content in x 5 g / kg at 100 cm depth
     estimated_min_value: 0.0
     estimated_max_value: 120.0
-  - id: b200
-    units: x 5 g / kg
+  - units: x 5 g / kg
+    id: b200
     description: Soil organic carbon content in x 5 g / kg at 200 cm depth
     estimated_min_value: 0.0
     estimated_max_value: 120.0

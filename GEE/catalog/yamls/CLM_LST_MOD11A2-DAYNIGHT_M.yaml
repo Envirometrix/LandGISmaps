@@ -57,63 +57,63 @@ image:
     amount: 1000
     units: METERS
   bands:
-  - id: jan
-    units: K / 0.02
+  - units: K / 0.02
+    id: jan
     description: Long-term Land Surface Temperature monthly day-night difference
     estimated_min_value: -40.5137
     estimated_max_value: 1336.09
-  - id: feb
-    units: K / 0.02
+  - units: K / 0.02
+    id: feb
     description: Long-term Land Surface Temperature monthly day-night difference
     estimated_min_value: -40.5137
     estimated_max_value: 1336.09
-  - id: mar
-    units: K / 0.02
+  - units: K / 0.02
+    id: mar
     description: Long-term Land Surface Temperature monthly day-night difference
     estimated_min_value: -40.5137
     estimated_max_value: 1336.09
-  - id: apr
-    units: K / 0.02
+  - units: K / 0.02
+    id: apr
     description: Long-term Land Surface Temperature monthly day-night difference
     estimated_min_value: -40.5137
     estimated_max_value: 1336.09
-  - id: may
-    units: K / 0.02
+  - units: K / 0.02
+    id: may
     description: Long-term Land Surface Temperature monthly day-night difference
     estimated_min_value: -40.5137
     estimated_max_value: 1336.09
-  - id: jun
-    units: K / 0.02
+  - units: K / 0.02
+    id: jun
     description: Long-term Land Surface Temperature monthly day-night difference
     estimated_min_value: -40.5137
     estimated_max_value: 1336.09
-  - id: jul
-    units: K / 0.02
+  - units: K / 0.02
+    id: jul
     description: Long-term Land Surface Temperature monthly day-night difference
     estimated_min_value: -40.5137
     estimated_max_value: 1336.09
-  - id: aug
-    units: K / 0.02
+  - units: K / 0.02
+    id: aug
     description: Long-term Land Surface Temperature monthly day-night difference
     estimated_min_value: -40.5137
     estimated_max_value: 1336.09
-  - id: sep
-    units: K / 0.02
+  - units: K / 0.02
+    id: sep
     description: Long-term Land Surface Temperature monthly day-night difference
     estimated_min_value: -40.5137
     estimated_max_value: 1336.09
-  - id: oct
-    units: K / 0.02
+  - units: K / 0.02
+    id: oct
     description: Long-term Land Surface Temperature monthly day-night difference
     estimated_min_value: -40.5137
     estimated_max_value: 1336.09
-  - id: nov
-    units: K / 0.02
+  - units: K / 0.02
+    id: nov
     description: Long-term Land Surface Temperature monthly day-night difference
     estimated_min_value: -40.5137
     estimated_max_value: 1336.09
-  - id: dec
-    units: K / 0.02
+  - units: K / 0.02
+    id: dec
     description: Long-term Land Surface Temperature monthly day-night difference
     estimated_min_value: -40.5137
     estimated_max_value: 1336.09

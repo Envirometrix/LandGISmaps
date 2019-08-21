@@ -25,7 +25,8 @@ dataset:
   term_of_use: |-
     [Creative Commons Attribution Share-Alike 4.0](https://creativecommons.org/licenses/by-sa/4.0/)
   citations:
-  - '"nan
+  - '"Tomislav Hengl. (2018). Soil pH in H2O at 6 standard depths (0, 10, 30, 60,
+    100 and 200 cm) at 250 m resolution (Version v0.2) [Data set]. Zenodo.
 
     [10.5281/zenodo.1475459](https://doi.org/10.5281/zenodo.1475459)"'
   productTags:
@@ -84,33 +85,33 @@ image:
     amount: 250
     units: METERS
   bands:
-  - id: b0
-    units: index x 10
+  - units: index x 10
+    id: b0
     description: Soil pH x 10 in H2O at 0 cm depth
     estimated_min_value: 42.0
     estimated_max_value: 110.0
-  - id: b10
-    units: index x 10
+  - units: index x 10
+    id: b10
     description: Soil pH x 10 in H2O at 10 cm depth
     estimated_min_value: 42.0
     estimated_max_value: 110.0
-  - id: b30
-    units: index x 10
+  - units: index x 10
+    id: b30
     description: Soil pH x 10 in H2O at 30 cm depth
     estimated_min_value: 42.0
     estimated_max_value: 110.0
-  - id: b60
-    units: index x 10
+  - units: index x 10
+    id: b60
     description: Soil pH x 10 in H2O at 60 cm depth
     estimated_min_value: 42.0
     estimated_max_value: 110.0
-  - id: b100
-    units: index x 10
+  - units: index x 10
+    id: b100
     description: Soil pH x 10 in H2O at 100 cm depth
     estimated_min_value: 42.0
     estimated_max_value: 110.0
-  - id: b200
-    units: index x 10
+  - units: index x 10
+    id: b200
     description: Soil pH x 10 in H2O at 200 cm depth
     estimated_min_value: 42.0
     estimated_max_value: 110.0

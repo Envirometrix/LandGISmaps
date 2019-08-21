@@ -60,63 +60,63 @@ image:
     amount: 1000
     units: METERS
   bands:
-  - id: jan
-    units: mm
+  - units: mm
+    id: jan
     description: Precipitation monthly in mm
     estimated_min_value: 0.0
     estimated_max_value: 380.0
-  - id: feb
-    units: mm
+  - units: mm
+    id: feb
     description: Precipitation monthly in mm
     estimated_min_value: 0.0
     estimated_max_value: 380.0
-  - id: mar
-    units: mm
+  - units: mm
+    id: mar
     description: Precipitation monthly in mm
     estimated_min_value: 0.0
     estimated_max_value: 380.0
-  - id: apr
-    units: mm
+  - units: mm
+    id: apr
     description: Precipitation monthly in mm
     estimated_min_value: 0.0
     estimated_max_value: 380.0
-  - id: may
-    units: mm
+  - units: mm
+    id: may
     description: Precipitation monthly in mm
     estimated_min_value: 0.0
     estimated_max_value: 380.0
-  - id: jun
-    units: mm
+  - units: mm
+    id: jun
     description: Precipitation monthly in mm
     estimated_min_value: 0.0
     estimated_max_value: 380.0
-  - id: jul
-    units: mm
+  - units: mm
+    id: jul
     description: Precipitation monthly in mm
     estimated_min_value: 0.0
     estimated_max_value: 380.0
-  - id: aug
-    units: mm
+  - units: mm
+    id: aug
     description: Precipitation monthly in mm
     estimated_min_value: 0.0
     estimated_max_value: 380.0
-  - id: sep
-    units: mm
+  - units: mm
+    id: sep
     description: Precipitation monthly in mm
     estimated_min_value: 0.0
     estimated_max_value: 380.0
-  - id: oct
-    units: mm
+  - units: mm
+    id: oct
     description: Precipitation monthly in mm
     estimated_min_value: 0.0
     estimated_max_value: 380.0
-  - id: nov
-    units: mm
+  - units: mm
+    id: nov
     description: Precipitation monthly in mm
     estimated_min_value: 0.0
     estimated_max_value: 380.0
-  - id: dec
-    units: mm
+  - units: mm
+    id: dec
     description: Precipitation monthly in mm
     estimated_min_value: 0.0
     estimated_max_value: 380.0
