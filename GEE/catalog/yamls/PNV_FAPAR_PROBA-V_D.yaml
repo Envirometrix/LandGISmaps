@@ -5,8 +5,8 @@ dataset:
     extent: GLOBAL
   user_uploaded: true
   thumbnailUrl: https://geoserver.opengeohub.org/landgisgeoserver/wms/reflect?layers=predicted1km:pnv_fapar_proba.v.jan_d_1km_s0..0cm_2014..2017_v0.1&format=image/png8&width=256&height=256&bbox=-10,30,30,70
-  description: "Potential Natural Vegetation FAPAR predicted monthly median (based\
-    \ on PROB-V FAPAR 2014\u20132017).   \n [ description ](https://github.com/Envirometrix/LandGISmaps#potential-natural-vegetation)"
+  description: "## Potential Natural Vegetation FAPAR predicted monthly median (based\
+    \ on PROB-V FAPAR 2014\u20132017)\n\n [ description ](https://github.com/Envirometrix/LandGISmaps#potential-natural-vegetation)"
   term_of_use: |-
     [Open Database License (ODbL) v1.3](https://opendatacommons.org/licenses/odbl/1-0/)
   citations:
@@ -36,73 +36,73 @@ image:
     amount: 1000
     units: METERS
   bands:
-  - units: fraction
+  - id: jan
+    units: fraction
     description: Potential FAPAR monthly
-    id: jan
     estimated_min_value: 0.0
     estimated_max_value: 220.0
-  - units: fraction
+  - id: feb
+    units: fraction
     description: Potential FAPAR monthly
-    id: feb
     estimated_min_value: 0.0
     estimated_max_value: 220.0
-  - units: fraction
+  - id: mar
+    units: fraction
     description: Potential FAPAR monthly
-    id: mar
     estimated_min_value: 0.0
     estimated_max_value: 220.0
-  - units: fraction
+  - id: apr
+    units: fraction
     description: Potential FAPAR monthly
-    id: apr
     estimated_min_value: 0.0
     estimated_max_value: 220.0
-  - units: fraction
+  - id: may
+    units: fraction
     description: Potential FAPAR monthly
-    id: may
     estimated_min_value: 0.0
     estimated_max_value: 220.0
-  - units: fraction
+  - id: jun
+    units: fraction
     description: Potential FAPAR monthly
-    id: jun
     estimated_min_value: 0.0
     estimated_max_value: 220.0
-  - units: fraction
+  - id: jul
+    units: fraction
     description: Potential FAPAR monthly
-    id: jul
     estimated_min_value: 0.0
     estimated_max_value: 220.0
-  - units: fraction
+  - id: aug
+    units: fraction
     description: Potential FAPAR monthly
-    id: aug
     estimated_min_value: 0.0
     estimated_max_value: 220.0
-  - units: fraction
+  - id: sep
+    units: fraction
     description: Potential FAPAR monthly
-    id: sep
     estimated_min_value: 0.0
     estimated_max_value: 220.0
-  - units: fraction
+  - id: oct
+    units: fraction
     description: Potential FAPAR monthly
-    id: oct
     estimated_min_value: 0.0
     estimated_max_value: 220.0
-  - units: fraction
+  - id: nov
+    units: fraction
     description: Potential FAPAR monthly
-    id: nov
     estimated_min_value: 0.0
     estimated_max_value: 220.0
-  - units: fraction
+  - id: dec
+    units: fraction
     description: Potential FAPAR monthly
-    id: dec
     estimated_min_value: 0.0
     estimated_max_value: 220.0
-  - units: fraction
+  - id: annual
+    units: fraction
     description: Potential FAPAR monthly
-    id: annual
     estimated_min_value: 0.0
     estimated_max_value: 220.0
-  - units: fraction
+  - id: annualdiff
+    units: fraction
     description: Potential FAPAR monthly
-    id: annualdiff
     estimated_min_value: 0.0
     estimated_max_value: 220.0

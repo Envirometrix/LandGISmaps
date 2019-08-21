@@ -1,0 +1,57 @@
+id: SOL_GRTGROUP_USDA-SOILTAX-HAPLUDALFS_P
+dataset:
+  title: OpenLandMap Hapludalfs
+  coverage:
+    extent: GLOBAL
+  user_uploaded: true
+  thumbnailUrl: https://geoserver.opengeohub.org/landgisgeoserver/wms/reflect?layers=predicted250m:sol_grtgroup_usda.soiltax.hapludalfs_p_250m_b0..0cm_1950..2017_v0.1&format=image/png8&width=256&height=256&bbox=-10,30,30,70
+  description: "## Predicted USDA soil great groups at 250 m (probabilities)\n\n\n\
+    \   Distribution of the USDA soil great groups based on machine learning predictions\
+    \ from global compilation of soil profiles. To learn more about soil great groups\
+    \ please refer to the [ Illustrated Guide to Soil Taxonomy - NRCS - USDA ](https://www.nrcs.usda.gov/wps/PA_NRCSConsumption/download/?cid=stelprdb1247203.pdf)\
+    \ . Processing steps are described in detail **[ here ](https://github.com/Envirometrix/LandGISmaps/tree/master/soil)**\
+    \ . Antartica is not included. \n\n  To access and visualize maps use: **[ https://landgis.opengeohub.org\
+    \ ](https://landgis.opengeohub.org)** \n\n  If you discover a bug, artifact or\
+    \ inconsistency in the LandGIS maps, or if you have a question please use some\
+    \ of the following channels: \n\n  *  Technical issues and questions about the\
+    \ code: [ https://github.com/Envirometrix/LandGISmaps/issues ](https://github.com/Envirometrix/LandGISmaps/issues)\
+    \ \n *  General questions and comments: [ https://disqus.com/home/forums/landgis/\
+    \ ](https://disqus.com/home/forums/landgis/) \n   All files internally compressed\
+    \ using \"COMPRESS=DEFLATE\" creation option in GDAL. File naming convention:\
+    \ \n\n  *  sol = theme: soil, \n *  grtgroup = variable: USDA great group, \n\
+    \ *  usda.argiustolls = determination method: USDA soil taxonomy class Argiustolls,\
+    \ \n *  p = probability, \n *  250m = spatial resolution / block support: 250\
+    \ m, \n *  s0..0cm = vertical reference: soil surface, \n *  1950..2017 = time\
+    \ reference: period 1950-2017, \n *  v0.1 = version number: 0.1,"
+  term_of_use: |-
+    [Creative Commons Attribution Share-Alike 4.0](https://creativecommons.org/licenses/by-sa/4.0/)
+  citations:
+  - '"nan
+
+    [10.5281/zenodo.1476844](https://doi.org/10.5281/zenodo.1476844)"'
+  productTags:
+  - hapludalfs
+  - argillic
+  sourceTags:
+  - EnvirometriX Ltd
+  providers:
+  - name: EnvirometriX Ltd
+  visualizations: |
+    [{"displayName": "Hapludalfs",
+      "imageVisualization": {"global_vis": {"max": [35.0],
+                                            "min": [0.0],
+                                            "palette": ["ffffb2",
+                                                        "fecc5c",
+                                                        "fd8d3c",
+                                                        "f03b20",
+                                                        "bd0026"]}}}]
+image:
+  x_resolution:
+    amount: 250
+    units: METERS
+  bands:
+  - id: grtgroup
+    units: fraction
+    description: Hapludalfs
+    estimated_min_value: 0.0
+    estimated_max_value: 35.0

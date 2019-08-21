@@ -1,0 +1,118 @@
+id: SOL_CLAY-WFRACTION_USDA-3A1A1A_M
+dataset:
+  title: OpenLandMap Clay content in % (kg / kg)
+  coverage:
+    extent: GLOBAL
+  user_uploaded: true
+  thumbnailUrl: https://geoserver.opengeohub.org/landgisgeoserver/wms/reflect?layers=predicted250m:sol_clay.wfraction_usda.3a1a1a_m_250m_b0..0cm_1950..2017_v0.2&format=image/png8&width=256&height=256&bbox=-10,30,30,70
+  description: "## Clay content in % (kg / kg) at 6 standard depths (0, 10, 30, 60,\
+    \ 100 and 200 cm) at 250 m resolution\n\n   Clay content in % (kg / kg) at 6 standard\
+    \ depths (0, 10, 30, 60, 100 and 200 cm) at 250 m resolution. Based on machine\
+    \ learning predictions from global compilation of soil profiles and samples. Processing\
+    \ steps are described in detail **[ here ](https://github.com/Envirometrix/LandGISmaps/tree/master/soil)**\
+    \ . Antartica is not included. \n\n  To access and visualize maps use: **[ https://landgis.opengeohub.org\
+    \ ](https://landgis.opengeohub.org)** \n\n  If you discover a bug, artifact or\
+    \ inconsistency in the LandGIS maps, or if you have a question please use some\
+    \ of the following channels: \n\n  *  Technical issues and questions about the\
+    \ code: [ https://github.com/Envirometrix/LandGISmaps/issues ](https://github.com/Envirometrix/LandGISmaps/issues)\
+    \ \n *  General questions and comments: [ https://disqus.com/home/forums/landgis/\
+    \ ](https://disqus.com/home/forums/landgis/) \n   All files internally compressed\
+    \ using \"COMPRESS=DEFLATE\" creation option in GDAL. File naming convention:\
+    \ \n\n  *  sol = theme: soil, \n *  clay.wfraction = variable: sand weight fraction,\
+    \ \n *  usda.3a1a1a = determination method: laboratory method code, \n *  m =\
+    \ mean value, \n *  250m = spatial resolution / block support: 250 m, \n *  b10..10cm\
+    \ = vertical reference: 10 cm depth below surface, \n *  1950..2017 = time reference:\
+    \ period 1950-2017, \n *  v0.2 = version number: 0.2,"
+  term_of_use: |-
+    [Creative Commons Attribution Share-Alike 4.0](https://creativecommons.org/licenses/by-sa/4.0/)
+  citations:
+  - '"nan
+
+    [10.5281/zenodo.1476854](https://doi.org/10.5281/zenodo.1476854)"'
+  productTags:
+  - soil
+  - clay
+  - usda
+  sourceTags:
+  - EnvirometriX Ltd
+  providers:
+  - name: EnvirometriX Ltd
+  visualizations: |
+    [{"displayName": "Clay content in % (kg / kg)",
+      "imageVisualization": {"global_vis": {"max": [100.0],
+                                            "min": [2.0],
+                                            "palette": ["FFFF00",
+                                                        "F8F806",
+                                                        "F1F10C",
+                                                        "EBEB13",
+                                                        "E4E419",
+                                                        "DDDD20",
+                                                        "D7D726",
+                                                        "D0D02D",
+                                                        "CACA33",
+                                                        "C3C33A",
+                                                        "BCBC41",
+                                                        "B6B647",
+                                                        "B0B04E",
+                                                        "A9A954",
+                                                        "A3A35A",
+                                                        "9C9C61",
+                                                        "959568",
+                                                        "8F8F6E",
+                                                        "898975",
+                                                        "82827B",
+                                                        "7B7B82",
+                                                        "757589",
+                                                        "6E6E8F",
+                                                        "686895",
+                                                        "61619C",
+                                                        "5A5AA3",
+                                                        "5454A9",
+                                                        "4D4DB0",
+                                                        "4747B6",
+                                                        "4141BC",
+                                                        "3A3AC3",
+                                                        "3333CA",
+                                                        "2D2DD0",
+                                                        "2626D7",
+                                                        "2020DD",
+                                                        "1919E4",
+                                                        "1212EB",
+                                                        "0C0CF1",
+                                                        "0606F8",
+                                                        "0000FF"]}}}]
+image:
+  x_resolution:
+    amount: 250
+    units: METERS
+  bands:
+  - id: b0
+    units: '%'
+    description: Clay content in % (kg / kg) at 0 cm depth
+    estimated_min_value: 2.0
+    estimated_max_value: 100.0
+  - id: b10
+    units: '%'
+    description: Clay content in % (kg / kg) at 10 cm depth
+    estimated_min_value: 2.0
+    estimated_max_value: 100.0
+  - id: b30
+    units: '%'
+    description: Clay content in % (kg / kg) at 30 cm depth
+    estimated_min_value: 2.0
+    estimated_max_value: 100.0
+  - id: b60
+    units: '%'
+    description: Clay content in % (kg / kg) at 60 cm depth
+    estimated_min_value: 2.0
+    estimated_max_value: 100.0
+  - id: b100
+    units: '%'
+    description: Clay content in % (kg / kg) at 100 cm depth
+    estimated_min_value: 2.0
+    estimated_max_value: 100.0
+  - id: b200
+    units: '%'
+    description: Clay content in % (kg / kg) at 200 cm depth
+    estimated_min_value: 2.0
+    estimated_max_value: 100.0

@@ -122,13 +122,15 @@ def update_band(md, band, vis):
         band['max'] = max(classes_values)
 
 #%%
-def gee_catalog_root(lun):
+def gee_catalog_root(lun=None, md=None):
 
     from markdownify import markdownify as mdf
     import io
     from pprint import pprint
 
-    md = layer_metadata(lun)
+    if lun is not None:
+        md = layer_metadata(lun)
+    
     pr = md['properties']
     row = md['row']
     bbox = "-10,30,30,70"
@@ -154,6 +156,7 @@ def gee_catalog_root(lun):
         else:
             desc_html = pr['description']
         desc_md = mdf(desc_html).strip()
+        desc_file.write_text(desc_md)
 
     dataset['description'] = literal(desc_md)
     #dataset['footer'] = literal('footer')   #TODO: fix
@@ -201,6 +204,18 @@ def gee_catalog_root(lun):
         
         imgcol['bands'] = bands
 
+    elif md['type_spatial'] == '3D':
+        root['image'] = imgcol
+        bands = []
+        for sublayer in md['sublayers']:
+            desc = "{} at {} cm depth".format(row['layer_title'], sublayer['band_name'][1:])
+            band = OrderedDict(id=sublayer['band_name'], description=desc, units = row['layer_units'])
+            update_band(md, band, vis)
+
+            bands.append(band)
+
+        imgcol['bands'] = bands
+
     elif md['type_spatial'] == 'TS':
         root['imageCollection'] = imgcol
         # cadence         
@@ -214,14 +229,9 @@ def gee_catalog_root(lun):
 #%%
 def gee_catalog_pnv():
 #%%
-    # gee_catalog_id = 'PNV_FAPAR_PROBA-V_D'
-    # luns = layer_table.loc[layer_table.layer_gee_catalog_id==gee_catalog_id,'layer_unique_number'].values
-    #luns = ['7.2']
     # 7.3 and 7.4 are alredy included in 7.2 dataset
-
-    # take all properties from first lun 
     root = gee_catalog_root('7.2')
-    # TODO Last band has different visualisation from layer 7.4
+    # TODO Last band has different visualisation to be taken from layer 7.4
     # md = layer_metadata('7.4')
     # vis = get_gee_vis(md)
 
@@ -229,17 +239,33 @@ def gee_catalog_pnv():
 
     root = gee_catalog_root('7.1')
     save_yaml(root)
-    #gee_path = 'users/landgis/' + root['id']
-    # manifest_dict = make_manifest(luns, gee_path, root['image']['bands'])
-    # manifest_json = json.dumps(manifest_dict)
     
+    
+def gee_catalog_sol():
+    luns = ['6.1', '6.2', '6.3', '6.4', '6.5', '6.6', '6.7', '6.8', '6.9']
+    
+    for lun in luns:
+        root = gee_catalog_root(lun)
+        save_yaml(root)
 
+def gee_catalog_clm():
+    # 5.5 is not public!
+    luns = ['5.1','5.2','5.3','5.4']
+    for lun in luns:
+        print(lun)
+        root = gee_catalog_root(lun)
+        save_yaml(root)
 
 
 #%%
+# gee_catalog_id = 'PNV_FAPAR_PROBA-V_D'
+# luns = layer_table.loc[layer_table.layer_gee_catalog_id==gee_catalog_id,'layer_unique_number'].values
+#luns = ['7.2']
+#gee_path = 'users/landgis/' + root['id']
+# manifest_dict = make_manifest(luns, gee_path, root['image']['bands'])
+# manifest_json = json.dumps(manifest_dict)
+#%%
     
-
-
 def gee_catalog_2D():
     
     table_2d = layer_table.loc[layer_table.layer_display_type.apply(lambda x: x.split('_')[0])=='2D']
@@ -254,3 +280,8 @@ def gee_catalog_2D():
             fid.write(yml)
 
 #%%
+
+if __name__=='__main__':
+    gee_catalog_pnv()
+    gee_catalog_sol()
+    gee_catalog_clm()

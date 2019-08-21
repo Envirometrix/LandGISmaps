@@ -5,9 +5,18 @@ dataset:
     extent: GLOBAL
   user_uploaded: true
   thumbnailUrl: https://geoserver.opengeohub.org/landgisgeoserver/wms/reflect?layers=predicted1km:pnv_biome.type_biome00k_c_1km_s0..0cm_2000..2017_v0.1&format=image/png8&width=256&height=256&bbox=-10,30,30,70
-  description: |+
-    Potential Natural Vegetation (PNV) is the vegetation cover in equilibrium with climate, that would exist at a given location non-impacted by human activities. PNV is useful for raising public awareness about land degradation and for estimating land potential. Here you can download results of predictions of (1) global distribution of biomes based on the BIOME 6000 data set (8057 modern pollen-based site reconstructions), (2) distribution of forest tree species in Europe based on detailed occurrence records (1,546,435 ground observations), and (3) global monthly Fraction of Absorbed Photosynthetically Active Radiation (FAPAR) values (30,301 randomly-sampled points). To report an issue or artifact in maps, please use https://github.com/envirometrix/PNVmaps/issues (2018-03-24)
-
+  description: "## Potential Natural Vegetation biomes global predictions of classes\
+    \ (based on the BIOMES 6000 data set current biomes)\n\nPotential Natural Vegetation\
+    \ (PNV) is the vegetation cover in equilibrium with climate, that would exist\
+    \ at a given location non-impacted by human activities. PNV is useful for raising\
+    \ public awareness about land degradation and for estimating land potential. Here\
+    \ you can download results of predictions of \n- (1) global distribution of biomes\
+    \ based on the BIOME 6000 data set (8057 modern pollen-based site reconstructions),\
+    \ \n- (2) distribution of forest tree species in Europe based on detailed occurrence\
+    \ records (1,546,435 ground observations), and \n- (3) global monthly Fraction\
+    \ of Absorbed Photosynthetically Active Radiation (FAPAR) values (30,301 randomly-sampled\
+    \ points). \n  \n  \nTo report an issue or artifact in maps, please use https://github.com/envirometrix/PNVmaps/issues\
+    \ (2018-03-24)\n\n"
   term_of_use: |-
     [Open Database License (ODbL) v1.0](https://opendatacommons.org/licenses/odbl/1-0/)
   citations:
@@ -52,9 +61,9 @@ image:
     amount: 1000
     units: METERS
   bands:
-  - units: factor
+  - id: biome.type
+    units: factor
     description: Potential distribution of biomes
-    id: biome.type
     classes:
     - color: 1c5510
       description: tropical evergreen broadleaf forest

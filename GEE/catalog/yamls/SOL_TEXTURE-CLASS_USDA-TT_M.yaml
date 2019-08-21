@@ -1,0 +1,331 @@
+id: SOL_TEXTURE-CLASS_USDA-TT_M
+dataset:
+  title: OpenLandMap Soil texture class (USDA system)
+  coverage:
+    extent: GLOBAL
+  user_uploaded: true
+  thumbnailUrl: https://geoserver.opengeohub.org/landgisgeoserver/wms/reflect?layers=predicted250m:sol_texture.class_usda.tt_m_250m_b0..0cm_1950..2017_v0.2&format=image/png8&width=256&height=256&bbox=-10,30,30,70
+  description: "## Soil texture classes (USDA system) for 6 soil depths (0, 10, 30,\
+    \ 60, 100 and 200 cm) at 250 m\n\n\n   Soil texture classes (USDA system) for\
+    \ 6 standard soil depths (0, 10, 30, 60, 100 and 200 cm) at 250 m. Derived from\
+    \ predicted soil texture fractions using the soiltexture package in R. Processing\
+    \ steps are described in detail **[ here ](https://github.com/Envirometrix/LandGISmaps/tree/master/soil)**\
+    \ . Antartica is not included. \n\n  To access and visualize maps use: **[ https://landgis.opengeohub.org\
+    \ ](https://landgis.opengeohub.org)** \n\n  If you discover a bug, artifact or\
+    \ inconsistency in the LandGIS maps, or if you have a question please use some\
+    \ of the following channels: \n\n  *  Technical issues and questions about the\
+    \ code: [ https://github.com/Envirometrix/LandGISmaps/issues ](https://github.com/Envirometrix/LandGISmaps/issues)\
+    \ \n *  General questions and comments: [ https://disqus.com/home/forums/landgis/\
+    \ ](https://disqus.com/home/forums/landgis/) \n   All files internally compressed\
+    \ using \"COMPRESS=DEFLATE\" creation option in GDAL. File naming convention:\
+    \ \n\n  *  sol = theme: soil, \n *  texture.class = variable: soil texture class,\
+    \ \n *  usda = determination method: USDA texture triangle, \n *  c = factor,\
+    \ \n *  250m = spatial resolution / block support: 250 m, \n *  b10..10cm = vertical\
+    \ reference: 10 cm depth below surface, \n *  1950..2017 = time reference: period\
+    \ 1950-2017, \n *  v0.2 = version number: 0.2,"
+  term_of_use: |-
+    [Creative Commons Attribution Share-Alike 4.0](https://creativecommons.org/licenses/by-sa/4.0/)
+  citations:
+  - '"nan
+
+    [10.5281/zenodo.1475451](https://doi.org/10.5281/zenodo.1475451)"'
+  productTags:
+  - soil
+  - texture
+  - usda
+  sourceTags:
+  - EnvirometriX Ltd
+  providers:
+  - name: EnvirometriX Ltd
+  visualizations: |
+    [{"displayName": "Soil texture class (USDA system)",
+      "imageVisualization": {"global_vis": {"max": [255.0],
+                                            "min": [1.0],
+                                            "palette": ["d5c36b",
+                                                        "b96947",
+                                                        "9d3706",
+                                                        "ae868f",
+                                                        "f86714",
+                                                        "46d143",
+                                                        "368f20",
+                                                        "3e5a14",
+                                                        "ffd557",
+                                                        "fff72e",
+                                                        "ff5a9d",
+                                                        "ff005b",
+                                                        "ffffff"]}}}]
+image:
+  x_resolution:
+    amount: 250
+    units: METERS
+  bands:
+  - id: b0
+    units: factor
+    description: Soil texture class (USDA system) at 0 cm depth
+    classes:
+    - color: d5c36b
+      description: Cl
+      value: '1'
+    - color: b96947
+      description: SiCl
+      value: '2'
+    - color: 9d3706
+      description: SaCl
+      value: '3'
+    - color: ae868f
+      description: ClLo
+      value: '4'
+    - color: f86714
+      description: SiClLo
+      value: '5'
+    - color: 46d143
+      description: SaClLo
+      value: '6'
+    - color: 368f20
+      description: Lo
+      value: '7'
+    - color: 3e5a14
+      description: SiLo
+      value: '8'
+    - color: ffd557
+      description: SaLo
+      value: '9'
+    - color: fff72e
+      description: Si
+      value: '10'
+    - color: ff5a9d
+      description: LoSa
+      value: '11'
+    - color: ff005b
+      description: Sa
+      value: '12'
+    - color: ffffff
+      description: NODATA
+      value: '255'
+    min: 1
+    max: 255
+  - id: b10
+    units: factor
+    description: Soil texture class (USDA system) at 10 cm depth
+    classes:
+    - color: d5c36b
+      description: Cl
+      value: '1'
+    - color: b96947
+      description: SiCl
+      value: '2'
+    - color: 9d3706
+      description: SaCl
+      value: '3'
+    - color: ae868f
+      description: ClLo
+      value: '4'
+    - color: f86714
+      description: SiClLo
+      value: '5'
+    - color: 46d143
+      description: SaClLo
+      value: '6'
+    - color: 368f20
+      description: Lo
+      value: '7'
+    - color: 3e5a14
+      description: SiLo
+      value: '8'
+    - color: ffd557
+      description: SaLo
+      value: '9'
+    - color: fff72e
+      description: Si
+      value: '10'
+    - color: ff5a9d
+      description: LoSa
+      value: '11'
+    - color: ff005b
+      description: Sa
+      value: '12'
+    - color: ffffff
+      description: NODATA
+      value: '255'
+    min: 1
+    max: 255
+  - id: b30
+    units: factor
+    description: Soil texture class (USDA system) at 30 cm depth
+    classes:
+    - color: d5c36b
+      description: Cl
+      value: '1'
+    - color: b96947
+      description: SiCl
+      value: '2'
+    - color: 9d3706
+      description: SaCl
+      value: '3'
+    - color: ae868f
+      description: ClLo
+      value: '4'
+    - color: f86714
+      description: SiClLo
+      value: '5'
+    - color: 46d143
+      description: SaClLo
+      value: '6'
+    - color: 368f20
+      description: Lo
+      value: '7'
+    - color: 3e5a14
+      description: SiLo
+      value: '8'
+    - color: ffd557
+      description: SaLo
+      value: '9'
+    - color: fff72e
+      description: Si
+      value: '10'
+    - color: ff5a9d
+      description: LoSa
+      value: '11'
+    - color: ff005b
+      description: Sa
+      value: '12'
+    - color: ffffff
+      description: NODATA
+      value: '255'
+    min: 1
+    max: 255
+  - id: b60
+    units: factor
+    description: Soil texture class (USDA system) at 60 cm depth
+    classes:
+    - color: d5c36b
+      description: Cl
+      value: '1'
+    - color: b96947
+      description: SiCl
+      value: '2'
+    - color: 9d3706
+      description: SaCl
+      value: '3'
+    - color: ae868f
+      description: ClLo
+      value: '4'
+    - color: f86714
+      description: SiClLo
+      value: '5'
+    - color: 46d143
+      description: SaClLo
+      value: '6'
+    - color: 368f20
+      description: Lo
+      value: '7'
+    - color: 3e5a14
+      description: SiLo
+      value: '8'
+    - color: ffd557
+      description: SaLo
+      value: '9'
+    - color: fff72e
+      description: Si
+      value: '10'
+    - color: ff5a9d
+      description: LoSa
+      value: '11'
+    - color: ff005b
+      description: Sa
+      value: '12'
+    - color: ffffff
+      description: NODATA
+      value: '255'
+    min: 1
+    max: 255
+  - id: b100
+    units: factor
+    description: Soil texture class (USDA system) at 100 cm depth
+    classes:
+    - color: d5c36b
+      description: Cl
+      value: '1'
+    - color: b96947
+      description: SiCl
+      value: '2'
+    - color: 9d3706
+      description: SaCl
+      value: '3'
+    - color: ae868f
+      description: ClLo
+      value: '4'
+    - color: f86714
+      description: SiClLo
+      value: '5'
+    - color: 46d143
+      description: SaClLo
+      value: '6'
+    - color: 368f20
+      description: Lo
+      value: '7'
+    - color: 3e5a14
+      description: SiLo
+      value: '8'
+    - color: ffd557
+      description: SaLo
+      value: '9'
+    - color: fff72e
+      description: Si
+      value: '10'
+    - color: ff5a9d
+      description: LoSa
+      value: '11'
+    - color: ff005b
+      description: Sa
+      value: '12'
+    - color: ffffff
+      description: NODATA
+      value: '255'
+    min: 1
+    max: 255
+  - id: b200
+    units: factor
+    description: Soil texture class (USDA system) at 200 cm depth
+    classes:
+    - color: d5c36b
+      description: Cl
+      value: '1'
+    - color: b96947
+      description: SiCl
+      value: '2'
+    - color: 9d3706
+      description: SaCl
+      value: '3'
+    - color: ae868f
+      description: ClLo
+      value: '4'
+    - color: f86714
+      description: SiClLo
+      value: '5'
+    - color: 46d143
+      description: SaClLo
+      value: '6'
+    - color: 368f20
+      description: Lo
+      value: '7'
+    - color: 3e5a14
+      description: SiLo
+      value: '8'
+    - color: ffd557
+      description: SaLo
+      value: '9'
+    - color: fff72e
+      description: Si
+      value: '10'
+    - color: ff5a9d
+      description: LoSa
+      value: '11'
+    - color: ff005b
+      description: Sa
+      value: '12'
+    - color: ffffff
+      description: NODATA
+      value: '255'
+    min: 1
+    max: 255
