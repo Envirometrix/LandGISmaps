@@ -27,7 +27,7 @@ RUN source activate $PYTHON_3_ENV && \
     conda install -y -c conda-forge google-auth-httplib2 google-cloud-storage google-cloud-monitoring nb_conda_kernels && \
     pip install earthengine-api && \
     # GDAL in conda
-    conda install -y -c conda-forge libgdal gdal
+    conda install -y -c conda-forge libgdal gdal rasterio pyproj
 
 # Install custom files in the container's /datalab directory.
 RUN cp /datalab/run.sh /datalab/base-run.sh

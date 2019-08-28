@@ -556,24 +556,35 @@ def set_all_properties_gee():
 
 
 def test():
+    pass
+#%%
     for lun in layer_table.layer_unique_number:
         md = layer_metadata(lun)
         print(lun)
-
+#%%
+    lun='5.4'
+    md=layer_metadata(lun)
+    pprint.pprint(md)
 
 
 #%%
 #%%
 
 if __name__ == '__main__':
-    #init_gc()
-    #init_ee('josipkrizan')
-    init_ee('opengeohub')
+    init_gc()
+    init_ee('josipkrizan')
+    #init_ee('opengeohub')
     # make_all_3DSS()
     # upload_all_gcs()
     # upload_all_gee()
     #set_all_properties_gee()
     # test()
+
+    md = layer_metadata('5.4')
+    #print(lun)
+    #make_tmp(md)
+    #gcs_upload(md)
+    gee_upload(md)
     pass
 
 
