@@ -555,6 +555,35 @@ def set_all_properties_gee():
         print(gee_update_properties(md))
 
 
+def copy_assets(inbucket='users/josipkrizan/landgis', outbucket='projects/OpenLandMap'):
+    #inbucket='users/josipkrizan/landgis'
+    #outbucket='projects/OpenLandMap'
+
+    assets = ee.data.getList({'id': inbucket})
+
+    for asset in assets:
+        src=asset['id']
+        dst=src.replace(inbucket,outbucket)
+        name = src.split('/')[-1]
+
+        if asset['type']=='Image':
+            print(name,'-->', dst,end='')
+            dstInfo = ee.data.getInfo(dst)
+            if dstInfo is None:
+                print (' -- copying ...')
+                ee.data.copyAsset(src,dst)
+            else:
+                print(' -- exist.')
+        elif asset['type']=='ImageCollection':
+            print('ImageCollection: ',name, end='')
+            dstInfo = ee.data.getInfo(dst)
+            if dstInfo is None:
+                print(' -- creating ...')
+                ee.data.createAsset({'type': ee.data.ASSET_TYPE_IMAGE_COLL}, dst)
+            else:
+                print(' -- exists.')                
+            copy_assets(inbucket=src, outbucket=dst)
+
 def test():
     pass
 #%%
