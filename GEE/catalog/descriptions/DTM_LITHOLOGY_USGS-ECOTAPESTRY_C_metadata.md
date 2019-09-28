@@ -1,0 +1,1 @@
+HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"   Geosciences and Environmental Change Science Center

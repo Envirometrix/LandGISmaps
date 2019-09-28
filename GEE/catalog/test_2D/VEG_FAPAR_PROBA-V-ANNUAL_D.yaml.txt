@@ -1,0 +1,67 @@
+id: VEG_FAPAR_PROBA-V-ANNUAL_D
+dataset:
+  title: "OpenLandMap FAPAR median annual value 2014\u20132017"
+  coverage:
+    extent: GLOBAL
+  user_uploaded: true
+  thumbnailUrl: https://geoserver.opengeohub.org/landgisgeoserver/wms/reflect?layers=layers250m:veg_fapar_proba.v.annual_d_250m_s0..0cm_2014..2017_v1.0&format=image/png8&width=256&height=256&bbox=-10,30,30,70
+  description: "Fraction of Absorbed Photosynthetically Active Radiation (FAPAR) at\
+    \ 250 m monthly for period 2014-2017 based on COPERNICUS land products\n=========================================================================================================================================\n\
+    \n   Long-term monthly Fraction of Absorbed Photosynthetically Active Radiation\
+    \ (FAPAR) median value at 250 m based on the time-series of [ COPERNICUS FAPAR\
+    \ ](https://land.copernicus.eu/global/products/fapar) . Derived using the data.table\
+    \ package and quantile function in R. Processing steps are available [ ** here\
+    \ ** ](https://github.com/Envirometrix/LandGISmaps/tree/master/input_layers/Copernicus_vito)\
+    \ . Antartica is not included. \n\n  To access and visualize maps use: ** [ https://landgis.opengeohub.org\
+    \ ](https://landgis.opengeohub.org) ** \n\n  If you discover a bug, artifact or\
+    \ inconsistency in the LandGIS maps, or if you have a question please use some\
+    \ of the following channels: \n\n  *  Technical issues and questions about the\
+    \ code: [ https://github.com/Envirometrix/LandGISmaps/issues ](https://github.com/Envirometrix/LandGISmaps/issues)\
+    \ \n *  General questions and comments: [ https://disqus.com/home/forums/landgis/\
+    \ ](https://disqus.com/home/forums/landgis/) \n   All files internally compressed\
+    \ using \"COMPRESS=DEFLATE\" creation option in GDAL. File naming convention:\
+    \ \n\n  *  veg = theme: vegetation, \n *  fapar = Fraction of Absorbed Photosynthetically\
+    \ Active Radiation, \n *  proba.v.oct = determination method: PROBA-V products,\
+    \ month October, \n *  d = median value, \n *  250m = spatial resolution / block\
+    \ support: 250 m, \n *  s0..0cm = vertical reference: land surface, \n *  2014..2017\
+    \ = time reference: from 2014 to 2017, \n *  v1.0 = version number: 1.0,"
+  footer: |-
+    footer
+  term_of_use: |-
+    [Creative Commons Attribution Share-Alike 4.0](https://creativecommons.org/licenses/by-sa/4.0/)
+  citations:
+  - '"Hengl T, Walsh MG, Sanderman J, Wheeler I, Harrison SP, Prentice IC. (2018)
+    Global mapping of potential natural vegetation: an assessment of machine learning
+    algorithms for estimating land potential. PeerJ 6:e5457
+
+    [10.7287/peerj.preprints.26811v8](https://doi.org/10.5281/zenodo.1450336)"'
+  productTags:
+  - fapar
+  - annual
+  - copernicus
+  - prob-v
+  sourceTags:
+  - OpenGeoHub
+  providers:
+  - link: https://opengeohub.org
+    name: OpenGeoHub
+  visualizations: "[{\"displayName\": \"FAPAR median annual value 2014\u20132017\"\
+    ,\n  \"imageVisualization\": {\"global_vis\": {\"max\": [220.0],\n           \
+    \                             \"min\": [0.0],\n                              \
+    \          \"palette\": [\"0000ff\",\n                                       \
+    \             \"00ffff\",\n                                                  \
+    \  \"ffff00\",\n                                                    \"ff0000\"\
+    ]}}}]\n"
+imageCollection:
+  x_resolution:
+    amount: 250
+    units: METERS
+  cadence:
+    interval: 4
+    unit: YEAR
+  bands:
+  - id: fapar
+    units: fraction
+    description: "FAPAR median annual value 2014\u20132017"
+    estimated_min_value: 0.0
+    estimated_max_value: 220.0

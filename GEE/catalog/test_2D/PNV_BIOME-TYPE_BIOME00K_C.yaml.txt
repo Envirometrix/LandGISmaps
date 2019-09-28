@@ -1,0 +1,64 @@
+id: PNV_BIOME-TYPE_BIOME00K_C
+dataset:
+  title: OpenLandMap Potential distribution of biomes
+  coverage:
+    extent: GLOBAL
+  user_uploaded: true
+  thumbnailUrl: https://geoserver.opengeohub.org/landgisgeoserver/wms/reflect?layers=predicted1km:pnv_biome.type_biome00k_c_1km_s0..0cm_2000..2017_v0.1&format=image/png8&width=256&height=256&bbox=-10,30,30,70
+  description: "Potential Natural Vegetation biomes global predictions of classes\
+    \ (based on the BIOMES 6000 data set current biomes).   \n [ description ](https://github.com/Envirometrix/LandGISmaps#potential-natural-vegetation)"
+  footer: |-
+    footer
+  term_of_use: |-
+    [Open Database License (ODbL) v1.0](https://opendatacommons.org/licenses/odbl/1-0/)
+  citations:
+  - '"Hengl T, Walsh MG, Sanderman J, Wheeler I, Harrison SP, Prentice IC. (2018)
+    Global Mapping of Potential Natural Vegetation: An Assessment of Machine Learning
+    Algorithms for Estimating Land Potential. PeerJ Preprints.
+
+    [10.7287/peerj.preprints.26811v1](http://dx.doi.org/10.7910/DVN/QQHCIK)"'
+  productTags:
+  - biome
+  - potential
+  sourceTags:
+  - OpenGeoHub
+  providers:
+  - link: https://opengeohub.org
+    name: OpenGeoHub
+  visualizations: |
+    [{"displayName": "Potential distribution of biomes",
+      "imageVisualization": {"global_vis": {"max": [32.0],
+                                            "min": [1.0],
+                                            "palette": ["1c5510",
+                                                        "659208",
+                                                        "ae7d20",
+                                                        "000065",
+                                                        "bbcb35",
+                                                        "009a18",
+                                                        "caffca",
+                                                        "55eb49",
+                                                        "65b2ff",
+                                                        "0020ca",
+                                                        "8ea228",
+                                                        "ff9adf",
+                                                        "baff35",
+                                                        "ffba9a",
+                                                        "ffba35",
+                                                        "f7ffca",
+                                                        "e7e718",
+                                                        "798649",
+                                                        "65ff9a",
+                                                        "d29e96"]}}}]
+imageCollection:
+  x_resolution:
+    amount: 1000
+    units: METERS
+  cadence:
+    interval: 18
+    unit: YEAR
+  bands:
+  - id: biome.type
+    units: factor
+    description: Potential distribution of biomes
+    estimated_min_value: 1.0
+    estimated_max_value: 32.0

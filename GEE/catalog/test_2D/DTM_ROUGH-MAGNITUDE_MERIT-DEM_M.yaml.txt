@@ -1,0 +1,76 @@
+id: DTM_ROUGH-MAGNITUDE_MERIT-DEM_M
+dataset:
+  title: OpenLandMap Maximum multiscale roughness
+  coverage:
+    extent: GLOBAL
+  user_uploaded: true
+  thumbnailUrl: https://geoserver.opengeohub.org/landgisgeoserver/wms/reflect?layers=layers250m:dtm_rough-magnitude_merit.dem_m_250m_s0..0cm_2018_v1.0&format=image/png8&width=256&height=256&bbox=-10,30,30,70
+  description: "Geomorpho90m - Global high-resolution geomorphometry layers: empirical\
+    \ evaluation and accuracy assessment. First order derivative layers.\n==========================================================================================================================================\n\
+    \n   Geomorphometry is the science of quantitative analysis of the Earth's surface.\
+    \ The primary inputs for such terrain analyses are remotely sensed Digital Elevation\
+    \ Models (DEMs), which provide an opportunity to derive a wide range of environmental\
+    \ variables to better understand patterns and processes in geography, geology,\
+    \ climatology, hydrology or biodiversity science. While DEMs provide the elevation\
+    \ itself, a wide array of geomorphometry metrics can be extracted to yield information\
+    \ regarding topographical variation and land surface parameters, to improve our\
+    \ understanding of the geographical, geomorphological and environmental properties\
+    \ of a given study area. By the elevation it is possible to describe the topographical\
+    \ complexity, which can shape the macro and micro climate of a given area. The\
+    \ topographical variation contributes significantly to the environmental complexity\
+    \ of a region, and also defines the biotic and abiotic features at a sub-regional\
+    \ level. \n\n  Land surface parameters are quantitative measures of various morphometric\
+    \ properties of a surface. The most common parameters, slope or aspect, can be\
+    \ used to further derive more complex features or curvature profiles of a terrain\
+    \ at any given location. Such measures are pivotal to reflect hydrological parameters\
+    \ shaping flow and erosion processes within the landscape, and to delineate catchment\
+    \ and stream features. Moreover, mapping and assessing landform variability such\
+    \ as concavity and convexity is essential to gaining a better picture of the dynamics\
+    \ of land erosion and landscape denudation in mountainous environments."
+  footer: |-
+    footer
+  term_of_use: |-
+    [Creative Commons Attribution Share-Alike 4.0](https://creativecommons.org/licenses/by-sa/4.0/)
+  citations:
+  - '"Geomorpho90m - Global high-resolution geomorphometry layers: empirical evaluation
+    and accuracy assessment
+
+    [10.7287/peerj.preprints.27595v1](https://doi.org/10.5281/zenodo.1805609)"'
+  productTags:
+  - roughness
+  - multiscale
+  - merit
+  - dem
+  sourceTags:
+  - OpenGeoHub
+  providers:
+  - link: https://opengeohub.org
+    name: OpenGeoHub
+  visualizations: |
+    [{"displayName": "Maximum multiscale roughness",
+      "imageVisualization": {"global_vis": {"max": [4000.0],
+                                            "min": [0.0],
+                                            "palette": ["2b83ba",
+                                                        "dfd9bc",
+                                                        "d5b183",
+                                                        "cb894a",
+                                                        "c16212",
+                                                        "c04e03",
+                                                        "c54308",
+                                                        "ca380d",
+                                                        "ce2e12",
+                                                        "d32317",
+                                                        "d7191c"]}}}]
+imageCollection:
+  x_resolution:
+    amount: 250
+    units: METERS
+  cadence:
+    interval: 1
+    unit: YEAR
+  bands:
+  - id: rough-magnitude
+    units: 100 x index
+    description: Maximum multiscale roughness
+    estimated_min_value: 0.0
+    estimated_max_value: 4000.0
