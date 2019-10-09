@@ -9,38 +9,38 @@ Call:
 
 Type:                             Probability estimation 
 Number of trees:                  85 
-Sample size:                      338677 
-Number of independent variables:  242 
-Mtry:                             40 
+Sample size:                      338513 
+Number of independent variables:  315 
+Mtry:                             150 
 Target node size:                 10 
 Variable importance mode:         impurity 
 Splitrule:                        gini 
-OOB prediction error (Brier s.):  0.460861 
+OOB prediction error (Brier s.):  0.422795 
 
  Variable importance:
-          [,1]
-PC241 3950.996
-PC240 3303.079
-PC225 2976.047
-PC4   2857.142
-PC1   2405.260
-PC81  2247.006
-PC26  2082.876
-PC230 1976.328
-PC224 1882.154
-PC63  1842.871
-PC6   1705.013
-PC242 1672.535
-PC9   1631.230
-PC3   1599.826
-PC28  1562.016
-PC226 1552.301
-PC79  1550.635
-PC199 1540.698
-PC17  1522.023
-PC71  1504.418
-PC15  1476.025
-PC22  1450.578
-PC53  1440.650
-PC231 1435.305
-PC23  1419.668
+                                                                               [,1]
+clm_lst_mod11a2.jul.daynight_m_1km_s0..0cm_2000..2017_v1.0.tif             4031.155
+clm_bioclim.var_chelsa.4_m_1km_s0..0cm_1979..2013_v1.0.tif                 2726.560
+dtm_roughness_merit.dem_m_250m_s0..0cm_2018_v1.0.tif                       2671.426
+dtm_dev.magnitude_merit.dem_m_250m_s0..0cm_2018_v1.0.tif                   2385.675
+clm_bioclim.var_chelsa.2_m_1km_s0..0cm_1979..2013_v1.0.tif                 2312.412
+clm_precipitation_sm2rain.jun_m_1km_s0..0cm_2007..2018_v0.2.tif            2151.263
+dtm_elevation_merit.dem_m_250m_s0..0cm_2017_v1.0.tif                       2146.870
+clm_lst_mod11a2.feb.day_sd_1km_s0..0cm_2000..2017_v1.0.tif                 2136.290
+dtm_rough.magnitude_merit.dem_m_250m_s0..0cm_2018_v1.0.tif                 2121.134
+dtm_cti_merit.dem_m_250m_s0..0cm_2018_v1.0.tif                             2065.122
+clm_lst_mod11a2.aug.daynight_m_1km_s0..0cm_2000..2017_v1.0.tif             1937.538
+clm_cloud.fraction_earthenv.modis.annual_m_1km_s0..0cm_2000..2015_v1.0.tif 1873.967
+dtm_dvm2_merit.dem_m_250m_s0..0cm_2017_v1.0.tif                            1813.732
+clm_precipitation_sm2rain.annual_m_1km_s0..0cm_2007..2018_v0.2.tif         1770.008
+clm_wind.speed_terraclimate.jun_m_5km_s0..0cm_1998..2018_v1.tif            1740.476
+clm_cloud.fraction_earthenv.modis.jan_p_1km_s0..0cm_2000..2015_v1.0.tif    1642.906
+clm_precipitation_sm2rain.apr_m_1km_s0..0cm_2007..2018_v0.2.tif            1597.048
+dtm_dvm_merit.dem_m_250m_s0..0cm_2017_v1.0.tif                             1595.399
+clm_cloud.fraction_earthenv.modis.jul_p_1km_s0..0cm_2000..2015_v1.0.tif    1592.004
+clm_lst_mod11a2.mar.day_m_1km_s0..0cm_2000..2017_v1.0.tif                  1581.333
+clm_cloud.fraction_earthenv.modis.sep_p_1km_s0..0cm_2000..2015_v1.0.tif    1572.972
+dtm_vrm_merit.dem_m_250m_s0..0cm_2018_v1.0.tif                             1536.488
+clm_cloud.fraction_earthenv.modis.nov_p_1km_s0..0cm_2000..2015_v1.0.tif    1533.205
+clm_cloud.fraction_earthenv.modis.feb_p_1km_s0..0cm_2000..2015_v1.0.tif    1515.548
+clm_cloud.fraction_earthenv.modis.aug_p_1km_s0..0cm_2000..2015_v1.0.tif    1479.572

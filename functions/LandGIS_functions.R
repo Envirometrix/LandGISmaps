@@ -65,6 +65,11 @@ pred_probs = function(i, gm, tile.tbl, col.legend, varn, out.dir="/data/tt/LandG
   out.c <- paste0(out.dir, "/", i, "/", varn, "_C_", i, ".tif")
   if(file.exists(out.rds) & !file.exists(out.c)){
     m = readRDS(out.rds)
+    ## FAPAR images missing values norther latitudes
+    sel.mis = which(sapply(m@data, function(x){sum(is.na(x))>0}))
+    for(j in 1:length(sel.mis)){  
+      m@data[,sel.mis[j]] <- ifelse(is.na(m@data[,sel.mis[j]]), rep(0, nrow(m)), m@data[,sel.mis[j]])
+    }
     m = m[complete.cases(m@data[,gm$forest$independent.variable.names]),]
     pred = predict(gm, m@data)
     tax = attr(pred$predictions, "dimnames")[[2]]
@@ -89,6 +94,85 @@ pred_probs = function(i, gm, tile.tbl, col.legend, varn, out.dir="/data/tt/LandG
     gc()
   }
 }
+
+pred_probs.mlr = function(i, m, tile.tbl, col.legend, varn, out.dir="/data/tt/LandGIS/grid250m", model.error=TRUE){
+  i.n = which(tile.tbl$ID == strsplit(i, "T")[[1]][2])
+  out.rds <- paste0(out.dir, "/T", tile.tbl[i.n,"ID"], "/T", tile.tbl[i.n,"ID"], ".rds")
+  out.c <- paste0(out.dir, "/", i, "/", varn, "_C_", i, ".tif")
+  if(file.exists(out.rds) & !file.exists(out.c)){
+    X = readRDS(out.rds)
+    sel.pr = complete.cases(X@data[,m$features])
+    if(sum(sel.pr)>1){
+      X = X[sel.pr,]
+      tax <- m$task.desc$class.levels
+      out <- predict(m, newdata=X@data[,m$features])
+      if(model.error==TRUE){
+        out.p <- as.matrix(as.data.frame(getStackedBaseLearnerPredictions(m, newdata=X@data[,m$features])))
+        pred.prob <- NULL
+        for(j in tax){
+          pred.prob[[paste0("error.",j)]] <- matrixStats::rowSds(out.p[,grep(paste0(".", j), attr(out.p, "dimnames")[[2]])], na.rm = TRUE)
+        }
+        pred <- SpatialPixelsDataFrame(X@coords, data=cbind(out$data, data.frame(pred.prob)), grid = X@grid, proj4string = X@proj4string)
+      } else {
+        pred <- SpatialPixelsDataFrame(X@coords, data=out$data, grid = X@grid, proj4string = X@proj4string)
+      }
+      rs <- rowSums(pred@data[,paste0("prob.", tax)], na.rm=TRUE)
+      ## Write GeoTiffs:
+      if(sum(rs,na.rm=TRUE)>0&length(rs)>0){
+        ## predictions
+        x = pred[1]
+        for(j in 1:length(tax)){
+          out.tif <- paste0(out.dir, "/", i, "/", varn, "_M_", names(pred)[j], "_", i, ".tif")
+          x@data[,1] <- round(pred@data[,names(pred)[j]]*100)
+          writeGDAL(x[1], out.tif, type="Byte", mvFlag=255, options="COMPRESS=DEFLATE")
+          if(model.error==TRUE){
+            x@data[,2] <- round(pred@data[,paste0("error.", tax[j])]*100)
+            writeGDAL(x[2], gsub("_M_", "_sd_", out.tif), type="Byte", mvFlag=255, options="COMPRESS=DEFLATE")
+          }
+        }
+        ## most probable class:
+        pred$response.int = plyr::join(pred@data["response"], col.legend)$Number
+        writeGDAL(pred["response.int"], out.c, type="Byte", mvFlag=255, options="COMPRESS=DEFLATE")
+      }
+      gc()
+      gc()
+    }
+  }
+}
+
+pred_response.mlr = function(i, m, tile.tbl, varn, zmin, zmax, multiplier=1, out.dir="/data/tt/LandGIS/grid250m", model.error=TRUE, sd=c(0, 10, 30, 60, 100, 200), depths=TRUE, DEPTH.col="DEPTH", type="Byte", mvFlag=255){
+  i.n = which(tile.tbl$ID == strsplit(i, "T")[[1]][2])
+  out.rds <- paste0(out.dir, "/T", tile.tbl[i.n,"ID"], "/T", tile.tbl[i.n,"ID"], ".rds")
+  out.tifs <- paste0(out.dir, "/", i, "/", varn, "_M_sl", 1:length(sd), "_", i, ".tif")
+  if(file.exists(out.rds) & any(!file.exists(out.tifs))){
+    X = readRDS(out.rds)
+    #X = fill_NA_globe(X)
+    sel.pr = complete.cases(X@data[,m$features[-grep(DEPTH.col, m$features)]])
+    if(sum(sel.pr)>1){
+      X = X[sel.pr,]
+      wt <- abs(m$learner.model$super.model$learner.model$coefficients[-1])
+      if(depths==TRUE){
+        for(l in 1:length(sd)){
+          X@data[,DEPTH.col] = sd[l]
+          out <- predict(m, newdata=X@data[,m$features])
+          if(model.error==TRUE){
+            out.p <- as.matrix(as.data.frame(getStackedBaseLearnerPredictions(m, newdata=X@data[,m$features])))*multiplier
+            m.error <- round(matrixStats::rowWeightedSds(out.p, w=wt, na.rm=TRUE))
+            pred <- SpatialPixelsDataFrame(X@coords, data=cbind(out$data*multiplier, data.frame(m.error)), grid = X@grid, proj4string = X@proj4string)
+          } else {
+            pred <- SpatialPixelsDataFrame(X@coords, data=out$data*multiplier, grid = X@grid, proj4string = X@proj4string)
+          }
+          pred@data[,1] <- ifelse(pred@data[,1] < zmin*multiplier, zmin*multiplier, ifelse(pred@data[,1] > zmax*multiplier, zmax*multiplier, pred@data[,1]))
+          writeGDAL(pred[1], out.tifs[l], type=type, mvFlag=mvFlag, options="COMPRESS=DEFLATE")
+          if(model.error==TRUE){
+            writeGDAL(pred[2], gsub("_M_", "_sd_", out.tifs[l]), type=type, mvFlag=mvFlag, options="COMPRESS=DEFLATE")
+          }
+        }
+      }
+    }
+  }
+}
+
 
 hor2xyd = function(x, U="UHDICM", L="LHDICM", treshold.T=15){
   x$DEPTH <- x[,U] + (x[,L] - x[,U])/2
@@ -154,7 +238,7 @@ stack_stats_inram <- function(tif.sel, out=c("min","med","max"), probs =c(.025,.
   }
 }
 
-missing_tile = function(i, var1, var2, var3, out=c("min","med","max"), out.dir="/data/tt/OpenLandData/covs250m", type="Int16", mvFlag=-32767){
+missing_tile = function(i, var1, var2, var3, out=c("min","med","max"), out.dir="/data/tt/LandGIS/covs250m", type="Int16", mvFlag=-32767){
   for(j in 1:length(out)){
     out.tif = paste0(out.dir, "/", i,"/", var2, "_",  out[j], "_", i, ".tif")
     if(!file.exists(out.tif)){
@@ -168,7 +252,57 @@ missing_tile = function(i, var1, var2, var3, out=c("min","med","max"), out.dir="
   }
 }
 
-stack_stats <- function(i, tile.tbl, tif.sel, var, out=c("min","med","max"), probs =c(.025,.5,.975), out.dir="/data/tt/OpenLandData/covs250m", type="Int16", mvFlag=-32767){
+## fix missing FAPAR ----
+## using snow prob images
+fill_NA_fapar = function(i, tile.tbl, snow.tifs, out=c("min","med","max"), m.lst=c("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"), out.dir="/data/tt/LandGIS/covs250m", type="Byte", mvFlag=255){
+  tif.tiles <- as.vector(unlist(sapply(out, function(x){paste0(out.dir, "/", i, "/FAPAR_", m.lst, "_", x, "_", i, ".tif")})))
+  tif.out.tiles <- paste0(out.dir, "/", i, "/FAPAR_", m.lst, "_diff_", i, ".tif")
+  if(all(file.exists(tif.tiles)) & any(!file.exists(tif.out.tiles))){
+    m <- raster::stack(tif.tiles)
+    m <- as(m, "SpatialGridDataFrame")
+    #plot(m[4])
+    ## fill-in missing values
+    na.m <- lapply(m@data, function(x){sum(is.na(x))})
+    min.na.m <- min(unlist(na.m), na.rm = TRUE)
+    sel.fix <- unlist(na.m) > min.na.m
+    if(sum(sel.fix, na.rm=TRUE)>0){
+      ## read in snow images
+      i.n <- which(tile.tbl$ID == strsplit(i, "T")[[1]][2])
+      for(j in snow.tifs){
+        m@data[,basename(j)] = readGDAL(fname=j, offset=unlist(tile.tbl[i.n,c("offset.y","offset.x")]), region.dim=unlist(tile.tbl[i.n,c("region.dim.y","region.dim.x")]), output.dim=unlist(tile.tbl[i.n,c("region.dim.y","region.dim.x")]), silent = TRUE)$band1  
+      }
+      #plot(m[38])
+      for(k in m.lst){
+        for(jj in out){
+          sel.rep <- is.na(m@data[,paste0("FAPAR_", k, "_", jj, "_", i)]) & m@data[,paste0("clm_snow.prob_esacci.", tolower(k), "_p_1km_s0..0cm_2000..2016_v1.0.tif")] > 95
+          if(sum(sel.rep, na.rm=TRUE)>0){
+            m@data[which(sel.rep),paste0("FAPAR_", k, "_", jj, "_", i)] = 0
+          }
+        }
+      }
+      ## filter out missing values using temporal neighbours
+      for(jj in out){
+        f.l <- paste0("FAPAR_", tools::toTitleCase(c("jul_", "aug_", "sep_","oct_","nov_","dec_","jan_","feb_","mar_","apr_","may_", "jun_")), jj, "_", i)
+        for(j in 3:(length(f.l)-2)){
+            m@data[,f.l[j]] <- ifelse(is.na(m@data[,f.l[j]]), rowMeans(m@data[,f.l[c(j-2,j-1,j+1,j+2)]], na.rm = TRUE), m@data[,f.l[j]])
+        }
+      }
+      for(p in attr(sel.fix, "names")){
+        writeGDAL(m[p], paste0(out.dir, "/", i, "/", p, ".tif"), type=type, mvFlag=mvFlag, options=c("COMPRESS=DEFLATE"))
+      }
+    }
+    ## derive annual mean and s.d. 
+    for(k in m.lst){
+      m$diff = m@data[,paste0("FAPAR_", k, "_max_", i)] - m@data[,paste0("FAPAR_", k, "_min_", i)]
+      writeGDAL(m["diff"], paste0(out.dir, "/", i, "/FAPAR_", k, "_diff_", i, ".tif"), type=type, mvFlag=mvFlag, options=c("COMPRESS=DEFLATE"))  
+    }
+    m$mean = rowMeans(m@data[,paste0("FAPAR_", m.lst, "_med_", i)], na.rm=TRUE)
+    writeGDAL(m["mean"], paste0(out.dir, "/", i, "/FAPAR_annnual_med_", i, ".tif"), type=type, mvFlag=mvFlag, options=c("COMPRESS=DEFLATE"))
+  }
+}
+
+
+stack_stats <- function(i, tile.tbl, tif.sel, var, out=c("min","med","max"), probs =c(.025,.5,.975), out.dir="/data/tt/LandGIS/covs250m", type="Int16", mvFlag=-32767){
   out.tif = paste0(out.dir, "/", i,"/", var, "_",  out, "_", i, ".tif")
   require(data.table)
   require(rgdal)
@@ -187,7 +321,7 @@ stack_stats <- function(i, tile.tbl, tif.sel, var, out=c("min","med","max"), pro
   }
 }
 
-stack_mean_sd <- function(i, tile.tbl, tif.sel, var, out=c("mean","sd"), out.dir="/data/tt/OpenLandData/covs250m", type="Byte", mvFlag=255){
+stack_mean_sd <- function(i, tile.tbl, tif.sel, var, out=c("mean","sd"), out.dir="/data/tt/LandGIS/covs250m", type="Byte", mvFlag=255){
   out.tif = paste0(out.dir, "/", i,"/", var, "_",  out, "_", i, ".tif")
   require(data.table)
   require(rgdal)
@@ -624,7 +758,110 @@ filter_landmask = function(i, tile.tbl, inf.tif, tif.land="/data/LandGIS/layers2
   }
 }
 
-writeRDS.tile <- function(i, tif.sel, tile.tbl, tif.mask="/data/LandGIS/layers250m/lcv_landmask_esacci.lc.l4_c_250m_s0..0cm_2000..2015_v1.0.tif", out.dir="/data/tt/LandGIS/grid250m"){
+## fill missing values ----
+fill_NA_globe <- function(X){
+  sel.mis = sapply(X@data[,-unlist(sapply(c("admin0", "mask"), function(i){grep(i,names(X))}))], function(x){sum(is.na(x))>0})
+  if(sum(sel.mis)>0){
+    ## Systematic fixes
+    sn.sel <- grep(pattern="snow.prob", names(X))
+    if(sum(!is.na(sn.sel))>0){ 
+      for(p in sn.sel){ X@data[,p] <- ifelse(X@data[,p]>100, NA, X@data[,p]) }
+    }
+    ## Missing values in latitudes >61
+    m.l = c("jan_p","dec_p","nov_p")
+    if(any(X@coords[,2]>61.4)){
+      for(j in 1:length(m.l)){
+        m.n = grep(paste0("snow.prob_esacci.", m.l[j]), names(X))[1]
+        if(sum(!is.na(m.n))>0){ X@data[,m.n] <- ifelse(X@coords[,2]>61.4 & is.na(X@data[,m.n]), 100, X@data[,m.n]) }
+      }
+    }
+    m.lS = c("jun_p","jul_p","aug_p")
+    if(any(X@coords[,2]< -52)){
+      for(j in 1:length(m.l)){
+        m.n = grep(paste0("snow.prob_esacci.", m.l[j]), names(X))[1]
+        if(sum(!is.na(m.n))>0){ X@data[,m.n] <- ifelse(X@coords[,2]< -52 & is.na(X@data[,m.n]), 100, X@data[,m.n]) }
+      }
+    }
+    ## Filter missing values MODFC using neighbours in time:
+    n.l = c("sep_p","oct_p","nov_p","dec_p","jan_p","feb_p","mar_p")
+    n.0 = sapply(n.l, function(i){grep(paste0("cloud.fraction_earthenv.modis.", i), names(X))[1]})
+    if(length(n.0)>6){
+      for(j in 3:(length(n.l)-2)){
+        X@data[,n.0[j]] <- ifelse(is.na(X@data[,n.0[j]]), rowMeans(X@data[,n.0[c(j-2,j-1,j+1,j+2)]], na.rm = TRUE), X@data[,n.0[j]])
+      }
+    }
+    ## Northern latitudes
+    if(any(X@coords[,2]>75)){
+      m.z = grep("proba.v.", names(X))
+      for(j in 1:length(m.z)){
+        if(sum(is.na(X@data[,m.z[j]]))>0){ X@data[,m.z[j]] <- ifelse( is.na(X@data[,m.z[j]]), 0, X@data[,m.z[j]]) }
+      }
+    }
+    ## Filter missing values FAPAR neighbours in time:
+    for(ii in c("u.975","d","l.025")){
+      f.l = paste0(c("jul_", "aug_", "sep_","oct_","nov_","dec_","jan_","feb_","mar_","apr_","may_", "jun_"), ii)
+      f.0 = sapply(f.l, function(i){grep(paste0("fapar_proba.v.", i), names(X))[1]})
+      if(length(f.0)>6){
+        for(j in 3:(length(f.l)-2)){
+          X@data[,f.0[j]] <- ifelse(is.na(X@data[,f.0[j]]), rowMeans(X@data[,f.0[c(j-2,j-1,j+1,j+2)]], na.rm = TRUE), X@data[,f.0[j]])
+        }
+      }
+    }
+    for(ii in c("u.975","d","l.025","r")){
+      ## southern latitudes (Argentina)
+      f.lS = paste0(c("mar_","apr_","may_", "jun_","jul_", "aug_", "sep_","oct_"), ii)
+      f.0S = sapply(f.lS, function(i){grep(paste0("fapar_proba.v.", i), names(X))[1]})
+      if(length(f.0S)>6){
+        for(j in 3:(length(f.lS)-2)){
+          X@data[,f.0S[j]] <- ifelse(is.na(X@data[,f.0S[j]]), rowMeans(X@data[,f.0S[c(j-2,j-1,j+1,j+2)]], na.rm = TRUE), X@data[,f.0S[j]])
+        }
+      }
+    }
+    ## Filter Greenland
+    d.l <- grep("ice.and.glaciers_p", names(X))[1]
+    if(sum(!is.na(d.l))>0){
+      X@data[,d.l] <- ifelse(is.na(X@data[,d.l]) & X@data[,grep("admin0_fao.gaul_c", names(X))[1]]==99, 100, X@data[,d.l])
+    }
+    ## Global Surface Water
+    w.l <- grep("water.occurance_jrc", names(X))[1]
+    if(sum(!is.na(w.l))>0){
+      X@data[,w.l] <- ifelse(X@data[,w.l]>100 | is.na(X@data[,w.l]), 0, X@data[,w.l])
+    }
+    ## GIEMS
+    g.l <- grep("giems.d15", names(X))[1]
+    if(sum(!is.na(g.l))>0){
+      X@data[,g.l] <- ifelse(is.na(X@data[,g.l]), 0, X@data[,g.l])
+    }
+    ## Indicators
+    us.sel = grep(pattern="usgs.ecotapestry", names(X))
+    if(sum(!is.na(us.sel))>0){
+      for(q in us.sel){ X@data[,q] = ifelse(is.na(X@data[,q]), 0, X@data[,q]) }
+    }
+    ## precipitation
+    r.sel = grep(pattern="sm2rain", names(X))
+    if(sum(!is.na(r.sel))>0){
+      for(q in r.sel){ X@data[,q] = ifelse(is.na(X@data[,q]), 0, X@data[,q]) }
+    }
+  }
+  return(X)
+}
+
+fill_NA_tile = function(i, tile.tbl, out.dir="/data/tt/LandGIS/grid250m"){
+  i.n = which(tile.tbl$ID == strsplit(i, "T")[[1]][2])
+  out.rds <- paste0(out.dir, "/T", tile.tbl[i.n,"ID"], "/T", tile.tbl[i.n,"ID"], ".rds")
+  if(file.exists(out.rds)){
+    m = readRDS(out.rds)
+    s.na = sapply(m@data[,-grep("lcv_admin0", names(m))], function(x){sum(!is.na(x))}) < nrow(m) | sapply(m@data[,-grep("lcv_admin0", names(m))], function(x){var(x, na.rm=TRUE)})==0
+    s.na = s.na[-grep("_p_", attr(s.na, "names"))]
+    if(sum(s.na)>0){
+      m = fill_NA_globe(m)
+      saveRDS(m, out.rds)
+    }
+  }
+}
+
+
+writeRDS.tile <- function(i, tif.sel, tile.tbl, tif.mask="/mnt/archive/LandGIS/layers250m/lcv_landmask_esacci.lc.l4_c_250m_s0..0cm_2000..2015_v1.0.tif", tif.admin="/mnt/archive/LandGIS/layers250m/lcv_admin0_fao.gaul_c_250m_s0..0cm_2015_v1.0.tif", out.dir="/data/tt/LandGIS/grid250m"){
   i.n = which(tile.tbl$ID == strsplit(i, "T")[[1]][2])
   out.rds <- paste0(out.dir, "/T", tile.tbl[i.n,"ID"], "/T", tile.tbl[i.n,"ID"], ".rds")
   if(!file.exists(out.rds)){
@@ -633,12 +870,14 @@ writeRDS.tile <- function(i, tif.sel, tile.tbl, tif.mask="/data/LandGIS/layers25
     sel.p = (m$band1==1|m$band1==3)
     if(sum(sel.p)>0){
       m = m[sel.p,]
+      m@data[,2] <- readGDAL(fname=tif.admin, offset=unlist(tile.tbl[i.n,c("offset.y","offset.x")]), region.dim=unlist(tile.tbl[i.n,c("region.dim.y","region.dim.x")]), output.dim=unlist(tile.tbl[i.n,c("region.dim.y","region.dim.x")]), silent=TRUE)$band1[m@grid.index]
       for(j in 1:length(tif.sel)){
-        m@data[,j+1] = readGDAL(fname=tif.sel[j], offset=unlist(tile.tbl[i.n,c("offset.y","offset.x")]), region.dim=unlist(tile.tbl[i.n,c("region.dim.y","region.dim.x")]), output.dim=unlist(tile.tbl[i.n,c("region.dim.y","region.dim.x")]), silent=TRUE)$band1[m@grid.index]
+        m@data[,j+2] = signif(readGDAL(fname=tif.sel[j], offset=unlist(tile.tbl[i.n,c("offset.y","offset.x")]), region.dim=unlist(tile.tbl[i.n,c("region.dim.y","region.dim.x")]), output.dim=unlist(tile.tbl[i.n,c("region.dim.y","region.dim.x")]), silent=TRUE)$band1[m@grid.index], 4)
       }
-      names(m) = c("mask", basename(tif.sel))
-      ## Fill-in the remaining missing values (can be very tricky)
-      sel.mis = sapply(m@data[,-unlist(sapply(c("usgs.ecotapestry", "mask"), function(i){grep(i,names(m))}))], function(x){sum(is.na(x))>0})
+      names(m) = make.names(c("mask", basename(tif.admin), basename(tif.sel)))
+      m = fill_NA_globe(m)
+      ## Fill-in the remaining missing values
+      sel.mis = sapply(m@data[,-unlist(sapply(c("usgs.ecotapestry", "mask", "admin"), function(i){grep(i,names(m))}))], function(x){sum(is.na(x))>0})
       if(sum(sel.mis)>0){
         x = which(sel.mis)
         for(k in 1:length(x)){
@@ -657,6 +896,30 @@ writeRDS.tile <- function(i, tif.sel, tile.tbl, tif.mask="/data/LandGIS/layers25
           }
         }
       }
+      saveRDS(m, out.rds)
+    }
+  }  
+}
+
+add_writeRDS.tile <- function(i, tif.add, tif.rm=NULL, tile.tbl, out.dir="/data/tt/LandGIS/grid250m"){
+  i.n = which(tile.tbl$ID == strsplit(i, "T")[[1]][2])
+  out.rds <- paste0(out.dir, "/T", tile.tbl[i.n,"ID"], "/T", tile.tbl[i.n,"ID"], ".rds")
+  if(file.exists(out.rds)){
+    m = readRDS(out.rds)
+    #s.na = sapply(m@data, function(x){sum(!is.na(x))})
+    if(any(!basename(tif.add) %in% names(m))){
+      ## optionally remove layers
+      if(!is.null(tif.rm)){
+        ## remove layers
+        tif.rm.l = grep(tif.rm, names(m))
+        if(length(tif.rm.l)>0){
+          m@data = m@data[,-tif.rm.l]
+        }
+      }
+      for(j in 1:length(tif.add)){
+        m@data[,basename(tif.add[j])] = signif(readGDAL(fname=tif.add[j], offset=unlist(tile.tbl[i.n,c("offset.y","offset.x")]), region.dim=unlist(tile.tbl[i.n,c("region.dim.y","region.dim.x")]), output.dim=unlist(tile.tbl[i.n,c("region.dim.y","region.dim.x")]), silent=TRUE)$band1[m@grid.index], 4)
+      }
+      m = fill_NA_globe(m)
       saveRDS(m, out.rds)
     }
   }  

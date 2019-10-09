@@ -1,0 +1,163 @@
+Results of model fitting 'randomForest and XGBoost':
+
+
+Variable: saturated.hyd.conductivity
+Ranger result
+
+Call:
+ ranger(formula = fm.t, data = df, importance = "impurity", write.forest = TRUE,      mtry = t.mrfX$bestTune$mtry, num.trees = 85, case.weights = case.weights) 
+
+Type:                             Regression 
+Number of trees:                  85 
+Sample size:                      26386 
+Number of independent variables:  316 
+Mtry:                             105 
+Target node size:                 5 
+Variable importance mode:         impurity 
+Splitrule:                        variance 
+OOB prediction error (MSE):       0.07654117 
+R squared (OOB):                  0.8529154 
+
+ Variable importance:
+                                                                              [,1]
+veg_fapar_proba.v.annnual_d_250m_s0..0cm_2014..2019_v1.0.tif            1867.21436
+veg_fapar_proba.v.oct_d_250m_s0..0cm_2014..2019_v1.0.tif                1352.25280
+veg_fapar_proba.v.jun_d_250m_s0..0cm_2014..2019_v1.0.tif                1121.99806
+veg_fapar_proba.v.jul_d_250m_s0..0cm_2014..2019_v1.0.tif                 678.52865
+veg_fapar_proba.v.nov_d_250m_s0..0cm_2014..2019_v1.0.tif                 616.02207
+clm_precipitation_sm2rain.sep_sd.10_10km_s0..0cm_2007..2018_v1.0.tif     561.21463
+DEPTH                                                                    362.36045
+clm_wind.speed_terraclimate.aug_m_5km_s0..0cm_1998..2018_v1.tif          327.98559
+veg_fapar_proba.v.oct_r_250m_s0..0cm_2014..2019_v1.0.tif                 316.23103
+lcv_landsat.swir2_wri.forestwatch_m_250m_s0..0cm_2014_v1.0.tif           240.40179
+clm_lst_mod11a2.feb.daynight_m_1km_s0..0cm_2000..2017_v1.0.tif           218.06688
+clm_bioclim.var_chelsa.4_m_1km_s0..0cm_1979..2013_v1.0.tif               169.51437
+veg_fapar_proba.v.sep_l.025_250m_s0..0cm_2014..2019_v1.0.tif             154.39128
+clm_wind.speed_terraclimate.jul_m_5km_s0..0cm_1998..2018_v1.tif          137.18425
+clm_lst_mod11a2.nov.day_sd_1km_s0..0cm_2000..2017_v1.0.tif               132.18267
+veg_fapar_proba.v.aug_l.025_250m_s0..0cm_2014..2019_v1.0.tif              83.23679
+clm_wind.speed_terraclimate.sep_m_5km_s0..0cm_1998..2018_v1.tif           81.85080
+veg_fapar_proba.v.oct_l.025_250m_s0..0cm_2014..2019_v1.0.tif              77.69686
+clm_cloud.fraction_earthenv.modis.apr_p_1km_s0..0cm_2000..2015_v1.0.tif   74.75356
+clm_bioclim.var_chelsa.16_m_1km_s0..0cm_1979..2013_v1.0.tif               64.68739
+clm_wind.speed_terraclimate.jan_m_5km_s0..0cm_1998..2018_v1.tif           60.38170
+clm_bioclim.var_chelsa.7_m_1km_s0..0cm_1979..2013_v1.0.tif                60.21644
+clm_wind.speed_terraclimate.dec_m_5km_s0..0cm_1998..2018_v1.tif           56.42873
+veg_fapar_proba.v.feb_l.025_250m_s0..0cm_2014..2019_v1.0.tif              54.91783
+clm_lst_mod11a2.oct.day_sd_1km_s0..0cm_2000..2017_v1.0.tif                49.74906
+clm_lst_mod11a2.annual.day_sd_1km_s0..0cm_2000..2017_v1.0.tif             49.16234
+clm_precipitation_sm2rain.oct_sd.10_10km_s0..0cm_2007..2018_v1.0.tif      48.81950
+lcv_surf.refl.b02_mod09a1.pc4_m_500m_s0..0cm_2001_v1.0.tif                48.38046
+clm_lst_mod11a2.jan.daynight_m_1km_s0..0cm_2000..2017_v1.0.tif            43.63418
+clm_bioclim.var_chelsa.14_m_1km_s0..0cm_1979..2013_v1.0.tif               40.98892
+clm_precipitation_sm2rain.feb_m_1km_s0..0cm_2007..2018_v0.2.tif           40.67044
+lcv_surf.refl.b02_mod09a1.pc3_m_500m_s0..0cm_2001_v1.0.tif                38.55392
+clm_lst_mod11a2.feb.day_sd_1km_s0..0cm_2000..2017_v1.0.tif                37.34748
+clm_precipitation_sm2rain.sep_m_1km_s0..0cm_2007..2018_v0.2.tif           35.94225
+dtm_upslope.curvature_merit.dem_m_250m_s0..0cm_2017_v1.0.tif              35.06252
+
+eXtreme Gradient Boosting 
+
+26386 samples
+  316 predictor
+
+No pre-processing
+Resampling: Cross-Validated (3 fold, repeated 1 times) 
+Summary of sample sizes: 17591, 17591, 17590 
+Resampling results across tuning parameters:
+
+  eta  max_depth  nrounds  RMSE       Rsquared   MAE      
+  0.3  2           50      0.3482173  0.7685768  0.1594424
+  0.3  2          100      0.3273935  0.7947638  0.1493785
+  0.3  2          150      0.3147113  0.8101650  0.1427817
+  0.3  3           50      0.3169928  0.8079059  0.1387418
+  0.3  3          100      0.2998165  0.8277949  0.1293537
+  0.3  3          150      0.2932060  0.8351422  0.1246870
+  0.3  4           50      0.3005261  0.8269515  0.1255190
+  0.3  4          100      0.2903500  0.8381898  0.1179935
+  0.3  4          150      0.2869695  0.8418856  0.1142097
+  0.4  2           50      0.3391030  0.7797499  0.1554224
+  0.4  2          100      0.3182647  0.8058708  0.1444330
+  0.4  2          150      0.3100645  0.8156763  0.1392754
+  0.4  3           50      0.3096098  0.8164474  0.1346783
+  0.4  3          100      0.2960125  0.8319131  0.1257931
+  0.4  3          150      0.2904209  0.8380756  0.1209083
+  0.4  4           50      0.2965026  0.8313408  0.1227142
+  0.4  4          100      0.2882081  0.8405260  0.1164630
+  0.4  4          150      0.2869248  0.8419938  0.1134716
+  0.5  2           50      0.3319471  0.7888357  0.1508659
+  0.5  2          100      0.3150027  0.8097972  0.1420466
+  0.5  2          150      0.3060274  0.8203468  0.1376094
+  0.5  3           50      0.3053474  0.8213141  0.1313735
+  0.5  3          100      0.2925019  0.8358716  0.1224184
+  0.5  3          150      0.2871669  0.8417013  0.1179458
+  0.5  4           50      0.2932460  0.8349418  0.1218920
+  0.5  4          100      0.2875820  0.8412397  0.1150147
+  0.5  4          150      0.2886045  0.8402546  0.1133242
+
+Tuning parameter 'gamma' was held constant at a value of 0
+Tuning parameter 'colsample_bytree' was held constant
+ at a value of 0.8
+Tuning parameter 'min_child_weight' was held constant at a value of 1
+Tuning
+ parameter 'subsample' was held constant at a value of 1
+RMSE was used to select the optimal model using the smallest value.
+The final values used for the model were nrounds = 150, max_depth = 4, eta = 0.4, gamma = 0, colsample_bytree =
+ 0.8, min_child_weight = 1 and subsample = 1.
+
+ XGBoost variable importance:
+                                                                               Feature        Gain        Cover
+ 1:                       veg_fapar_proba.v.annnual_d_250m_s0..0cm_2014..2019_v1.0.tif 0.338852546 4.820306e-03
+ 2:                           veg_fapar_proba.v.nov_r_250m_s0..0cm_2014..2019_v1.0.tif 0.147590070 1.782471e-02
+ 3:               clm_precipitation_sm2rain.sep_sd.10_10km_s0..0cm_2007..2018_v1.0.tif 0.076253432 2.481260e-03
+ 4:                     lcv_landsat.swir2_wri.forestwatch_m_250m_s0..0cm_2018_v1.2.tif 0.047027642 1.673337e-03
+ 5:                         clm_lst_mod11a2.nov.day_sd_1km_s0..0cm_2000..2017_v1.0.tif 0.041278731 1.812329e-03
+ 6:                                                                              DEPTH 0.024099405 4.244645e-02
+ 7:                    clm_wind.speed_terraclimate.sep_m_5km_s0..0cm_1998..2018_v1.tif 0.023305662 3.552509e-04
+ 8:                          clm_lst_mod11a2.feb.day_m_1km_s0..0cm_2000..2017_v1.0.tif 0.014991850 1.592090e-04
+ 9:                    clm_precipitation_sm2rain.feb_m_1km_s0..0cm_2007..2018_v0.2.tif 0.014104131 4.150428e-03
+10:                         clm_bioclim.var_chelsa.4_m_1km_s0..0cm_1979..2013_v1.0.tif 0.012105524 2.340436e-03
+11:                         lcv_surf.refl.b02_mod09a1.pc4_m_500m_s0..0cm_2001_v1.0.tif 0.011215824 1.130864e-02
+12:                           veg_fapar_proba.v.jul_r_250m_s0..0cm_2014..2019_v1.0.tif 0.011041688 1.376615e-02
+13:                    clm_wind.speed_terraclimate.jul_m_5km_s0..0cm_1998..2018_v1.tif 0.009648246 9.337735e-05
+14:                        clm_bioclim.var_chelsa.12_m_1km_s0..0cm_1979..2013_v1.0.tif 0.008952900 3.563249e-05
+15:                         lcv_surf.refl.b01_mod09a1.pc1_m_500m_s0..0cm_2001_v1.0.tif 0.008536057 5.117054e-03
+16:                                     dtm_dvm2_merit.dem_m_2km_s0..0cm_2017_v1.0.tif 0.007890763 1.571102e-02
+17:                         clm_bioclim.var_chelsa.2_m_1km_s0..0cm_1979..2013_v1.0.tif 0.007508145 5.170755e-03
+18:                       lcv_landsat.nir_wri.forestwatch_m_250m_s0..0cm_2000_v1.0.tif 0.007141233 1.055840e-02
+19:               clm_precipitation_sm2rain.may_sd.10_10km_s0..0cm_2007..2018_v1.0.tif 0.006283545 2.611344e-03
+20: dtm_lithology_usgs.ecotapestry.intermediate.volcanics_p_250m_s0..0cm_2014_v1.0.tif 0.006051766 3.052138e-04
+21:                         lcv_surf.refl.b06_mod09a1.pc2_m_500m_s0..0cm_2001_v1.0.tif 0.005831283 2.568256e-03
+22:                           veg_fapar_proba.v.jun_r_250m_s0..0cm_2014..2019_v1.0.tif 0.005499553 2.570619e-02
+23:                         lcv_surf.refl.b01_mod09a1.pc3_m_500m_s0..0cm_2001_v1.0.tif 0.005158059 8.535057e-03
+24:                          clm_lst_mod11a2.apr.day_m_1km_s0..0cm_2000..2017_v1.0.tif 0.005002541 3.699588e-03
+25:                           veg_fapar_proba.v.mar_r_250m_s0..0cm_2014..2019_v1.0.tif 0.004806498 9.878604e-03
+                                                                               Feature        Gain        Cover
+       Frequency
+ 1: 0.0022962113
+ 2: 0.0063145809
+ 3: 0.0040183697
+ 4: 0.0011481056
+ 5: 0.0028702641
+ 6: 0.1791044776
+ 7: 0.0005740528
+ 8: 0.0011481056
+ 9: 0.0074626866
+10: 0.0034443169
+11: 0.0051664753
+12: 0.0091848450
+13: 0.0005740528
+14: 0.0011481056
+15: 0.0040183697
+16: 0.0080367394
+17: 0.0022962113
+18: 0.0051664753
+19: 0.0045924225
+20: 0.0011481056
+21: 0.0045924225
+22: 0.0109070034
+23: 0.0045924225
+24: 0.0022962113
+25: 0.0051664753
+       Frequency
+
