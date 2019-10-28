@@ -8,11 +8,12 @@ library(rgdal)
 library(fasterize)
 load(".RData")
 TOKEN = scan("~/TOKEN_ACCESS", what="character")
-dep.id = "2591215"
+dep.id = "3405563"
 # https://zenodo.org/record/2591215/files/SM2RAIN_ASCAT_0125_2007.nc?download=1
+# https://zenodo.org/record/3405563/files/SM2RAIN_ASCAT_0125_2007_v1.1.nc?download=1
 
 ## Download NetCDFs ----
-x = fromJSON(system('curl -H \"Accept: application/json\" \"https://zenodo.org/api/records/2591215\"', intern = TRUE, show.output.on.console = FALSE))
+x = fromJSON(system('curl -H \"Accept: application/json\" \"https://zenodo.org/api/records/3405563\"', intern = TRUE, show.output.on.console = FALSE))
 sel.nc = x$files$links$download
 str(sel.nc)
 for(i in sel.nc){ if(!file.exists(basename(i))){ download.file(i, basename(i)) } }
@@ -39,12 +40,19 @@ extra.tifs = function(j, lon, lat, rain, time, r){
     coordinates(df) = ~ lon+lat
     gt = rasterize(df, r, field=names(df))
     gtf = focal(gt, w=matrix(1,3,3), fun=fill.na, pad=TRUE, na.rm=FALSE)
-    filename = paste0("daily.rainfall_", as.Date(time[j], origin = "2000-01-01"), "_10km.tif")
+    filename = paste0("./10km/daily.rainfall_", as.Date(time[j], origin = "2000-01-01"), "_10km.tif")
     if(!file.exists(filename)){
       writeRaster(gtf, filename, options=c("COMPRESS=DEFLATE"), datatype='INT4S', format="GTiff", overwrite=TRUE)
     }
   }
 }
+
+## clean-up
+#x = list.files(pattern=glob2rx("daily.rainfall_*_10km.tif$"), full.names = TRUE)
+#unlink(x)
+#nc.lst = list.files(pattern=glob2rx("SM2RAIN_ASCAT_0125_*.nc$"), full.names = TRUE)
+#nc.lst = nc.lst[-grep("v1.1", nc.lst)]
+#unlink(nc.lst)
 
 ## Run in parallel ----
 library("ncdf4")
@@ -60,7 +68,7 @@ for(i in basename(sel.nc)){
   time = ncvar_get(nc, varid="Time")
   rain = ncvar_get(nc, varid="Rainfall")
   ## run in parallel:
-  sfInit(parallel=TRUE, cpus=35)
+  sfInit(parallel=TRUE, cpus=45)
   sfLibrary(raster)
   sfLibrary(rgdal)
   sfExport("lon", "lat", "time", "rain", "extra.tifs", "fill.na", "r")
@@ -69,10 +77,10 @@ for(i in basename(sel.nc)){
 }
 
 ## Compress per year ----
-for(i in 2007:2018){
+for(i in 2007:2019){
   out.zip = paste0("SM2RAIN_daily.rainfall_", i, "_10km.zip")
   if(!file.exists(out.zip)){
-    tif.sel = list.files(path="/mnt/DATA/SMRAIN/raw", pattern=glob2rx(paste0("*_", i, "-*-*_10km.tif$")), full.names = TRUE)
+    tif.sel = list.files(path="./10km", pattern=glob2rx(paste0("*_", i, "-*-*_10km.tif$")), full.names = TRUE)
     zip(zipfile = out.zip, files = tif.sel)
   }
 }
@@ -84,34 +92,35 @@ system(paste0('gdalwarp /mnt/DATA/LandGIS/layers1km/lcv_landmask_esacci.lc.l4_c_
 ## Monthly mean and SD ----
 library(rgdal)
 library(parallel)
-library(Rfast)
+#library(Rfast)
 
 m.lst <- c("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec")
 m0.lst <- c(paste0("0", 1:9), 10:12)
-mask10km = readGDAL("/mnt/DATA/SMRAIN/raw/lcv_landmask_esacci.lc.l4_c_10km_s0..0cm_2000..2015_v1.0.tif")
+mask10km = readGDAL("lcv_landmask_esacci.lc.l4_c_10km_s0..0cm_2000..2015_v1.0.tif")
 #mask10km = as(mask10km, "SpatialPixelsDataFrame")
 #mask10km = mask10km[!mask10km$band1==2,]
 #str(mask10km@grid.index)
 ## 1,219,379
-
+save.image()
 
 for(i in 1:length(m.lst)){
-  out.file = paste0('clm_precipitation_sm2rain.', tolower(m.lst[i]),'_m_10km_s0..0cm_2007..2018_v1.0.tif')
+  out.file = paste0('./agg/clm_precipitation_sm2rain.', tolower(m.lst[i]),'_m_10km_s0..0cm_2007..2019_v1.1.tif')
   out.file.sd = gsub("_m_", "_sd.10_", out.file)
   if(!file.exists(out.file)){
-    x.lst = list.files(pattern=glob2rx(paste0('daily.rainfall_*-', m0.lst[i], '-*_10km.tif$')))
+    gc()
+    x.lst = list.files("./10km", pattern=glob2rx(paste0('daily.rainfall_*-', m0.lst[i], '-*_10km.tif$')), full.names = TRUE)
     ## read about 350 tifs to memory
-    #m = parallel::mclapply(1:length(x.lst), function(j){ readGDAL(x.lst[j], silent=TRUE)$band1[mask10km@grid.index] }, mc.cores=64)
+    #m = parallel::mclapply(1:length(x.lst), function(j){ readGDAL(x.lst[j], silent=TRUE)$band1[mask10km@grid.index] }, mc.cores=80)
     ## 1.7GB
-    m = parallel::mclapply(1:length(x.lst), function(j){ readGDAL(x.lst[j], silent=TRUE)$band1 }, mc.cores=64)
+    m = parallel::mclapply(1:length(x.lst), function(j){ readGDAL(x.lst[j], silent=TRUE)$band1 }, mc.cores=78, mc.silent = FALSE, mc.preschedule = FALSE)
     ## 5.7GB
     m = as.matrix(data.frame(m))
     ## what to do with missing values?
     #m[is.na(m)] <- 0
-    mask10km$m = rowSums(m, na.rm=TRUE)/12
+    mask10km$mean = rowSums(m, na.rm=TRUE)/12
     ## Rfast has no flexibility considering the missing values
-    #mask10km$m = Rfast::rowsums(m, indices = NULL, parallel = TRUE)/12
-    writeGDAL(mask10km["m"], out.file, type = "Int16", mvFlag = -32768, options = c("COMPRESS=DEFLATE"))
+    #mask10km$mean = Rfast::rowsums(m, indices = NULL, parallel = TRUE)/12
+    writeGDAL(mask10km["mean"], out.file, type = "Int16", mvFlag = -32768, options = c("COMPRESS=DEFLATE"))
     if(!file.exists(out.file.sd)){
       #mask10km$sd = Rfast::rowVars(m, suma = NULL, std = TRUE)*10
       mask10km$sd = matrixStats::rowSds(m, na.rm = TRUE)*10
@@ -122,4 +131,5 @@ for(i in 1:length(m.lst)){
   }
 }
 
-save.image()
+x = list.files("./agg", glob2rx("*_v1.1.tif$"), full.names = TRUE)
+file.rename(x, gsub("2007..2018", "2007..2019", x))
