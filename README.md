@@ -254,6 +254,11 @@ Note that sync between the layers on the OpenLandMap.org and Google Earth Engine
 only once a year, hence, if you wish to use the most up-to-date layers at any moment, 
 downloading maps from either Zenodo or via the WCS is recommended.
 
+To access OpenLandMap layers you can also refer to the public data sets at:
+
+- https://developers.google.com/earth-engine/datasets/tags/openlandmap
+
+
 The file naming convention
 --------------------------
 
@@ -277,7 +282,7 @@ complete list):
     d.  u.841 = upper 68% probability threshold (quantile), for 
         one-sided probability use “uo”,
 
-    e.  sd.1 = 1 standard deviation,
+    e.  sd.1 = 1 standard deviation (“sd“ can be also used),
 
     f.  md = model deviation (in the case of ensemble predictions),
 
