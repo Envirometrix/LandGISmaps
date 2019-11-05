@@ -243,6 +243,7 @@ out <- snowfall::sfClusterApplyLB(pr.dirs, function(i){ add_writeRDS.tile(i, tif
 snowfall::sfStop()
 
 ## fill-in missing values (repeated)
+#fill_NA_tile(i="T45733", tile.tbl)
 library(snowfall)
 snowfall::sfInit(parallel=TRUE, cpus=64)
 snowfall::sfLibrary(rgdal)

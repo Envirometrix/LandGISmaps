@@ -1,6 +1,12 @@
 ## Functions for LandGIS (https://github.com/Envirometrix/LandGIS_data)
 ## tom.hengl@opengeohub.org
 
+check.coords <- function(x, coords=c("longitude_decimal_degrees","latitude_decimal_degrees")){
+  geo.rows <- !is.na(x[,coords[1]]) & !is.na(x[,coords[2]]) & x[,coords[1]] > -25.4 & x[,coords[1]] < 51.5 & !(x[,coords[1]] == 0 & x[,coords[2]] == 0) & x[,coords[2]] > -47 & x[,coords[2]] < 37.4
+  x <- x[which(geo.rows),]
+  return(x)
+}
+
 unregister <- function() {
   env <- foreach:::.foreachGlobals
   rm(list=ls(name=env), pos=env)
@@ -67,8 +73,10 @@ pred_probs = function(i, gm, tile.tbl, col.legend, varn, out.dir="/data/tt/LandG
     m = readRDS(out.rds)
     ## FAPAR images missing values norther latitudes
     sel.mis = which(sapply(m@data, function(x){sum(is.na(x))>0}))
-    for(j in 1:length(sel.mis)){  
-      m@data[,sel.mis[j]] <- ifelse(is.na(m@data[,sel.mis[j]]), rep(0, nrow(m)), m@data[,sel.mis[j]])
+    if(length(sel.mis)>0){
+      for(j in 1:length(sel.mis)){  
+        m@data[,sel.mis[j]] <- ifelse(is.na(m@data[,sel.mis[j]]), rep(0, nrow(m)), m@data[,sel.mis[j]])
+      }
     }
     m = m[complete.cases(m@data[,gm$forest$independent.variable.names]),]
     pred = predict(gm, m@data)
@@ -140,33 +148,36 @@ pred_probs.mlr = function(i, m, tile.tbl, col.legend, varn, out.dir="/data/tt/La
   }
 }
 
-pred_response.mlr = function(i, m, tile.tbl, varn, zmin, zmax, multiplier=1, out.dir="/data/tt/LandGIS/grid250m", model.error=TRUE, sd=c(0, 10, 30, 60, 100, 200), depths=TRUE, DEPTH.col="DEPTH", type="Byte", mvFlag=255){
+pred_response.mlr = function(i, m, tile.tbl, varn, zmin, zmax, multiplier=1, out.dir="/data/tt/LandGIS/grid250m", model.error=TRUE, sd=c(0, 10, 30, 60, 100, 200), DEPTH.col="DEPTH", type="Byte", mvFlag=255){
   i.n = which(tile.tbl$ID == strsplit(i, "T")[[1]][2])
   out.rds <- paste0(out.dir, "/T", tile.tbl[i.n,"ID"], "/T", tile.tbl[i.n,"ID"], ".rds")
   out.tifs <- paste0(out.dir, "/", i, "/", varn, "_M_sl", 1:length(sd), "_", i, ".tif")
   if(file.exists(out.rds) & any(!file.exists(out.tifs))){
     X = readRDS(out.rds)
     #X = fill_NA_globe(X)
-    sel.pr = complete.cases(X@data[,m$features[-grep(DEPTH.col, m$features)]])
+    d.c = grep(DEPTH.col, m$features)
+    if(length(d.c)==0){ 
+      sel.pr = complete.cases(X@data[,m$features])
+    } else {
+      sel.pr = complete.cases(X@data[,m$features[-d.c]])
+    }
     if(sum(sel.pr)>1){
       X = X[sel.pr,]
       wt <- abs(m$learner.model$super.model$learner.model$coefficients[-1])
-      if(depths==TRUE){
-        for(l in 1:length(sd)){
-          X@data[,DEPTH.col] = sd[l]
-          out <- predict(m, newdata=X@data[,m$features])
-          if(model.error==TRUE){
-            out.p <- as.matrix(as.data.frame(getStackedBaseLearnerPredictions(m, newdata=X@data[,m$features])))*multiplier
-            m.error <- round(matrixStats::rowWeightedSds(out.p, w=wt, na.rm=TRUE))
-            pred <- SpatialPixelsDataFrame(X@coords, data=cbind(out$data*multiplier, data.frame(m.error)), grid = X@grid, proj4string = X@proj4string)
-          } else {
-            pred <- SpatialPixelsDataFrame(X@coords, data=out$data*multiplier, grid = X@grid, proj4string = X@proj4string)
-          }
-          pred@data[,1] <- ifelse(pred@data[,1] < zmin*multiplier, zmin*multiplier, ifelse(pred@data[,1] > zmax*multiplier, zmax*multiplier, pred@data[,1]))
-          writeGDAL(pred[1], out.tifs[l], type=type, mvFlag=mvFlag, options="COMPRESS=DEFLATE")
-          if(model.error==TRUE){
-            writeGDAL(pred[2], gsub("_M_", "_sd_", out.tifs[l]), type=type, mvFlag=mvFlag, options="COMPRESS=DEFLATE")
-          }
+      for(l in 1:length(sd)){
+        X@data[,DEPTH.col] = sd[l]
+        out <- predict(m, newdata=X@data[,m$features])
+        if(model.error==TRUE){
+          out.p <- as.matrix(as.data.frame(getStackedBaseLearnerPredictions(m, newdata=X@data[,m$features])))*multiplier
+          m.error <- round(matrixStats::rowWeightedSds(out.p, w=wt, na.rm=TRUE))
+          pred <- SpatialPixelsDataFrame(X@coords, data=cbind(out$data*multiplier, data.frame(m.error)), grid = X@grid, proj4string = X@proj4string)
+        } else {
+          pred <- SpatialPixelsDataFrame(X@coords, data=out$data*multiplier, grid = X@grid, proj4string = X@proj4string)
+        }
+        pred@data[,1] <- ifelse(pred@data[,1] < zmin*multiplier, zmin*multiplier, ifelse(pred@data[,1] > zmax*multiplier, zmax*multiplier, pred@data[,1]))
+        writeGDAL(pred[1], out.tifs[l], type=type, mvFlag=mvFlag, options="COMPRESS=DEFLATE")
+        if(model.error==TRUE){
+          writeGDAL(pred[2], gsub("_M_", "_sd_", out.tifs[l]), type=type, mvFlag=mvFlag, options="COMPRESS=DEFLATE")
         }
       }
     }
@@ -341,7 +352,7 @@ stack_mean_sd <- function(i, tile.tbl, tif.sel, var, out=c("mean","sd"), out.dir
   }
 }
 
-mosaick_ll <- function(varn=NULL, i, out.tif, in.path="/data/tt/LandGIS/grid250m", out.path="/data/LandGIS/predicted250m", ot="Int16", dstnodata=-32768, dominant=FALSE, resample="near", metadata=NULL, aggregate=FALSE, te, tr, only.metadata=TRUE, pattern=NULL){
+mosaick_ll <- function(varn=NULL, i, out.tif, in.path="/data/tt/LandGIS/grid250m", out.path="/data/LandGIS/predicted250m", ot="Int16", dstnodata=-32768, dominant=FALSE, prj, resample="near", metadata=NULL, aggregate=FALSE, te, tr, only.metadata=TRUE, pattern=NULL){
   if(missing(out.tif)){
     out.tif <- paste0(out.path, "/", varn, "_", i, "_250m_ll.tif")
   }
@@ -360,7 +371,11 @@ mosaick_ll <- function(varn=NULL, i, out.tif, in.path="/data/tt/LandGIS/grid250m
       tif.tmp <- tempfile(fileext = ".tif")
       cat(tmp.lst, sep="\n", file=out.tmp)
       system(paste0('gdalbuildvrt -input_file_list ', out.tmp, ' ', vrt.tmp))
-      system(paste0('gdalwarp ', vrt.tmp, ' ', tif.tmp, ' -ot \"', paste(ot), '\" -dstnodata \"',  paste(dstnodata), '\" -r \"near\" -co \"BIGTIFF=YES\" -multi -wo \"NUM_THREADS=2\" -wm 2000 -tr ', tr, ' ', tr, ' -te ', te))
+      if(is.null(prj)){ 
+        system(paste0('gdalwarp ', vrt.tmp, ' ', tif.tmp, ' -ot \"', paste(ot), '\" -dstnodata \"',  paste(dstnodata), '\" -r \"', resample, '\" -co \"BIGTIFF=YES\" -multi -wo \"NUM_THREADS=2\" -wm 2000 -tr ', tr, ' ', tr, ' -te ', te))
+      } else {
+        system(paste0('gdalwarp ', vrt.tmp, ' ', tif.tmp, ' -ot \"', paste(ot), '\" -dstnodata \"',  paste(dstnodata), '\" -r \"', resample, '\" -t_srs \"', prj, '\" -co \"BIGTIFF=YES\" -multi -wo \"NUM_THREADS=2\" -wm 2000 -tr ', tr, ' ', tr, ' -te ', te))
+      }
       system(paste0('gdaladdo ', tif.tmp, ' 2 4 8 16 32 64 128'))
       system(paste0('gdal_translate ', tif.tmp,' ', out.tif, ' -mo \"CO=YES\" -co \"TILED=YES\" -co \"BLOCKXSIZE=512\" -co \"BLOCKYSIZE=512\" -co \"COMPRESS=LZW\" -co \"COPY_SRC_OVERVIEWS=YES\" --config GDAL_TIFF_OVR_BLOCKSIZE 512'))
       if(!is.null(metadata)){ 
@@ -758,7 +773,7 @@ filter_landmask = function(i, tile.tbl, inf.tif, tif.land="/data/LandGIS/layers2
   }
 }
 
-## fill missing values ----
+## systematically fill NA values ----
 fill_NA_globe <- function(X){
   sel.mis = sapply(X@data[,-unlist(sapply(c("admin0", "mask"), function(i){grep(i,names(X))}))], function(x){sum(is.na(x))>0})
   if(sum(sel.mis)>0){
@@ -766,6 +781,11 @@ fill_NA_globe <- function(X){
     sn.sel <- grep(pattern="snow.prob", names(X))
     if(sum(!is.na(sn.sel))>0){ 
       for(p in sn.sel){ X@data[,p] <- ifelse(X@data[,p]>100, NA, X@data[,p]) }
+    }
+    ## Missing values in the dtm_floodmap.500y_jrc.hazardmapping
+    fm.sel <- grep(pattern="floodmap", names(X))
+    if(sum(!is.na(fm.sel))>0){ 
+      for(p in fm.sel){ X@data[,p] <- ifelse( X@coords[,1]< -166.8 | is.na(X@data[,p]), 0, X@data[,p]) }
     }
     ## Missing values in latitudes >61
     m.l = c("jan_p","dec_p","nov_p")
@@ -875,6 +895,7 @@ writeRDS.tile <- function(i, tif.sel, tile.tbl, tif.mask="/mnt/archive/LandGIS/l
         m@data[,j+2] = signif(readGDAL(fname=tif.sel[j], offset=unlist(tile.tbl[i.n,c("offset.y","offset.x")]), region.dim=unlist(tile.tbl[i.n,c("region.dim.y","region.dim.x")]), output.dim=unlist(tile.tbl[i.n,c("region.dim.y","region.dim.x")]), silent=TRUE)$band1[m@grid.index], 4)
       }
       names(m) = make.names(c("mask", basename(tif.admin), basename(tif.sel)))
+      ## systematically remove all missing values
       m = fill_NA_globe(m)
       ## Fill-in the remaining missing values
       sel.mis = sapply(m@data[,-unlist(sapply(c("usgs.ecotapestry", "mask", "admin"), function(i){grep(i,names(m))}))], function(x){sum(is.na(x))>0})
