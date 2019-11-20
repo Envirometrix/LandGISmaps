@@ -1,6 +1,6 @@
 LandGIS — Open Land Data service
 ================================
-[Hengl, T.](https://github.com/thengl), [Kilibarda, M.](https://github.com/milankili), [Ognjen Antonijevic](https://github.com/ognjenantonijevic), [Luka Glusica](https://github.com/Luka-G), [Josip Krizan](https://github.com/jkrizan)
+[Hengl, T.](https://github.com/thengl), [Kilibarda, M.](https://github.com/milankili), [Ognjen Antonijevic, O.](https://github.com/ognjenantonijevic), [Glusica, L.](https://github.com/Luka-G), [Krizan, J.](https://github.com/jkrizan)
 
 | <a href="https://github.com/thengl"><img src="https://avatars0.githubusercontent.com/u/640722?s=460&v=4" height="100" alt="Tomislav Hengl"></a> | <a href="https://github.com/milankili"><img src="https://avatars2.githubusercontent.com/u/12234384?s=460&v=4" height="100" alt="Milan Kilibarda"></a> | <a href="https://github.com/ognjenantonijevic"><img src="https://avatars3.githubusercontent.com/u/19489863?s=460&v=4" height="100" alt="Ognjen Antonijevic"></a> | <a href="https://github.com/Luka-G"><img src="https://avatars1.githubusercontent.com/u/17803603?s=460&v=4" height="100" alt="Luka Glusica"></a> | <a href="https://github.com/jkrizan"><img src="https://avatars2.githubusercontent.com/u/4386840?s=460&v=4" height="100" alt="Josip Krizan"></a> |
 | --- | --- | --- | --- | --- |
