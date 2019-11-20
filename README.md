@@ -1,9 +1,9 @@
 LandGIS — Open Land Data service
 ================================
-[Hengl, T.](https://github.com/thengl) and [Kilibarda, M.](https://github.com/milankili)
+[Hengl, T.](https://github.com/thengl), [Kilibarda, M.](https://github.com/milankili), [Ognjen Antonijevic](https://github.com/ognjenantonijevic), [Luka Glusica](https://github.com/Luka-G), [Josip Krizan](https://github.com/jkrizan)
 
-| <a href="https://github.com/thengl"><img src="https://avatars0.githubusercontent.com/u/640722?s=460&v=4" height="100" alt="Tomislav Hengl"></a> | <a href="https://github.com/milankili"><img src="https://avatars2.githubusercontent.com/u/12234384?s=460&v=4" height="100" alt="Milan Kilibarda"></a> |
-|-------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
+| <a href="https://github.com/thengl"><img src="https://avatars0.githubusercontent.com/u/640722?s=460&v=4" height="100" alt="Tomislav Hengl"></a> | <a href="https://github.com/milankili"><img src="https://avatars2.githubusercontent.com/u/12234384?s=460&v=4" height="100" alt="Milan Kilibarda"></a> | <a href="https://github.com/ognjenantonijevic"><img src="https://avatars3.githubusercontent.com/u/19489863?s=460&v=4" height="100" alt="Ognjen Antonijevic"></a> | <a href="https://github.com/Luka-G"><img src="https://avatars1.githubusercontent.com/u/17803603?s=460&v=4" height="100" alt="Luka Glusica"></a> | <a href="https://github.com/jkrizan"><img src="https://avatars2.githubusercontent.com/u/4386840?s=460&v=4" height="100" alt="Josip Krizan"></a> |
+| --- | --- | --- | --- | --- |
 
 -   [General specifications](#landgis)
 -   [Accessing data](#accessing-data)
@@ -134,7 +134,7 @@ provide a GeoJSON with point feature collection and layer name from the table:
 
 ```	
 curl -X POST --form "points=@test_points.geojson" --form "layer=pnv_fapar_proba.v.jul_d_1km_s0..0cm_2014..2017_v0.1.tif" https://landgisapi.opengeohub.org/query/points -o results.json 
-```	
+```
 
 where `test_points.geojson` is the GeoJSON file containing coordinates of points. 
 More examples of how to construct spatial queries are available at: 
@@ -241,6 +241,7 @@ which gives a total of 9 files:
 ```
 
 these can be further downloaded using `download.file` function or similar.
+There is also an R package for zenodo (**[zen4R](https://github.com/eblondel/zen4R)**) that makes downloading files even easier.
 
 Accessing data from Google Earth Engine
 ---------------------------------------
