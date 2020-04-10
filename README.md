@@ -968,7 +968,7 @@ Derived using the predicted clay, silt and sand content images and the [soiltext
 sol_texture.class_usda.tt_m_250m_b*..*cm_1950..2017_v0.2.tif
 ```
 :open_file_folder: [Download layer](https://doi.org/10.5281/zenodo.1475451)
-:information_source: [Classes](/tables/sol_texture.class_usda.tt_m_250m_b_1950..2017_v0.2.tif.csv)
+:information_source: [Classes](/tables/sol_texture.class_usda.tt_m_250m_b_1950..2017_v0.1.tif.csv)
 
 6.8 Soil pH in H2O
 
