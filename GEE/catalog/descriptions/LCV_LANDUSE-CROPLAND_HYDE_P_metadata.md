@@ -1,1 +1,0 @@
-HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"   Mirrored from themasites.pbl.nl/en/themasites/hyde/index.html by HTTrack Website Copier/3.x [XR&CO'2010], Wed, 30 Mar 2011 08:29:49 GMT   Added by HTTrack  /Added by HTTrack    Home HYDE - the Netherlands Environmental Assessment Agency (PBL)

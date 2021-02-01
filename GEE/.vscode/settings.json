@@ -1,6 +1,0 @@
-{
-    "python.dataScience.jupyterServerURI": "",
-    "python.pythonPath": "/usr/local/envs/py3env/bin/python",
-    "python.linting.pylintEnabled": true,
-    "python.linting.enabled": true
-}

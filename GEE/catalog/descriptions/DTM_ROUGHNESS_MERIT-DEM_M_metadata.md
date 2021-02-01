@@ -1,1 +1,0 @@
-window.location.href = "./programs/gdaldem.html"

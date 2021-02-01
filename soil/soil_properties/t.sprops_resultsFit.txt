@@ -1,7 +1,0 @@
-Processing time:
-   user  system elapsed 
- 52.532  13.674 856.924 
-
---------------------------------------
-
-Variable: ph.h2o
